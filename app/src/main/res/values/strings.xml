@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">CIS350App</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Don\'t have an account? Register here</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_no_such_user">This username does not exist</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <!-- Strings related to register -->
+    <string name="prompt_reg_username">Username</string>
+    <string name="prompt_reg_password">Password</string>
+    <string name="prompt_school">School</string>
+    <string name="prompt_age">Age</string>
+    <string name="prompt_gender">Gender/Pronouns</string>
+    <string name="error_username_taken">This username is already taken, please choose another one</string>
+    <!-- Strings related to mailbox -->
+    <string name="title_notification_list">Notifications</string>
+    <string name="title_notification_detail">Notification Detail</string>
+    <string name="title_activity_register">Sign up for an account</string>
 </resources>
