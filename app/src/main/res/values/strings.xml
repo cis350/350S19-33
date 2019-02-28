@@ -22,4 +22,10 @@
     <string name="title_notification_list">Notifications</string>
     <string name="title_notification_detail">Notification Detail</string>
     <string name="title_activity_register">Sign up for an account</string>
+    <string name="notifications">Notifications</string>
+    <string name="search_for_admin">Search for Admin</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="events">Events</string>
+    <string name="log_out">Log out</string>
+    <string name="reports">Reports</string>
 </resources>
