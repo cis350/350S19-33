@@ -9,24 +9,25 @@
         android:id="@+id/report"
         android:layout_width="395dp"
         android:layout_height="112dp"
-        android:text="@string/reports"
+        android:text="@string/hp_reports"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toTopOf="@+id/notifications"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:onClick="reports_action"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/notifications"
         android:layout_width="395dp"
         android:layout_height="113dp"
-        android:text="@string/notifications"
+        android:text="@string/hp_notifications"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:onClick="notifications_action"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report" />
 
@@ -34,10 +35,11 @@
         android:id="@+id/search"
         android:layout_width="395dp"
         android:layout_height="112dp"
-        android:text="@string/search_for_admin"
+        android:text="@string/hp_search"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toTopOf="@+id/events"
         app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="search_for_admin_action"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notifications" />
@@ -46,23 +48,25 @@
         android:id="@+id/acctsettings"
         android:layout_width="395dp"
         android:layout_height="112dp"
-        android:text="@string/account_settings"
+        android:text="@string/hp_accountsettings"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:onClick="acct_settings_action"
         app:layout_constraintTop_toBottomOf="@+id/events" />
 
     <Button
         android:id="@+id/events"
         android:layout_width="395dp"
         android:layout_height="113dp"
-        android:text="@string/events"
+        android:text="@string/hp_events"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toTopOf="@+id/acctsettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:onClick="events_action"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search" />
 
@@ -70,12 +74,12 @@
         android:id="@+id/logout"
         android:layout_width="395dp"
         android:layout_height="113dp"
-        android:text="@string/log_out"
+        android:text="@string/hp_logout"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:onClick="logout_action"
         app:layout_constraintTop_toBottomOf="@+id/acctsettings" />
 
     <android.support.constraint.Barrier
@@ -83,4 +87,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="left" />
+
 </android.support.constraint.ConstraintLayout>

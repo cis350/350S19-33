@@ -28,4 +28,21 @@
     <string name="events">Events</string>
     <string name="log_out">Log out</string>
     <string name="reports">Reports</string>
+    <!--Strings related to homepage-->
+    <string name="hp_reports">Reports</string>
+    <string name="hp_notifications">Notifications</string>
+    <string name="hp_search">Search for Admin</string>
+    <string name="hp_events">Events</string>
+    <string name="hp_accountsettings">Account Settings</string>
+    <string name="hp_logout">Log out</string>
+    <!--Strings related to admin profile-->
+    <string name="full_name">Full Name</string>
+    <string name="role">Role</string>
+    <string name="gender">Gender</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="officelocation">Office Location</string>
+    <!--Strings related to search-->
+    <string name="search">Search for an administrator below</string>
+
 </resources>

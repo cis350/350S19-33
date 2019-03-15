@@ -17,4 +17,34 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
     }
+
+    //to be changed
+    public void reports_action(View v){
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    //to be changed
+    public void notifications_action(View v){
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    //to be changed
+    public void search_for_admin_action(View v){
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    //to be changed
+    public void events_action(View v){
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    //to be changed
+    public void acct_settings_action(View v){
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    public void logout_action(View v){
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
 }
