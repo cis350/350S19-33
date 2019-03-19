@@ -29,6 +29,7 @@
     <string name="log_out">Log out</string>
     <string name="reports">Reports</string>
     <!--Strings related to homepage-->
+    <string name="title_homepage">Homepage</string>
     <string name="hp_reports">Reports</string>
     <string name="hp_notifications">Notifications</string>
     <string name="hp_search">Search for Admin</string>
@@ -44,5 +45,7 @@
     <string name="officelocation">Office Location</string>
     <!--Strings related to search-->
     <string name="search">Search for an administrator below</string>
+    <!--Account settings-->
+    <string name="edit">Edit</string>
 
 </resources>

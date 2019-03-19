@@ -7,47 +7,47 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="103dp"
         android:text="@string/officelocation"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="353dp" />
+        tools:layout_editor_absoluteY="620dp" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="103dp"
         android:text="@string/gender"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="180dp" />
+        tools:layout_editor_absoluteY="287dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="103dp"
         android:text="@string/email"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="295dp" />
+        tools:layout_editor_absoluteY="509dp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="49dp"
+        android:layout_height="103dp"
         android:text="@string/phone"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="238dp" />
+        tools:layout_editor_absoluteY="398dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="49dp"
+        android:layout_height="103dp"
         android:text="@string/role"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="123dp" />
+        tools:layout_editor_absoluteY="176dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="103dp"
         android:text="@string/full_name"
         tools:layout_editor_absoluteX="40dp"
         tools:layout_editor_absoluteY="65dp" />

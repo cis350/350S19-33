@@ -23,14 +23,12 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 
-    //to be changed
     public void notifications_action(View v){
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        startActivity(new Intent(HomeActivity.this, NotificationListActivity.class));
     }
 
-    //to be changed
     public void search_for_admin_action(View v){
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        startActivity(new Intent(HomeActivity.this, SearchActivity.class));
     }
 
     //to be changed

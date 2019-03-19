@@ -289,7 +289,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Intent i = new Intent(getBaseContext(), NotificationListActivity.class);
+                //change the location to be homeactivity
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
                 startActivity(i);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

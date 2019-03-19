@@ -1,91 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Reports"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/report"
-        android:layout_width="395dp"
-        android:layout_height="112dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="reports_action"
         android:text="@string/hp_reports"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/notifications"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="reports_action"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/notifications"
-        android:layout_width="395dp"
-        android:layout_height="113dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="notifications_action"
         android:text="@string/hp_notifications"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:onClick="notifications_action"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report" />
 
     <Button
         android:id="@+id/search"
-        android:layout_width="395dp"
-        android:layout_height="112dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="search_for_admin_action"
         android:text="@string/hp_search"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/events"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="search_for_admin_action"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notifications" />
 
     <Button
         android:id="@+id/acctsettings"
-        android:layout_width="395dp"
-        android:layout_height="112dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="acct_settings_action"
         android:text="@string/hp_accountsettings"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="acct_settings_action"
         app:layout_constraintTop_toBottomOf="@+id/events" />
 
     <Button
         android:id="@+id/events"
-        android:layout_width="395dp"
-        android:layout_height="113dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="events_action"
         android:text="@string/hp_events"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/acctsettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:onClick="events_action"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search" />
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="395dp"
-        android:layout_height="113dp"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:onClick="logout_action"
         android:text="@string/hp_logout"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="logout_action"
         app:layout_constraintTop_toBottomOf="@+id/acctsettings" />
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
 
 </android.support.constraint.ConstraintLayout>
