@@ -2,6 +2,7 @@ package com.example.cis350app.data;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,7 @@ public class EventContent {
                 "Houston Hall", format.format(new Date()), "Group therapy");
         Event e3 = new Event("2", "Coming Out Of The Closet", "LGBT Center",
                 format.format(new Date()), "Diving into gender and sexual identities");
+        e1.register();
         List<Event> events = new ArrayList<>();
         events.add(e1);
         events.add(e2);
@@ -50,6 +52,7 @@ public class EventContent {
         public final String time; //time of event
         public final String description; //description of event
         public final List<String> comments = new ArrayList<String>(); //comments on event
+        public boolean register = false;
 
         public Event(String id, String name, String location, String time, String description) {
             this.id = id;
@@ -68,6 +71,10 @@ public class EventContent {
 
         public void addComment(String comment) {
             comments.add(comment);
+        }
+
+        public void register() {
+            register = false;
         }
     }
 }

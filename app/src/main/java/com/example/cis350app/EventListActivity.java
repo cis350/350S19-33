@@ -26,42 +26,19 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class EventListActivity extends AppCompatActivity {
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_list);
 
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-        */
-
-        /*
-        if (findViewById(R.id.event_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
-        */
-
-        /*
         View recyclerView = findViewById(R.id.event_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
-        */
+
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, EventContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, EventContent.ITEMS));
     }
 
     public static class SimpleItemRecyclerViewAdapter
@@ -69,36 +46,22 @@ public class EventListActivity extends AppCompatActivity {
 
         private final EventListActivity mParentActivity;
         private final List<EventContent.Event> mValues;
-        private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EventContent.Event item = (EventContent.Event) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(EventDetailFragment.ARG_ITEM_ID, item.id);
-                    EventDetailFragment fragment = new EventDetailFragment();
-                    fragment.setArguments(arguments);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, EventDetailActivity.class);
+                intent.putExtra(EventDetailFragment.ARG_ITEM_ID, item.id);
 
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            //.replace(R.id.event_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, EventDetailActivity.class);
-                    intent.putExtra(EventDetailFragment.ARG_ITEM_ID, item.id);
-
-                    context.startActivity(intent);
-                }
+                context.startActivity(intent);
             }
         };
 
         SimpleItemRecyclerViewAdapter(EventListActivity parent,
-                                      List<EventContent.Event> items,
-                                      boolean twoPane) {
+                                      List<EventContent.Event> items) {
             mValues = items;
             mParentActivity = parent;
-            mTwoPane = twoPane;
         }
 
         @Override
