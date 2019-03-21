@@ -31,9 +31,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this, SearchActivity.class));
     }
 
-    //to be changed
     public void events_action(View v){
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        startActivity(new Intent(HomeActivity.this, EventListActivity.class));
     }
 
     //to be changed

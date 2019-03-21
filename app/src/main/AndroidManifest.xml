@@ -49,11 +49,11 @@
         </activity>
         <activity
             android:name=".EventListActivity"
-            android:label="Events Page">
+            android:label="Events">
         </activity>
         <activity
             android:name=".EventDetailActivity"
-            android:label="Events Page">
+            android:label="Events Detail">
         </activity>
     </application>
 
