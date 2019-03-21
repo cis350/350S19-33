@@ -2,8 +2,8 @@ package com.example.cis350app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import
-        
+import android.support.v7.widget.Toolbar;
+
 public class ProfileActivity extends AppCompatActivity {
 
     Toolbar myToolBar;

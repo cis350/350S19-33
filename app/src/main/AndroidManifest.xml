@@ -45,6 +45,7 @@
         </activity>
         <activity
             android:name=".HomeActivity"
+<<<<<<< HEAD
             android:label="@string/title_homepage"></activity>
         <activity
             android:name=".SearchActivity"
@@ -52,6 +53,18 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_profile"></activity>
+=======
+            android:label="@string/title_homepage">
+        </activity>
+        <activity
+            android:name=".EventListActivity"
+            android:label="Events">
+        </activity>
+        <activity
+            android:name=".EventDetailActivity"
+            android:label="Events Detail">
+        </activity>
+>>>>>>> 12747b203ed800ee213317e6ad793cd07000fb11
     </application>
 
 </manifest>
