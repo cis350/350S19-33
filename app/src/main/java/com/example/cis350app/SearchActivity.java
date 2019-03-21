@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.ListView;
 import java.util.Arrays;
 import java.util.ArrayList;
+import android.content.Intent;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -32,10 +35,21 @@ public class SearchActivity extends AppCompatActivity {
                 arrayAdmin
         );
 
+        //put listeners on the admin items in the listviews
+        search_admin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
+                intent.putExtra("AdminName", search_admin.getItemAtPosition(position).toString());
+                startActivity(intent);
+            }
+        });
+
         search_admin.setAdapter(adapter);
 
     }
 
+    //create a search bar that filters based on input
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

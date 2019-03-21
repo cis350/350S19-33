@@ -49,6 +49,9 @@
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_search"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_profile"></activity>
     </application>
 
 </manifest>

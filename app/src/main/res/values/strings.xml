@@ -53,6 +53,8 @@
         <item>Dorothy Chang</item>
     </string-array>
     <string name="search">Search for an administrator below</string>
+    <!--Strings related to profile-->
+    <string name="title_profile">Profile</string>
     <!--Account settings-->
     <string name="edit">Edit</string>
     <string name="title_activity_testing">TestingActivity</string>
