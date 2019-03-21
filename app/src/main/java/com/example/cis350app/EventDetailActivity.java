@@ -34,7 +34,6 @@ public class EventDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            /*
             Bundle arguments = new Bundle();
             arguments.putString(EventDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(EventDetailFragment.ARG_ITEM_ID));
@@ -43,7 +42,6 @@ public class EventDetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     //.add(R.id.event_detail_container, fragment)
                     .commit();
-                    */
         }
     }
 

@@ -41,17 +41,20 @@ public class EventListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+        */
 
-
-        if (findViewById(R.id.notification_detail_container) != null) {
+        /*
+        if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+        */
 
-        View recyclerView = findViewById(R.id.notification_list);
+        /*
+        View recyclerView = findViewById(R.id.event_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
         */
@@ -72,16 +75,14 @@ public class EventListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EventContent.Event item = (EventContent.Event) view.getTag();
                 if (mTwoPane) {
-                    /*
                     Bundle arguments = new Bundle();
-                    arguments.putString(NotificationDetailFragment.ARG_ITEM_ID, item.id);
+                    arguments.putString(EventDetailFragment.ARG_ITEM_ID, item.id);
                     EventDetailFragment fragment = new EventDetailFragment();
                     fragment.setArguments(arguments);
 
                     mParentActivity.getSupportFragmentManager().beginTransaction()
                             //.replace(R.id.event_detail_container, fragment)
                             .commit();
-                    */
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, EventDetailActivity.class);
@@ -103,7 +104,7 @@ public class EventListActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.notification_list_content, parent, false);
+                    .inflate(R.layout.event_list_content, parent, false);
             return new ViewHolder(view);
         }
 
