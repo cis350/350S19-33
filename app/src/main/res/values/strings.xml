@@ -44,8 +44,20 @@
     <string name="phone">Phone</string>
     <string name="officelocation">Office Location</string>
     <!--Strings related to search-->
+    <string name="title_search">Search</string>
+    <string-array name="app_name">SearchAdmins</string-array>
+    <string-array name="my_admins">
+        <item>Michelle Lok</item>
+        <item>April Chen</item>
+        <item>Chelsey Lin</item>
+        <item>Dorothy Chang</item>
+    </string-array>
     <string name="search">Search for an administrator below</string>
     <!--Account settings-->
     <string name="edit">Edit</string>
+    <string name="title_activity_testing">TestingActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

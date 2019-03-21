@@ -36,9 +36,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 
-    //to be changed
     public void acct_settings_action(View v){
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        startActivity(new Intent(HomeActivity.this, AccountSettingsActivity.class));
     }
 
     public void logout_action(View v){
