@@ -46,7 +46,15 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_homepage">
-    </activity>
+        </activity>
+        <activity
+            android:name=".EventListActivity"
+            android:label="Events Page">
+        </activity>
+        <activity
+            android:name=".EventDetailActivity"
+            android:label="Events Page">
+        </activity>
     </application>
 
 </manifest>
