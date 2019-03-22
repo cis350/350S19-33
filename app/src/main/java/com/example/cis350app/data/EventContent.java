@@ -34,7 +34,7 @@ public class EventContent {
                 "Houston Hall", format.format(new Date()), "Group therapy");
         Event e3 = new Event("2", "Coming Out Of The Closet", "LGBT Center",
                 format.format(new Date()), "Diving into gender and sexual identities");
-        e2.register();
+        e1.register();
         List<Event> events = new ArrayList<>();
         events.add(e1);
         events.add(e2);
