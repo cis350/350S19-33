@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.Button;
 
 /**
  * An activity representing a single Notification detail screen. This
@@ -54,6 +55,8 @@ public class NotificationDetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

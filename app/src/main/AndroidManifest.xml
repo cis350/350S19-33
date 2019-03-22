@@ -36,6 +36,19 @@ package="com.example.cis350app">
             android:value="com.example.cis350app.NotificationListActivity" />
     </activity>
     <activity
+        android:name=".ReportDetailActivity"
+        android:label="Report Detail"
+        android:parentActivityName=".ReportListActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.cis350app.ReportListActivity" />
+    </activity>
+    <activity
+        android:name=".ReportActivity"
+        android:label="Reports">
+    </activity>
+    <activity
         android:name=".LoginActivity"
         android:label="@string/title_activity_login">
         <intent-filter>
@@ -68,5 +81,6 @@ package="com.example.cis350app">
         android:label="Events Detail">
     </activity>
 </application>
+
 
 </manifest>

@@ -10,7 +10,6 @@
     <string name="error_no_such_user">This username does not exist</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
     <!-- Strings related to register -->
     <string name="prompt_reg_username">Username</string>
     <string name="prompt_reg_password">Password</string>
@@ -18,6 +17,13 @@
     <string name="prompt_age">Age</string>
     <string name="prompt_gender">Gender/Pronouns</string>
     <string name="error_username_taken">This username is already taken, please choose another one</string>
+    <!-- String related to reports -->
+    <string name = "prompt_report_name">Name</string>
+    <string name = "prompt_report_date">Date</string>
+    <string name = "prompt_report_subject">Subject of Report</string>
+    <string name = "prompt_report_description">Description of Incident</string>
+    <string name = "prompt_report_person">Are you reporting on behalf of yourself or a friend?</string>
+    <string name="error_field_required">This field is required</string>
     <!-- Strings related to mailbox -->
     <string name="title_notification_list">Notifications</string>
     <string name="title_notification_detail">Notification Detail</string>

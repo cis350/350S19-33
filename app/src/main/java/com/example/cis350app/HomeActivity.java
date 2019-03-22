@@ -20,9 +20,12 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    //to be changed
+    public void new_report_action(View v){
+        startActivity(new Intent(HomeActivity.this, ReportActivity.class));
+    }
+
     public void reports_action(View v){
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        startActivity(new Intent(HomeActivity.this, ReportListActivity.class));
     }
 
     public void notifications_action(View v){
