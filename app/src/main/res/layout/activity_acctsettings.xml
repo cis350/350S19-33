@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountSettingsActivity">
+    tools:context=".d">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/reg_password"
+                        android:id="@+id/edit_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_reg_password"
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/school"
+                        android:id="@+id/edit_school"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_school"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/age"
+                        android:id="@+id/edit_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_age"
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/gender"
+                        android:id="@+id/edit_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_gender"
@@ -128,28 +128,5 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/title_home"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="4dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
 
 </android.support.constraint.ConstraintLayout>
