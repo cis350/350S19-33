@@ -294,4 +294,3 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         }
     }
 }
-

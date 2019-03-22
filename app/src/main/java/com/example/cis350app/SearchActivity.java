@@ -13,6 +13,8 @@ import android.widget.ListView;
 import java.util.Arrays;
 import java.util.ArrayList;
 import android.content.Intent;
+import com.example.cis350app.data.SearchContent;
+import com.example.cis350app.data.SearchContent.Profile;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -40,7 +42,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
-                intent.putExtra("AdminName", search_admin.getItemAtPosition(position).toString());
+                String adminSelected = search_admin.getItemAtPosition(position).toString();
+                Profile adminProfile = SearchContent.getAdminData(adminSelected);
+                intent.putExtra("AdminName", adminProfile);
                 startActivity(intent);
             }
         });

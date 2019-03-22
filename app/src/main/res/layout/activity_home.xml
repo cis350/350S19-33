@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/notifications"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -33,7 +33,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report" />
 
@@ -48,7 +48,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/events"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notifications" />
 
@@ -63,7 +63,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/events" />
 
@@ -78,7 +78,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toTopOf="@+id/acctsettings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search" />
 
@@ -92,7 +92,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/acctsettings" />
 
