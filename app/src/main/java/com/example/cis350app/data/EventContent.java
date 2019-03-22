@@ -34,7 +34,7 @@ public class EventContent {
                 "Houston Hall", format.format(new Date()), "Group therapy");
         Event e3 = new Event("2", "Coming Out Of The Closet", "LGBT Center",
                 format.format(new Date()), "Diving into gender and sexual identities");
-        e1.register();
+        e2.register();
         List<Event> events = new ArrayList<>();
         events.add(e1);
         events.add(e2);
@@ -64,9 +64,13 @@ public class EventContent {
 
         @Override
         public String toString() {
-            String s = name + "\n" + "Location: " + location + " Time: " + time +
-                    "Description: " + description;
+            String s = name + "\n" + "Location: " + location + "\n" + " Time: " + time +
+                   "\n" + "Description: " + description;
             return s;
+        }
+
+        public List<String> getComments() {
+            return comments;
         }
 
         public void addComment(String comment) {
@@ -74,7 +78,11 @@ public class EventContent {
         }
 
         public void register() {
-            register = false;
+            register = true;
+        }
+
+        public boolean isRegistered() {
+            return register;
         }
     }
 }

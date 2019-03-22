@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.cis350app.data.EventContent;
 
 public class EventDetailFragment extends Fragment {
+
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -51,11 +52,11 @@ public class EventDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.event_detail, container, false);
+        View rootView = inflater.inflate(R.layout.event_singleton, container, false);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.event_detail)).setText(mItem.toString());
+            ((TextView) rootView.findViewById(R.id.event_string)).setText(mItem.toString());
         }
 
         return rootView;
