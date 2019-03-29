@@ -74,7 +74,7 @@ const showSignup = function(req, res) {
   }
 };
 
-const dashboard = function(req, res) {
+const getDashboard = function(req, res) {
   const email = req.query.email;
 
   const queryObject = { "email" : email };
@@ -95,7 +95,33 @@ const dashboard = function(req, res) {
         openReports: openReports,
         closedReports: closedReports,
       }
-      res.render('dashboard', {data: data});
+      res.render('dashboard');
+    }
+  });
+};
+
+const getDashboardData = function(req, res) {
+  const email = req.query.email;
+
+  const queryObject = { "email" : email };
+
+  User.findOne( queryObject, (err, person) => {
+    if (err) {
+      console.log('uh oh' + err);
+      res.json({});
+    }
+    else if (!person) {
+      res.redirect('login/');
+    }
+    else {
+      const personObj = person.toObject();
+      const openReports = personObj.openReports.length;
+      const closedReports = personObj.closedReports.length;
+      const data = {
+        openReports: openReports,
+        closedReports: closedReports,
+      }
+      res.send(data);
     }
   });
 };
@@ -106,7 +132,8 @@ const routes = {
   check_login: checkLogin,
   signup: signup,
   show_signup: showSignup,
-  dashboard: dashboard,
+  get_dashboard: getDashboard,
+  get_dashboard_data: getDashboardData,
 };
 
 module.exports = routes;

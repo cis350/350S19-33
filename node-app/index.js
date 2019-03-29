@@ -17,7 +17,8 @@ app.get('/login', user.get_login);
 app.post('/checkLogin', user.check_login);
 app.get('/signup', user.show_signup);
 app.post('/signup', user.signup);
-app.get('/dashboard', user.dashboard);
+app.get('/dashboard', user.get_dashboard);
+app.get('/dashboarddata', user.get_dashboard_data);
 
 /*************************************************/
 

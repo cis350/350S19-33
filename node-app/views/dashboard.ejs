@@ -4,19 +4,56 @@
   <title>Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+  <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    const load = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('email');
+      $.getJSON('/dashboarddata?email=' + email, function(data) {
+        const {openReports, closedReports} = data;
+        new Chartist.Pie('#chart1', {
+          series: [openReports, closedReports]
+        }, {
+          donut: true,
+          donutWidth: 60,
+          donutSolid: true,
+          startAngle: 270,
+          total: (openReports + closedReports) * 2,
+          showLabel: true
+        });
+      });
+    }  
+    window.onload = function() { load(); }
+  </script>
   <style type="text/css">
     body {
+      background-color: white;
       padding-top: 40px;
       padding-bottom: 40px;
-      background-color: white;
+      text-align: center;
+    }
+    .chart {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .chart-title {
+      font-size: 16pt;
+    }
+    .ct-label {
+      font-size: 14pt;
+      fill: white;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Dashboard</h1>
-    <p>Open reports: <%= data.openReports %></p>
-    <p>Closed reports: <%= data.closedReports %></p>
+    <div class="chart">
+      <p class="chart-title"> Open Reports and Closed Reports </p> 
+      <div class="ct-chart ct-golden-section" id="chart1"></div>
+    </div>
   </div>
 </body>
 </html>
