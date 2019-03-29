@@ -76,6 +76,9 @@ const showSignup = function(req, res) {
 
 const dashboard = function(req, res) {
   const email = req.query.email;
+
+  const queryObject = { "email" : email };
+
   User.findOne( queryObject, (err, person) => {
     if (err) {
       console.log('uh oh' + err);
@@ -85,7 +88,14 @@ const dashboard = function(req, res) {
       res.redirect('login/');
     }
     else {
-      res.render('dashboard', {person: person});
+      const personObj = person.toObject();
+      const openReports = personObj.openReports.length;
+      const closedReports = personObj.closedReports.length;
+      const data = {
+        openReports: openReports,
+        closedReports: closedReports,
+      }
+      res.render('dashboard', {data: data});
     }
   });
 };
