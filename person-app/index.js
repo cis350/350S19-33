@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // import the Person class from Person.js
 var Person = require('./Person.js');
 
+const user = require('./routes/user.js');
+
 /***************************************/
 
 // route for creating a new person
@@ -102,17 +104,20 @@ app.use('/api', (req, res) => {
 		    res.json(returnArray); 
 		}
 		
-	    });
     });
+});
 
-
-
+app.get('/login', user.get_login);
+app.post('/checkLogin', user.check_login);
+app.get('/signup', user.show_signup);
+app.post('/signup', user.signup);
+app.get('/dashboard', user.dashboard);
 
 /*************************************************/
 
 app.use('/public', express.static('public'));
 
-app.use('/', (req, res) => { res.redirect('/public/personform.html'); } );
+app.use('/', (req, res) => { res.redirect('public/personform.html'); } );
 
 app.listen(3000,  () => {
 	console.log('Listening on port 3000');

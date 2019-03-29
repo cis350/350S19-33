@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signup</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			padding-top: 40px;
+			padding-bottom: 40px;
+			background-color: white;
+		}
+		.form-control {
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Signup for an account</h1>
+    <%if (message != null) { %>
+    <font color="red"><%= message %><p>
+    <% } %>
+    <font color="black">
+    <form action="/signup" method="post" class="form-signin" data-toggle="validator">
+    	<span>Email address</span>
+      <input type="text" name="email" placeholder="Email" class="form-control" required>
+      <br>
+      <span>Password</span>
+      <input type="password" name="password" placeholder="Password" class="form-control" required>
+      <br>
+      <span>Name</span>
+      <input type="text" name="name" placeholder="First name" class="form-control" required>
+      <br>
+      <span>School</span>
+      <input type="text" name="school" placeholder="School" class="form-control" required>
+      <br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    <br>
+  </div>
+</body>
+</html>
