@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
   <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript">
     const load = function() {
@@ -13,16 +14,62 @@
       const email = urlParams.get('email');
       $.getJSON('/dashboarddata?email=' + email, function(data) {
         const {openReports, closedReports} = data;
+        // open vs closed reports
         new Chartist.Pie('#chart1', {
+          labels: [openReports + ' Open Reports', closedReports + ' Closed Reports'],
           series: [openReports, closedReports]
         }, {
-          donut: true,
-          donutWidth: 60,
-          donutSolid: true,
+          // donut: true,
+          // donutWidth: 60,
+          // donutSolid: true,
+          height: '400px',
+          width: '500px',
           startAngle: 270,
-          total: (openReports + closedReports) * 2,
+          total: (openReports + closedReports),
           showLabel: true
         });
+      });
+      // open reports
+      new Chartist.Line('#chart2', {
+        series: [
+          {
+            name: 'series-1',
+            data: [
+              {x: new Date(143134652600), y: 10},
+              {x: new Date(143234652600), y: 12},
+              {x: new Date(143340052600), y: 15},
+              {x: new Date(143366652600), y: 9},
+              {x: new Date(143410652600), y: 18},
+              {x: new Date(143508652600), y: 23},
+              {x: new Date(143569652600), y: 15},
+              {x: new Date(143579652600), y: 11}
+            ]
+          }
+        ]
+      }, {
+        height: '400px',
+        width: '500px',
+        axisX: {
+          type: Chartist.FixedScaleAxis,
+          divisor: 5,
+          labelInterpolationFnc: function(value) {
+            return moment(value).format('MMM D');
+          }
+        }
+      });
+      // new reports
+      new Chartist.Bar('#chart3', {
+        labels: ['January', 'February', 'March', 'April'],
+        series: [[12, 9, 7, 8]]
+      }, {
+        height: '400px',
+        width: '500px',
+        seriesBarDistance: 10,
+        axisX: {
+          labelInterpolationFnc: function(value) {
+            return value;
+          }
+        }
       });
     }  
     window.onload = function() { load(); }
@@ -34,9 +81,14 @@
       padding-bottom: 40px;
       text-align: center;
     }
+    .charts {
+      display: inline-block;
+    }
     .chart {
       padding-top: 20px;
       padding-bottom: 20px;
+      width: 500px;
+      height: 500px;
     }
     .chart-title {
       font-size: 16pt;
@@ -50,9 +102,19 @@
 <body>
   <div class="container">
     <h1>Dashboard</h1>
-    <div class="chart">
-      <p class="chart-title"> Open Reports and Closed Reports </p> 
-      <div class="ct-chart ct-golden-section" id="chart1"></div>
+    <div class="charts">
+      <div class="chart">
+        <p class="chart-title"> Your Reports </p> 
+        <div class="ct-chart ct-golden-section" id="chart1"></div>
+      </div>
+      <div class="chart">
+        <p class="chart-title"> Open Reports Over Time </p> 
+        <div class="ct-chart ct-golden-section" id="chart2"></div>
+      </div>
+      <div class="chart">
+        <p class="chart-title"> New Reports Per Day </p> 
+        <div class="ct-chart ct-golden-section" id="chart3"></div>
+      </div>
     </div>
   </div>
 </body>
