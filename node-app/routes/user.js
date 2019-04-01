@@ -53,6 +53,8 @@ const signup = function(req, res) {
     password: password,
     name: name,
     school: school,
+    openReports: ['001', '002', '004'],
+    closedReports: ['003', '005'],
   });
 
   // save new user to database
@@ -89,8 +91,8 @@ const getDashboard = function(req, res) {
     }
     else {
       const personObj = person.toObject();
-      const openReports = personObj.openReports.length;
-      const closedReports = personObj.closedReports.length;
+      const openReports = personObj.openReports && personObj.openReports.length;
+      const closedReports = personObj.closedReports && personObj.closedReports.length;
       const data = {
         openReports: openReports,
         closedReports: closedReports,
@@ -115,8 +117,8 @@ const getDashboardData = function(req, res) {
     }
     else {
       const personObj = person.toObject();
-      const openReports = personObj.openReports.length;
-      const closedReports = personObj.closedReports.length;
+      const openReports = personObj.openReports && personObj.openReports.length;
+      const closedReports = personObj.closedReports && personObj.closedReports.length;
       const data = {
         openReports: openReports,
         closedReports: closedReports,
