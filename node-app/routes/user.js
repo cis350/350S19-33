@@ -1,6 +1,8 @@
 /* Routes for user accounts */
+var session = require('client-sessions');
 
 const User = require('../data/User.js');
+const Status = require('../data/Status.js');
 
 const getLogin = function(req, res) {
   if (req.query.q == 1) {
@@ -34,6 +36,7 @@ const checkLogin = function(req, res) {
     }
     else {
       if (person.password == password) {
+        req.session.user = person;
         res.redirect('dashboard/?email=' + email);
       } else {
         res.redirect('login/?q=3');
@@ -57,13 +60,25 @@ const signup = function(req, res) {
     closedReports: ['003', '005'],
   });
 
+  const newStatus = new Status({
+    email: email,
+    name: name,
+    onVacation: false
+  });
+
   // save new user to database
   newUser.save( (err) => { 
     if (err) {
       res.redirect('signup/?q=1');
     }
     else {
-      res.redirect('dashboard/?email=' + email);
+      newStatus.save( (err) => {
+        if(err){
+          res.redirect('signup/?q=1');
+        } else {
+          res.redirect('dashboard/?email=' + email);
+        }
+      });
     }
   }); 
 };
