@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+ <div class="mail-box">
+                  <aside class="lg-side">
+                      <div class="inbox-head">
+                          <h3>Inbox</h3>
+                      </div>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+<body>
+
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Filter</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#read">Read</a>
+    <a href="#unread">Unread</a>
+  </div>
+</div>
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+</body>
+                      <div class="inbox-body">
+                          <table class="table table-inbox table-hover">
+                            <tbody>
+                            <tr>
+                                  <td class="view-message dont-show"><b>Name</b></td>
+                                  <td class="view-message"><b>Subject</b></td>
+                                  <td class="view-message inbox-small-cells"></td>
+                                  <td class="view-message text-right"><b>Date</b></td>
+                              </tr>
+                            <% reports.forEach((report) => { %>
+                              <tr class="unread">
+                                  <td class="view-message dont-show"><%= report.studentName%> 
+                                  <% if (!report.read) { %>
+                                  <span class="label label-danger pull-right">unread</span></td></td>
+                                  <% } %>
+                                  <td class="view-message"><%= report.subject %></td>
+                                  <td class="view-message inbox-small-cells"></td>
+                                  <td class="view-message text-right"><%= report.date %></td>
+                              </tr>
+                            <% }) %>
+                          </tbody>
+                          </table>
+                      </div>
+                  </aside>
+              </div>
+</div>
+</html>
