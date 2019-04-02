@@ -20,7 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const user = require('./routes/user.js');
 const status = require('./routes/status.js');
-const event = require('./routes/event.js')
+const event = require('./routes/event.js');
+const report = require('./routes/report.js');
 
 /***************************************/
 
@@ -51,7 +52,10 @@ app.use('/editForm', event.update_event, (req, res) => {
 	res.send("event form handled");
 });
 
-
+//notification mailbox and individual reports
+app.get('/reports', report.get_reports)
+app.get('/reports#read', status.get_read);
+app.get('/reports#unread', status.get_unread);
 /*************************************************/
 
 app.use('/public', express.static('public'));
