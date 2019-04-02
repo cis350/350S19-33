@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript">
-    const load = function() {
+    var load = function() {
       const urlParams = new URLSearchParams(window.location.search);
       const email = urlParams.get('email');
       $.getJSON('/dashboarddata?email=' + email, function(data) {
