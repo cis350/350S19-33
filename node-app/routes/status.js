@@ -4,7 +4,7 @@ const Status = require('../data/Status.js');
 
 const changeStatus = function(req, res) {
   const person = req.session.user;
-  Person.findOne({ email: person.email }, (err, daStatus) => {
+  Status.findOne({ email: person.email }, (err, daStatus) => {
     if (err) { 
       res.type('html').status(500);
       res.send('Error: ' + err); 
@@ -18,7 +18,19 @@ const changeStatus = function(req, res) {
         res.type('html').status(500);
         res.send('Error: ' + err);
       } else {
-        res.render('updated', { status: daStatus });
+          Status.find( (err, allStatuses) => {
+     if (err) {
+        res.type('html').status(500);
+        res.send('Error: ' + err);
+     }
+     else if (allStatuses.length == 0) {
+        res.type('html').status(200);
+        res.send('There are no people');
+     }
+else {
+        res.render('status.ejs', { statuses: allStatuses, person: req.session.user });
+     }
+});
       }
     });
     }
@@ -36,7 +48,7 @@ const getStatuses = function(req, res) {
         res.send('There are no people');
      }
 else {
-        res.render('status.ejs', { statuses: allStatuses });
+        res.render('status.ejs', { statuses: allStatuses, person: req.session.user });
      }
 });
 }

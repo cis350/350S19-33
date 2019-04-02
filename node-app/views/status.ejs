@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-<button onclick="myFunction()">Change Status</button>
-<div id="myDIV">Out of office</div>
 <table class="tg">
     <tr>
     <th class="tg-fymr">Admin</th>
@@ -10,19 +8,12 @@
   <% statuses.forEach((status) => { %>
   <tr>
     <td class="tg-0lax"><%= status.name %></td>
-    <td class="tg-0lax"><%= status.onVacation %></td>
+    <td id=<%=status.email%> class="tg-0lax"><%= status.onVacation%></td>
   </tr>
 <% }); %>
 </table>
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myDIV");
-  if (x.innerHTML === "In office") {
-    x.innerHTML = "Out of office";
-  } else {
-    x.innerHTML = "In office";
-  }
-}
-</script>
+<p>Change your vacation status below, <%= person.name %></p>
+<form action="/changed" method="post">
+  <button type="submit" onclick="myFunction();">Change Status</button>
+</form>
 </html>
