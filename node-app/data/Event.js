@@ -5,6 +5,7 @@ mongoose.connect('mongodb+srv://dorothy:dorothy@cluster0-8qbcz.mongodb.net/test?
 var Schema = mongoose.Schema;
 
 var eventSchema = new Schema({
+	id: {type: String, required: true, unique: true},
 	name: {type: String, required: true, unique: true},
 	location: {type: String, required: true},
 	time: {type: String, required: true},
