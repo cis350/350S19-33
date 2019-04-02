@@ -50,6 +50,8 @@ const signup = function(req, res) {
 	const password = req.body.password;
   const name = req.body.name;
   const school = req.body.school;
+  const location = req.body.location;
+  const phone = req.body.phone;
 
   const newUser = new User({
     email: email,
@@ -58,6 +60,8 @@ const signup = function(req, res) {
     school: school,
     openReports: ['001', '002', '004'],
     closedReports: ['003', '005'],
+    location: location,
+    phone: phone,
   });
 
   const newStatus = new Status({
