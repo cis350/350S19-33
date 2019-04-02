@@ -9,6 +9,7 @@ var eventSchema = new Schema({
 	name: {type: String, required: true, unique: true},
 	location: {type: String, required: true},
 	time: {type: String, required: true},
+	date: {type: String, required: true},
 	host: {type: String, required: true},
 	description: {type: String, required: true}
     });

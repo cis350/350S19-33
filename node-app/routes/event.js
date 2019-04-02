@@ -55,6 +55,7 @@ const updateEvent = function(req, res) {
   const name = req.body.name;
   const location = req.body.location;
   const time = req.body.time;
+  const date = req.body.date;
   const host = req.body.host;
   const description = req.body.description;
 
@@ -69,6 +70,7 @@ const updateEvent = function(req, res) {
       event.name = name;
       event.location = location;
       event.time = time;
+      event.date = date;
       event.host = host;
       event.description = description;
       event.save();
@@ -82,6 +84,7 @@ const saveEvent = function(req, res) {
   const name = req.body.name;
   const location = req.body.location;
   const time = req.body.time;
+  const date = req.body.date;
   const host = req.body.host;
   const description = req.body.description;
   const id = ObjectId();
@@ -91,6 +94,7 @@ const saveEvent = function(req, res) {
     name: name,
     location: location,
     time: time,
+    date: date,
     host: host,
     description: description,
   });
