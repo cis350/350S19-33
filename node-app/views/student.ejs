@@ -2,10 +2,12 @@
 <html>
 <body>
 	<h1><%= student.name %> </h1>
-	<p> Age: <%= event.age %> </p>
-	<p> Gender: <%= event.gender %> </p>
-	<p> School: <%= event.school %> </p>
+	<p> Age: <%= student.age %> </p>
+	<p> Gender: <%= student.gender %> </p>
+	<p> School: <%= student.school %> </p>
 	<p> Reports:  </p> 
+	<% reports.forEach((report) => { %>
+	<% } %>
 	<p> <a href="/students"> Back to all students </a> </p>
 </body>
 </html>

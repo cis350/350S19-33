@@ -30,14 +30,32 @@ const getStudent = function(req, res) {
       res.type('html').status(200);
       res.send('No student with the id ' + searchId);
     } else {
-      res.render('student', { student: student });
+      getReports();
     }
   });
 };
 
+const getReports = function(req, res) {
+  const studentName = req.query.name;
+
+  Report.find( { studentName: studentName }, (err, reports) => {
+    if (err) {
+      res.type('html').status(500);
+      res.send('Error: ' + err);
+    } else if (!reports) {
+      res.type('html').status(200);
+      res.send('No reports for the student named ' + studentName);
+    } else {
+      res.render('student', { student: student, reports: reports });
+    }
+  });
+
+}
+
 const routes = {
   get_students: getStudents,
-  get_student: getStudent
+  get_student: getStudent,
+  get_reports: getReports
 };
 
 module.exports = routes;
