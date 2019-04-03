@@ -22,6 +22,7 @@ const user = require('./routes/user.js');
 const status = require('./routes/status.js');
 const event = require('./routes/event.js');
 const report = require('./routes/report.js');
+const student = require('./routes/student.js');
 
 /***************************************/
 
@@ -53,9 +54,13 @@ app.use('/editForm', event.update_event, (req, res) => {
 });
 
 //notification mailbox and individual reports
-app.get('/reports', report.get_reports)
+app.get('/reports', report.get_reports);
 app.get('/reports#read', report.get_read);
 app.get('/reports#unread', report.get_unread);
+
+//Chelsey's search 
+app.get('/students', student.get_students);
+app.get('/student', student.get_student);
 /*************************************************/
 
 app.use('/public', express.static('public'));
