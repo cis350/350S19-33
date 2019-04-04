@@ -30,7 +30,9 @@ const getRead = function(req, res) {
   const person = req.session.user;
   console.log(person);
   Report.find((err, reports) => {
-    if (err) { 
+    if(!req.session.user){
+      res.redirect('login/');
+    } else if (err) { 
       res.type('html').status(500);
       res.send('Error: ' + err); 
     } else if (reports.length == 0) {
@@ -51,7 +53,9 @@ const getRead = function(req, res) {
 const getUnread = function(req, res) {
   const person = req.session.user;
   Report.find((err, reports) => {
-    if (err) { 
+    if(!req.session.user){
+      res.redirect('login/');
+    } else if (err) { 
       res.type('html').status(500);
       res.send('Error: ' + err); 
     } else if (reports.length == 0) {
