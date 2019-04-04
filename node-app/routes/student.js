@@ -21,7 +21,7 @@ const getStudents = function(req, res) {
 };
 
 const getStudent = function(req, res) {
-  const searchId = req.query.id;
+  const searchUsername = req.query.username;
 
   Student.findOne( { id: searchId }, (err, student) => {
     if (err) {
@@ -29,9 +29,9 @@ const getStudent = function(req, res) {
       res.send('Error: ' + err);
     } else if (!student) {
       res.type('html').status(200);
-      res.send('No student with the id ' + searchId);
+      res.send('No student with the username ' + searchUsername);
     } else {
-      Report.find( { studentId : searchId }, (err, reports) => {
+      Report.find( { studentUsername : searchUsername }, (err, reports) => {
         if (err) {
           res.type('html').status(500);
           res.send('Error: ' + err);
@@ -46,14 +46,14 @@ const getStudent = function(req, res) {
 };
     
 const saveStudent = function(req, res) {
+  const username = req.body.username;
   const name = req.body.name;
   const age = req.body.age;
   const gender = req.body.gender;
   const school = req.body.school;
-  const id = ObjectId();
 
   const newStudent = new Student({
-    id: id,
+    username: username,
     name: name,
     age: age,
     gender: gender,
@@ -64,7 +64,7 @@ const saveStudent = function(req, res) {
     if (err) {
       res.send('Error: ' + err);
     } else {
-      res.redirect('/student?id=' + id);
+      res.redirect('/student?username=' + username);
     }
   });
 };

@@ -12,7 +12,7 @@
     <% students.forEach((student) => { %>
       <tr>
         <th> <%= student.name %> </th>
-        <td> <a href='/student?id=<%=student.id%>'> Show </a> </td>
+        <td> <a href='/student?username=<%=student.username%>'> Show </a> </td>
       </tr>
     <% }); %>
   </tbody>
