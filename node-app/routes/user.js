@@ -37,7 +37,7 @@ const checkLogin = function(req, res) {
     else {
       if (person.password == password) {
         req.session.user = person;
-        res.redirect('dashboard/?email=' + email);
+        res.redirect('dashboard/');
       } else {
         res.redirect('login/?q=3');
       }
@@ -81,7 +81,7 @@ const signup = function(req, res) {
           res.redirect('signup/?q=1');
         } else {
           req.session.user = newUser;
-          res.redirect('dashboard/?email=' + email);
+          res.redirect('dashboard/');
         }
       });
     }
@@ -97,7 +97,7 @@ const showSignup = function(req, res) {
 };
 
 const getDashboard = function(req, res) {
-  const email = req.query.email;
+  const email = req.session.user.email;
 
   const queryObject = { "email" : email };
 
@@ -123,7 +123,7 @@ const getDashboard = function(req, res) {
 };
 
 const getDashboardData = function(req, res) {
-  const email = req.query.email;
+  const email = req.session.user.email;
 
   const queryObject = { "email" : email };
 
