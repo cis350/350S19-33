@@ -1,6 +1,7 @@
 /* Routes for statuses */
 
 const Report = require('../data/Report.js');
+const ObjectId = require('mongodb').ObjectID;
 
 const getReports = function(req, res) {
   const person = req.session.user;
@@ -17,6 +18,23 @@ const getReports = function(req, res) {
 });
 };
 
+const getReport = function(req, res){
+    const id = req.query._id;
+
+    Report.findOne( { id: id}, (err, event) => {
+        if (err) {
+          res.type('html').status(500);
+          res.send('Error: ' + err);
+        } else if (!event) {
+          res.type('html').status(200);
+          res.send('No event with the id ' + searchId);
+        } else {
+          res.render('event', { event: event });
+        }
+      });
+    };
+
+}
 const getRead = function(req, res) {
   const person = req.session.user;
   Report.find((err, reports) => {
