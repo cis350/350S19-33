@@ -40,6 +40,7 @@ body {
   <a href="/status">Vacation statuses</a>
   <a href="/reports">Reports</a>
   <a href="/events">Events</a>
+  <a href="/dashboard">Dashboard</a>
 </div>
 
 </body>
@@ -53,18 +54,13 @@ body {
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript">
     var load = function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const email = urlParams.get('email');
-      $.getJSON('/dashboarddata?email=' + email, function(data) {
+      $.getJSON('/dashboarddata', function(data) {
         const {openReports, closedReports} = data;
         // open vs closed reports
         new Chartist.Pie('#chart1', {
           labels: [openReports + ' Open Reports', closedReports + ' Closed Reports'],
           series: [openReports, closedReports]
         }, {
-          // donut: true,
-          // donutWidth: 60,
-          // donutSolid: true,
           height: '400px',
           width: '500px',
           startAngle: 270,
