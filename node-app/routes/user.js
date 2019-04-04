@@ -3,6 +3,7 @@ var session = require('client-sessions');
 
 const User = require('../data/User.js');
 const Status = require('../data/Status.js');
+const Report = require('../data/Report.js');
 
 const getLogin = function(req, res) {
   if (req.query.q == 1) {
@@ -125,28 +126,59 @@ const getDashboard = function(req, res) {
 const getDashboardData = function(req, res) {
   const email = req.session.user.email;
 
-  const queryObject = { "email" : email };
+  const queryObject = { 'adminEmail' : email };
 
-  User.findOne( queryObject, (err, person) => {
+  Report.find( queryObject, (err, reports) => {
     if (err) {
       console.log('uh oh' + err);
       res.json({});
     }
-    else if (!person) {
-      res.redirect('login/');
+    else if (!reports || !reports.length) {
+      const data = {
+        openReports: 0,
+        closedReports: 0,
+        dateOpened: [],
+        dateClosed: [],
+      }
+      res.send(data);
     }
     else {
-      const personObj = person.toObject();
-      const openReports = personObj.openReports && personObj.openReports.length;
-      const closedReports = personObj.closedReports && personObj.closedReports.length;
+      var openReports = 0;
+      var closedReports = 0;
+      var dateOpened = [];
+      var dateClosed = [];
+      for (var i = 0; i < reports.length; i++) {
+        const report = reports[i].toObject();
+        const reportClosed = report.closed;
+        if (reportClosed) {
+          closedReports++;
+          const closedDate = report.closedDate;
+          dateClosed.push(closedDate);
+        } else {
+          openReports++;
+        }
+        const date = report.date;
+        dateOpened.push(date);
+      }
       const data = {
         openReports: openReports,
         closedReports: closedReports,
+        dateOpened: processDates(dateOpened),
+        dateClosed: processDates(dateClosed),
       }
       res.send(data);
     }
   });
 };
+
+const processDates = function(dates) {
+  data = [0, 0, 0, 0];
+  for (var i = 0; i < dates.length; i++) {
+    const month = new Date(dates[i]).getMonth();
+    data[month] = data[month] + 1;
+  }
+  return data;
+}
 
 const logOut = function(req, res) {
   req.session.destroy();

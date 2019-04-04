@@ -55,7 +55,12 @@ body {
   <script type="text/javascript">
     var load = function() {
       $.getJSON('/dashboarddata', function(data) {
-        const {openReports, closedReports} = data;
+        const {openReports, closedReports, dateOpened, dateClosed} = data;
+        if (!openReports && !closedReports) {
+          document.getElementById("no-reports").innerHTML = "You have no reports so there is no data to show!";
+          document.getElementById("chart-parent").style.visibility = "hidden";
+            return;
+        }
         // open vs closed reports
         new Chartist.Pie('#chart1', {
           labels: [openReports + ' Open Reports', closedReports + ' Closed Reports'],
@@ -67,49 +72,43 @@ body {
           total: (openReports + closedReports),
           showLabel: true
         });
-      });
-      // open reports
-      new Chartist.Line('#chart2', {
-        series: [
-          {
-            name: 'series-1',
-            data: [
-              {x: new Date(143134652600), y: 10},
-              {x: new Date(143234652600), y: 12},
-              {x: new Date(143340052600), y: 15},
-              {x: new Date(143366652600), y: 9},
-              {x: new Date(143410652600), y: 18},
-              {x: new Date(143508652600), y: 23},
-              {x: new Date(143569652600), y: 15},
-              {x: new Date(143579652600), y: 11}
-            ]
+        // open reports
+        new Chartist.Bar('#chart2', {
+          labels: ['January', 'February', 'March', 'April'],
+          series: [dateOpened]
+        }, {
+          height: '400px',
+          width: '500px',
+          seriesBarDistance: 10,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value;
+            }
+          },
+          axisY: {
+            onlyInteger: true,
           }
-        ]
-      }, {
-        height: '400px',
-        width: '500px',
-        axisX: {
-          type: Chartist.FixedScaleAxis,
-          divisor: 5,
-          labelInterpolationFnc: function(value) {
-            return moment(value).format('MMM D');
+        });
+        // closed reports
+        new Chartist.Bar('#chart3', {
+          labels: ['January', 'February', 'March', 'April'],
+          series: [dateClosed]
+        }, {
+          height: '400px',
+          width: '500px',
+          seriesBarDistance: 10,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value;
+            }
+          },
+          axisY: {
+            onlyInteger: true,
           }
-        }
+        });
       });
-      // new reports
-      new Chartist.Bar('#chart3', {
-        labels: ['January', 'February', 'March', 'April'],
-        series: [[12, 9, 7, 8]]
-      }, {
-        height: '400px',
-        width: '500px',
-        seriesBarDistance: 10,
-        axisX: {
-          labelInterpolationFnc: function(value) {
-            return value;
-          }
-        }
-      });
+      
+      
     }  
     window.onload = function() { load(); }
   </script>
@@ -141,17 +140,18 @@ body {
 <body>
   <div class="container">
     <h1>Dashboard</h1>
-    <div class="charts">
+    <p id="no-reports"></p>
+    <div class="charts" id="chart-parent">
       <div class="chart">
         <p class="chart-title"> Your Reports </p> 
         <div class="ct-chart ct-golden-section" id="chart1"></div>
       </div>
       <div class="chart">
-        <p class="chart-title"> Open Reports Over Time </p> 
+        <p class="chart-title"> Reports Opened Per Month </p> 
         <div class="ct-chart ct-golden-section" id="chart2"></div>
       </div>
       <div class="chart">
-        <p class="chart-title"> New Reports Per Day </p> 
+        <p class="chart-title"> Reports Closed Per Month </p> 
         <div class="ct-chart ct-golden-section" id="chart3"></div>
       </div>
     </div>
