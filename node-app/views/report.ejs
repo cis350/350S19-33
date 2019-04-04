@@ -3,12 +3,10 @@
   <body>
   	<h1><%= report.subject %> </h1>
   	<p> Student Username: <%= report.studentUsername %> </p>
-  	<p> Student Name: <%= e %> </p>
-  	<p> Date: <%= event.date %> </p>
-  	<p> Host: <%= event.host %> </p>
-  	<p> Description: <%= event.description %> </p>
-  	<p> <a href='/editEvent?id=<%=event.id%>'> Edit </a> </p>
-  	<p> <a href='/deleteEvent?id=<%=event.id%>'> Delete </a> </p>
-  	<p> <a href="/events"> Back to all events </a> </p>
+  	<p> Student Name: <%= report.studentName %> </p>
+  	<p> Date Report Submitted: <%= report.date %> </p>
+  	<p> Description: <%= report.reportDescription %> </p>
+    <p> <a href='/editMemo?id=<%=report.id%>'> Create Memo </a> </p>
+
   </body>
   </html>

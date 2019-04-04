@@ -34,6 +34,25 @@ const getReport = function(req, res){
       });
     };
 
+    const editMemo = function(req, res) {
+      const searchId = req.query.id;
+
+      Report.findOne( { id: searchId }, (err, report) => {
+        if (err) {
+          res.type('html').status(500);
+          res.send('Error: ' + err);
+        } else if (!event) {
+          res.type('html').status(200);
+          res.send('No event with the id ' + searchId);
+        } else {
+          res.render('editMemo', { report: report });
+        }
+      });
+    };
+
+
+
+
 const getRead = function(req, res) {
   const person = req.session.user;
   Report.find((err, reports) => {
@@ -67,7 +86,8 @@ const getUnread = function(req, res) {
 const routes = {
   get_reports: getReports,
   get_report: getReport,
-  get_read: getRead,  
+  get_read: getRead,
+  edit_memo: editMemo,
   get_unread: getUnread
 };
 
