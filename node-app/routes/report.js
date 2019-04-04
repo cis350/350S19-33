@@ -1,8 +1,8 @@
 /* Routes for statuses */
 
 const Report = require('../data/Report.js');
-     const Memo = require('../data/Memo.js')
-  const ObjectId = require('mongodb').ObjectID;
+const Memo = require('../data/Memo.js')
+const ObjectId = require('mongodb').ObjectID;
 
     const getReports = function(req, res) {
                           const person = req.session.user;
@@ -86,18 +86,19 @@ const Report = require('../data/Report.js');
        const description = req.body.date;
        const solution = req.body.host;
        const id = ObjectId();
+       //const reportId = req.query._id;
 
-       const newEvent = new Event({
+       const newMemo = new Memo({
          id: id,
+         //reportId: reportId
          name: name,
-         location: location,
-         time: time,
+         school: school,
          date: date,
+         description : description,
          host: host,
-         description: description,
        });
 
-       newEvent.save( (err) => {
+       newMemo.save( (err) => {
          if (err) {
            res.send('Error: ' + err);
          } else {
@@ -143,6 +144,7 @@ const Report = require('../data/Report.js');
                           get_read: getRead,
                           edit_memo: editMemo,
                           update_memo:updateMemo,
+                          save_memo: saveMemo,
                           get_unread: getUnread
                         };
 

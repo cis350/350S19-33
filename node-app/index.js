@@ -61,6 +61,9 @@ app.get('/report', report.get_report);
 app.get('/editMemo', report.edit_memo);
 app.get('/createMemo', (req, res) => {res.redirect('/public/memoform.html');});
 
+app.use('/handleForm', report.save_memo, (req, res) => {
+    res.send("memo form handled");
+})
 
 app.use('/editMemo', report.update_memo, (req, res) => {
 	res.send("memo form handled");
