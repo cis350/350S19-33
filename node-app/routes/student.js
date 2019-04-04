@@ -23,7 +23,7 @@ const getStudents = function(req, res) {
 const getStudent = function(req, res) {
   const searchUsername = req.query.username;
 
-  Student.findOne( { id: searchId }, (err, student) => {
+  Student.findOne( { username: searchUsername }, (err, student) => {
     if (err) {
       res.type('html').status(500);
       res.send('Error: ' + err);
