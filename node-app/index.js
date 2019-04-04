@@ -57,6 +57,7 @@ app.use('/editForm', event.update_event, (req, res) => {
 app.get('/reports', report.get_reports);
 app.get('/reports#read', report.get_read);
 app.get('/reports#unread', report.get_unread);
+app.get('/report', report.get_report);
 
 //Chelsey's search 
 app.get('/students', student.get_students);

@@ -21,20 +21,19 @@ const getReports = function(req, res) {
 const getReport = function(req, res){
     const id = req.query._id;
 
-    Report.findOne( { id: id}, (err, event) => {
+    Report.findOne( { id: id}, (err, report) => {
         if (err) {
           res.type('html').status(500);
           res.send('Error: ' + err);
-        } else if (!event) {
+        } else if (!report) {
           res.type('html').status(200);
-          res.send('No event with the id ' + searchId);
+          res.send('No report with the id ' + id);
         } else {
-          res.render('event', { event: event });
+          res.render('report', { report: report });
         }
       });
     };
 
-}
 const getRead = function(req, res) {
   const person = req.session.user;
   Report.find((err, reports) => {
@@ -66,7 +65,8 @@ const getUnread = function(req, res) {
 };
 
 const routes = {
-  get_reports: getReports,  
+  get_reports: getReports,
+  get_report: getReport,
   get_read: getRead,  
   get_unread: getUnread
 };
