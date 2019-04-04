@@ -56,12 +56,31 @@ app.use('/editForm', event.update_event, (req, res) => {
 
 //notification mailbox and individual reports
 app.get('/reports', report.get_reports);
+app.get('/reports#read', report.get_read);
+app.get('/reports#unread', report.get_unread);
+app.get('/report', report.get_report);
+app.get('/editMemo', report.edit_memo);
+app.get('/createMemo', (req, res) => {res.redirect('/public/memoform.html');});
+
+app.use('/handleForm', report.save_memo, (req, res) => {
+    res.send("memo form handled");
+})
+
+app.use('/editMemo', report.update_memo, (req, res) => {
+	res.send("memo form handled");
+});
+
 app.get('/read', report.get_read);
 app.get('/unread', report.get_unread);
+
 
 //Chelsey's search 
 app.get('/students', student.get_students);
 app.get('/student', student.get_student);
+app.use('/createStudent', (req, res) => { res.redirect('/public/studentform.html'); } );
+app.use('/studentForm', student.save_student, (req, res) => {
+	res.send("stuent form handled");
+});
 /*************************************************/
 
 app.use('/public', express.static('public'));

@@ -1,0 +1,17 @@
+<html>
+
+<form action="/editMemo" method="post">
+
+<p> <input name="id" value='<%= memo.id %>' hidden >  </p>
+<p> Administrator Name : <input name="name" value='<%= memo.name %>' > </p>
+<p> Administrator School: <input name="school" value='<%=memo.school%>' > </p>
+<p> Date Memo Submitted: <input name="date" value='<%=memo.date%>' > </p>
+<p> Administrator Understanding of Incident: <input name="time" value='<%=memo.description%>' > </p>
+<p> Planned action steps: <input name="solution" value='<%=memo.solution%>' > </p>
+
+<input type="submit" value="Submit form!">
+
+</form>
+
+
+</html>

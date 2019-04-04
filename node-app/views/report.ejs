@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+  <html>
+  <body>
+  	<h1><%= report.subject %> </h1>
+  	<p> Student Username: <%= report.studentUsername %> </p>
+  	<p> Student Name: <%= report.studentName %> </p>
+  	<p> Date Report Submitted: <%= report.date %> </p>
+  	<p> Description: <%= report.reportDescription %> </p>
+    <p> <a href='/editMemo?id=<%=report.id%>'> Create Memo </a> </p>
+    <p>Admin Memos: <%= report.memoId %> </p>
+  </body>
+  </html>
