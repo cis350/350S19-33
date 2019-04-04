@@ -5,7 +5,7 @@ mongoose.connect('mongodb+srv://dorothy:dorothy@cluster0-8qbcz.mongodb.net/test?
 var Student = mongoose.Schema;
 
 var studentSchema = new Student({
-	id: {type: String, required: true, unique: true},
+	username: {type: String, required: true, unique: true},
 	name: {type: String, required: true},
 	age: {type: Number, required: true},
 	gender: {type: String, required: true},
