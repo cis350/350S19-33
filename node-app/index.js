@@ -58,12 +58,10 @@ app.get('/reports', report.get_reports);
 app.get('/reports#read', report.get_read);
 app.get('/reports#unread', report.get_unread);
 app.get('/report', report.get_report);
-app.get('/editMemo', event.edit_memo);
+app.get('/editMemo', report.edit_memo);
 app.get('/createMemo', (req, res) => {res.redirect('/public/memoform.html');});
 
-app.use('/handleMemo', report.save_memo, (req, res) => {
-	res.send("memo form handled");
-});
+
 app.use('/editMemo', report.update_memo, (req, res) => {
 	res.send("memo form handled");
 });

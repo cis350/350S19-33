@@ -2,12 +2,12 @@
 
 <form action="/editMemo" method="post">
 
-<p> <input name="id" value='<%= report.id %>' hidden >  </p>
-<p> Administrator Name : <input name="name" value='<%= report. %>' > </p>
-<p> Administrator School: <input name="school" value='<%=event.location%>' > </p>
-<p> Date Memo Submitted: <input name="date" value='<%=event.time%>' > </p>
-<p> Adminstrator Understanding of Incident: <input name="time" value='<%=event.date%>' > </p>
-<p> Planned action steps: <input name="solution" value='<%=event.host%>' > </p>
+<p> <input name="id" value='<%= memo.id %>' hidden >  </p>
+<p> Administrator Name : <input name="name" value='<%= memo.name %>' > </p>
+<p> Administrator School: <input name="school" value='<%=memo.school%>' > </p>
+<p> Date Memo Submitted: <input name="date" value='<%=memo.date%>' > </p>
+<p> Administrator Understanding of Incident: <input name="time" value='<%=memo.description%>' > </p>
+<p> Planned action steps: <input name="solution" value='<%=memo.solution%>' > </p>
 
 <input type="submit" value="Submit form!">
 

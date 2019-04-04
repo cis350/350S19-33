@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://dorothy:dorothy@cluster0-8qbcz.mongodb.net/test?retryWrites=true');
 
-var Report = mongoose.Schema;
+var Schema = mongoose.Schema;
 
-var reportSchema = new Report({
+var memoSchema = new Schema({
     id: {type: String, required: true},
     reportId: {type: String, required:true},
 	name: {type: String, required: true},
