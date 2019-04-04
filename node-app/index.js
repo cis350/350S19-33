@@ -32,6 +32,7 @@ app.get('/signup', user.show_signup);
 app.post('/signup', user.signup);
 app.get('/dashboard', user.get_dashboard);
 app.get('/dashboarddata', user.get_dashboard_data);
+app.get('/logout', user.log_out);
 
 //Michelle's status
 app.get('/status', status.get_statuses);
@@ -69,9 +70,17 @@ app.use('/editMemo', report.update_memo, (req, res) => {
 	res.send("memo form handled");
 });
 
+app.get('/read', report.get_read);
+app.get('/unread', report.get_unread);
+
+
 //Chelsey's search 
 app.get('/students', student.get_students);
 app.get('/student', student.get_student);
+app.use('/createStudent', (req, res) => { res.redirect('/public/studentform.html'); } );
+app.use('/studentForm', student.save_student, (req, res) => {
+	res.send("stuent form handled");
+});
 /*************************************************/
 
 app.use('/public', express.static('public'));

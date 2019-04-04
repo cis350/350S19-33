@@ -4,6 +4,7 @@ const Report = require('../data/Report.js');
 const Memo = require('../data/Memo.js')
 const ObjectId = require('mongodb').ObjectID;
 
+
     const getReports = function(req, res) {
                           const person = req.session.user;
                           Report.find((err, reports) => {

@@ -80,6 +80,7 @@ const signup = function(req, res) {
         if(err){
           res.redirect('signup/?q=1');
         } else {
+          req.session.user = newUser;
           res.redirect('dashboard/?email=' + email);
         }
       });
@@ -147,6 +148,10 @@ const getDashboardData = function(req, res) {
   });
 };
 
+const logOut = function(req, res) {
+  req.session.destroy();
+  res.redirect('login/');
+};
 
 const routes = {
   get_login: getLogin,
@@ -155,6 +160,7 @@ const routes = {
   show_signup: showSignup,
   get_dashboard: getDashboard,
   get_dashboard_data: getDashboardData,
+  log_out: logOut
 };
 
 module.exports = routes;
