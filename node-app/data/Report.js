@@ -5,6 +5,7 @@ mongoose.connect('mongodb+srv://dorothy:dorothy@cluster0-8qbcz.mongodb.net/test?
 var Report = mongoose.Schema;
 
 var reportSchema = new Report({
+	id: {type: String, required: true, unique: true},
 	adminEmail: {type: String, required: true},
 	date: {type: Date, required: true},
 	studentName: {type: String, required: true},

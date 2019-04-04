@@ -39,7 +39,10 @@ else {
 
 const getStatuses = function(req, res) {
   Status.find( (err, allStatuses) => {
-     if (err) {
+    if(!req.session.user){
+      res.redirect('login/');
+    }
+     else if (err) {
         res.type('html').status(500);
         res.send('Error: ' + err);
      }

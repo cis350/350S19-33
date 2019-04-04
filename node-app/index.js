@@ -56,8 +56,8 @@ app.use('/editForm', event.update_event, (req, res) => {
 
 //notification mailbox and individual reports
 app.get('/reports', report.get_reports);
-app.get('/reports#read', report.get_read);
-app.get('/reports#unread', report.get_unread);
+app.get('/read', report.get_read);
+app.get('/unread', report.get_unread);
 
 //Chelsey's search 
 app.get('/students', student.get_students);

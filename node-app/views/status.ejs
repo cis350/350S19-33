@@ -55,8 +55,9 @@ body {
   </tr>
 <% }); %>
 </table>
-<p>Change your vacation status below, <%= person.name %></p>
+<p><%= person.name %>, change your vacation status here:
 <form action="/changed" method="post">
   <button type="submit" onclick="myFunction();">Change Status</button>
+  </p>
 </form>
 </html>
