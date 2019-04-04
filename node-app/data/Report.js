@@ -10,6 +10,7 @@ var reportSchema = new Report({
 	date: {type: Date, required: true},
 	studentName: {type: String, required: true},
 	studentUsername : {type: String, required: true},
+	studentId : {type: String, required: true},
 	subject: {type: String, required: true},
 	reportDescription: {type: String, required: true},
 	reportForWhom: {type: String, required: true},
