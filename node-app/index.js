@@ -32,6 +32,7 @@ app.get('/signup', user.show_signup);
 app.post('/signup', user.signup);
 app.get('/dashboard', user.get_dashboard);
 app.get('/dashboarddata', user.get_dashboard_data);
+app.get('/logout', user.log_out);
 
 //Michelle's status
 app.get('/status', status.get_statuses);
