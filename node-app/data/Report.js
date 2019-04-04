@@ -14,8 +14,8 @@ var reportSchema = new Report({
 	subject: {type: String, required: true},
 	reportDescription: {type: String, required: true},
 	reportForWhom: {type: String, required: true},
-	read: {type: Boolean, required: true}
-	closed: {type: Boolean, required: true}
+	read: {type: Boolean, required: true},
+	closed: {type: Boolean, required: true},
 	closedDate: {type: Date, required: true}
 });
 
