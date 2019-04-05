@@ -51,6 +51,11 @@ body {
   	<p> Date Report Submitted: <%= report.date %> </p>
   	<p> Description: <%= report.reportDescription %> </p>
     <p> <a href='/editMemo?id=<%=report.id%>'> Create Memo </a> </p>
-    <p>Admin Memos: <%= report.memoId %> </p>
+    <p> <a href='/showMemos?id=<%=report.id%>'> Show Report Memos </a> </p>
+    <form action="/addComment" method="post" >
+    <p>Add a comment or a question!<p>
+    <input type="text" name="comment" placeholder="Comment" style="width: 300px class="form-control" >
+    <input type="submit" class="btn">
+    </form>
   </body>
   </html>

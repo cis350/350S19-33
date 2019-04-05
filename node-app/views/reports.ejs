@@ -151,9 +151,14 @@ window.onclick = function(event) {
                                   <span class="label label-success pull-right">read</span></td></td>
                                   <% } %>
                                   <td class="view-message"><a href='/report?id=<%=report.id%>'+report.id><%= report.subject %> </a> </td>
+                                  <%if(!report.closed){ %>
+                                    <span class="label label-danger pull-right">CLOSED</span></td></td>
+                                  <%}%>
+                                  <td class="view-message"><a href="/reports/?id="+report.id><%= report.subject %> </a> </td>
                                   <td class="view-message inbox-small-cells"></td>
                                   <td class="view-message text-right"><%= report.date %></td>
                                   <td> <a href='/report?id=<%=report.id%>'> Open Report </a> </td>
+                                  <td> <a href='/toClose?id=<%report.id%>'>Close Report </a> </td>
                               </tr>
                             <% }) %>
                           </tbody>

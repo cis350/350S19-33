@@ -56,8 +56,48 @@ const getReport = function(req, res){
     });
 };
 
+const closeReport = function(req, res){
+    const id = req.query.id;
+    const person = req.session.user;
+
+    Report.findOne({id:id}, (err, report) => {
+        if(err){
+            res.type('html').status(500);
+            res.send('Error: ' + err);
+        } else if(!report){
+            res.type('html').status(200);
+            res.send('No report with the id ' + id);
+        }else{
+            report.closed = !report.closed;
+            res.render('reports.ejs', {report:report, person:req.session.user})
+        }
+
+    })
+
+}
+
+const addComment = function(req, res){
+      const id = req.query._id;
+      const comment = req.body.comment;
+      const person = req.session.user;
+
+      Report.findOne( {id: id}, (err, report) => {
+        if (err) {
+          res.send('Error' + err);
+        }
+        else if (!report) {
+          res.type('html').status(200);
+          res.send('No report with the id ' + id);
+        }
+        else {
+          report.comment = comment;
+          res.render('report.ejs', {report:report, person: req.session.user});
+          }
+        });
+};
+
 const editMemo = function(req, res) {
-    const searchId = req.query._id;
+    const searchId = req.query.id;
 
     Memo.findOne( { id: searchId }, (err, memo) => {
         if (err) {
@@ -71,6 +111,11 @@ const editMemo = function(req, res) {
         }
     });
 };
+
+
+
+
+
 
 const updateMemo = function(req,res){
     const searchId = req.body._id;
@@ -99,32 +144,6 @@ const updateMemo = function(req,res){
     });
 }
 
-const saveMemo = function(req, res) {
-    const name = req.body.name;
-    const school = req.body.location;
-    const date = req.body.time;
-    const description = req.body.date;
-    const solution = req.body.host;
-    const id = ObjectId();
-
-    const newMemo = new Memo({
-        id: id,
-         //reportId: reportId
-        name: name,
-        school: school,
-        date: date,
-        description : description,
-        host: host,
-    });
-
-    newMemo.save( (err) => {
-        if (err) {
-            res.send('Error: ' + err);
-        } else {
-            res.redirect('/showMemos?id=' + id);
-        }
-    });
-};
 
 const showMemos = function(req, res){
     const person = req.session.user;
@@ -190,14 +209,83 @@ const getUnread = function(req, res) {
 });
 };
 
+
+const saveMemo = function(req, res) {
+    const name = req.body.name;
+    const school = req.body.school;
+    const date = req.body.date;
+    const description = req.body.description;
+    const solution = req.body.solution;
+    const id = ObjectId();
+    const reportId = req.body._id;
+
+    const newMemo = new Memo({
+        id: id,
+         //reportId: reportId
+        reportId: reportId,
+        name: name,
+        school: school,
+        date: date,
+        description : description,
+        solution: solution,
+
+    });
+
+    newMemo.save( (err) => {
+        if (err) {
+            res.send('Error: ' + err);
+        } else {
+            newMemo.save((err) => {
+                if(err){
+                    res.redirect('reports?id=' + id);
+                } else{
+                    req.session.memo = newMemo;
+                    res.redirect('reports?id=' + id);
+                }
+
+            });
+        }
+    });
+};
+
+const deleteMemo = function(req,res){
+      const id = req.query.id;
+
+      const queryObject = { "id" : id };
+
+      Memo.deleteOne({ "id" : id }, function (err) {
+        if (err) {
+          return handleError(err);
+        } else {
+            Memo.find( (err, memos) => {
+              if (err) {
+                res.type('html').status(500);
+                res.send('Error: ' + err);
+              } else if (memos.length == 0) {
+                res.type('html').status(200);
+                res.send('There are no memos');
+              } else {
+                res.render('memos', { memos: memos });
+              }
+            });
+            }
+    });
+};
+
+
+
+
 const routes = {
     get_reports: getReports,
     get_report: getReport,
     get_read: getRead,
+    close_report: closeReport,
     edit_memo: editMemo,
     update_memo:updateMemo,
     save_memo: saveMemo,
     show_memos: showMemos,
+    delete_memo: deleteMemo,
+    add_comment: addComment,
     get_unread: getUnread
 };
 

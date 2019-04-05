@@ -61,18 +61,20 @@ app.get('/reports#unread', report.get_unread);
 app.get('/report', report.get_report);
 app.get('/editMemo', report.edit_memo);
 app.get('/createMemo', (req, res) => {res.redirect('/public/memoform.html');});
+app.get('/showMemos', report.show_memos);
+app.get('/deleteMemo', report.delete_memo);
 
-app.use('/handleForm', report.save_memo, (req, res) => {
+app.use('/handleForm', report.show_memos, (req, res) => {
     res.send("memo form handled");
 })
 
-app.use('/editMemo', report.update_memo, (req, res) => {
+app.use('/editMForm', report.update_memo, (req, res) => {
 	res.send("memo form handled");
 });
 
 app.get('/read', report.get_read);
 app.get('/unread', report.get_unread);
-
+app.post('addComment', report.add_comment);
 
 //Chelsey's search 
 app.get('/students', student.get_students);

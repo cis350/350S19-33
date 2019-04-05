@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+           <html>
+           </body>
+           <h1> Memos for this Report </h1>
+           <body>
+           <table class="table">
+             <thead class="thead-dark">
+             <method
+               <tr>
+                 <th scope="col">Admin Name</th>
+                 <th scope="col">Date</th>
+                 <th scope="col">Description</th>
+                 <th scope="col">Solution</th>
+               </tr>
+             </thead>
+             <tbody>
+               <% memos.forEach((memo) => { %>
+                 <tr>
+                   <th> <%= memo.name %> </th>
+                   <td> <%= memo.date %> </td>
+                   <td> <%= memo.description %> </td>
+                   <td> <%= memo.solution %> </td>
+                   <td> <a href='/editMemo?id=<%memo.id%>'> Edit this Memo </a> </td>
+                   <td> <a href='/deleteMemo?id=<%=memo.id%>'> Delete this Memo </a> </td>
+                 </tr>
+               <% }); %>
+             </tbody>
+           </table>
+           </body>
+           </html>
