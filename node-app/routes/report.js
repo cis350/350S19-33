@@ -39,18 +39,19 @@ const getReport = function(req, res){
             res.type('html').status(200);
             res.send('No report with the id ' + id);
         } else {
-            //update report to be false since you clicked it
+            //the moment you clicked into the report, you read it
               console.log(report);
-              report.read = false;
-              console.log(report);
-           // report.save((err) => {
-            //if(err){
-            //  res.type('html').status(500);
-          //    res.send('Error: ' + err);
-          //  } else {
+              if(!report.read){
+                report.read = true;
+                report.save((err) => {
+              if(err){
+                res.type('html').status(500);
+               res.send('Error: ' + err);
+             } else {
               res.render('report', { report: report });
-         //   }
-         //   });
+            }
+            });
+          }
         }
     });
 };
