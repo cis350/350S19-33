@@ -80,26 +80,22 @@ body {
 
 <body>
 <input type="text" id="filter_users" onkeyup="myFunction()" placeholder="Search for Students">
-
 <ul id="users-list">
   <% students.forEach((student) => { %>
   <li><a href='/student?username=<%=student.username%>'> <%= student.name %> </a></li>
   <% }) %>
 </ul>
-
 </body>
 </html>
 
 <script>
 function myFunction() {
-  // Declare variables
   let input, filter, ul, li, a, i, txtValue;
   input = document.getElementById('filter_users');
   filter = input.value.toUpperCase();
   ul = document.getElementById("users-list");
   li = ul.getElementsByTagName('li');
 
-  // Loop through all list items, and hide those who don't match the search query
   for (i = 0; i < li.length; i++) {
     a = li[i].getElementsByTagName("a")[0];
     txtValue = a.textContent || a.innerText;
