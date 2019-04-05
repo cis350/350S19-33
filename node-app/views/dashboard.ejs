@@ -107,6 +107,23 @@ body {
             onlyInteger: true,
           }
         });
+        // closed reports
+        new Chartist.Line('#chart4', {
+          labels: ['January', 'February', 'March', 'April'],
+          series: [dateOpened, dateClosed]
+        }, {
+          height: '400px',
+          width: '500px',
+          seriesBarDistance: 10,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value;
+            }
+          },
+          axisY: {
+            onlyInteger: true,
+          }
+        });
       });
       
       
@@ -154,6 +171,10 @@ body {
       <div class="chart">
         <p class="chart-title"> Reports Closed Per Month </p> 
         <div class="ct-chart ct-golden-section" id="chart3"></div>
+      </div>
+      <div class="chart">
+        <p class="chart-title"> Reports Opened vs Reports Closed </p> 
+        <div class="ct-chart ct-golden-section" id="chart4"></div>
       </div>
     </div>
   </div>
