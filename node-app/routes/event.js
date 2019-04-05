@@ -4,6 +4,11 @@ const ObjectId = require('mongodb').ObjectID;
 const Event = require('../data/Event.js');
 
 const showEvents = function(req, res) {
+  if (!req.session.user) {
+    res.redirect('login/');
+    return;
+  }
+
   Event.find( (err, allEvents) => {
      if (err) {
         res.type('html').status(500);

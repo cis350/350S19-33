@@ -27,33 +27,33 @@ const changeStatus = function(req, res) {
         res.type('html').status(200);
         res.send('There are no people');
      }
-else {
-        res.render('status.ejs', { statuses: allStatuses, person: req.session.user });
-     }
-});
+      else {
+              res.render('status.ejs', { statuses: allStatuses, person: req.session.user });
+           }
+      });
       }
     });
     }
   });
 }
 
-const getStatuses = function(req, res) {
+const getStatuses = function(req, res) {  
   Status.find( (err, allStatuses) => {
     if(!req.session.user){
       res.redirect('login/');
+      return;
     }
-     else if (err) {
-        res.type('html').status(500);
-        res.send('Error: ' + err);
-     }
-     else if (allStatuses.length == 0) {
-        res.type('html').status(200);
-        res.send('There are no people');
-     }
-else {
-        res.render('status.ejs', { statuses: allStatuses, person: req.session.user });
-     }
-});
+    if (err) {
+      res.type('html').status(500);
+      res.send('Error: ' + err);
+    }
+    else if (allStatuses.length == 0) {
+      res.type('html').status(200);
+      res.send('There are no people');
+    } else {
+      res.render('status.ejs', { statuses: allStatuses, person: req.session.user });
+    }
+  });
 }
 
 const routes = {
