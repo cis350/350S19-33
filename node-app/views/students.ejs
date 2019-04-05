@@ -32,7 +32,7 @@ body {
   color: white;
 }
 
-#myInput {
+#filter_users {
   background-image: url('/css/searchicon.png'); 
   background-position: 10px 12px; 
   background-repeat: no-repeat; 
@@ -43,14 +43,14 @@ body {
   margin-bottom: 12px; 
 }
 
-#myUL {
+#users-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-#myUL li a {
-    border: 1px solid #ddd; 
+#users-list li a {
+  border: 1px solid #ddd; 
   margin-top: -1px; 
   background-color: #f6f6f6; 
   padding: 12px; 
@@ -60,7 +60,7 @@ body {
   display: block; 
 }
 
-#myUL li a:hover:not(.header) {
+#users-list li a:hover:not(.header) {
   background-color: #eee; 
 }
 </style>
@@ -78,23 +78,25 @@ body {
 </body>
 <head>
 
-<h1> Search for students </h1>
 <body>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-<% students.forEach((student) => { %>
-<ul id="myUL">
+<input type="text" id="filter_users" onkeyup="myFunction()" placeholder="Search for Students">
+
+<ul id="users-list">
+  <% students.forEach((student) => { %>
   <li><a href='/student?username=<%=student.username%>'> <%= student.name %> </a></li>
+  <% }) %>
 </ul>
-<% }) %>
+
 </body>
 </html>
 
 <script>
 function myFunction() {
-  var input, filter, ul, li, a, i, txtValue;
-  input = document.getElementById('myInput');
+  // Declare variables
+  let input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('filter_users');
   filter = input.value.toUpperCase();
-  ul = document.getElementById("myUL");
+  ul = document.getElementById("users-list");
   li = ul.getElementsByTagName('li');
 
   // Loop through all list items, and hide those who don't match the search query
