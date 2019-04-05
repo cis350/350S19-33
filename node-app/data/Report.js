@@ -16,7 +16,7 @@ var reportSchema = new Report({
 	reportForWhom: {type: String, required: true},
 	read: {type: Boolean, required: true},
 	closed: {type: Boolean, required: true},
-	comment: {type: String, required: false}
+	comment: {type: String, required: false},
 	closedDate: {type: Date, required: true},
 
 });

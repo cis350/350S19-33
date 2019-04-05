@@ -102,32 +102,31 @@ const closeReport = function(req, res){
 }
 
 const addComment = function(req, res){
-      const id = req.query.id;
-      const comment = req.body.comment;
-      const person = req.session.user;
+  const id = req.query.id;
+  const comment = req.body.comment;
+  const person = req.session.user;
 
-      Report.findOne( {id: id}, (err, report) => {
-        if (err) {
-            res.send('Error' + err);
+  Report.findOne( {id: id}, (err, report) => {
+    if (err) {
+        res.send('Error' + err);
+    }
+    else if (!report) {
+      res.type('html').status(200);
+      res.send('No report with the id ' + id);
+    }
+    else {
+      report.comment = comment;
+      report.save((err) => {
+        if(err){
+            res.type('html').status(500);
+            res.send('Error: ' + err);
+        } else {
+            req.session.comment = comment;
+            res.render('report', { report: report });
         }
-        else if (!report) {
-          res.type('html').status(200);
-          res.send('No report with the id ' + id);
-        }
-        else {
-          report.comment = comment;
-          report.save((err) => {
-            if(err){
-                res.type('html').status(500);
-                res.send('Error: ' + err);
-            } else {
-                req.session.comment = comment;
-                res.render('dashboard/');
-            }
-        });
-
-};
-});
+      });
+    };
+  });
 };
 
 
@@ -178,7 +177,7 @@ const showMemos = function(req, res){
 
 const getRead = function(req, res) {
   const person = req.session.user;
-  console.log(person);
+  // console.log(person);
   Report.find((err, reports) => {
     if(!req.session.user){
       res.redirect('login/');
@@ -202,7 +201,7 @@ const getRead = function(req, res) {
 
 const getClosed = function(req, res) {
   const person = req.session.user;
-  console.log(person);
+  // console.log(person);
   Report.find((err, reports) => {
     if(!req.session.user){
       res.redirect('login/');

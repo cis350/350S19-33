@@ -78,7 +78,7 @@ app.use('/saveForm', report.save_memo, (req, res) => {
     res.send("memo form handled");
 });
 
-app.post('addComment', report.add_comment);
+app.post('/addComment', report.add_comment);
 
 //Chelsey's search 
 app.get('/students', student.get_students);
