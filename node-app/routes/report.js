@@ -19,8 +19,33 @@ const getReports = function(req, res) {
     } else {
       var finalReports = [];
         reports.forEach(async (item) => {
+          //if the adminEmail is null, it means it hasn't been assigned yet
+          //assign it while checking for vacation
+          if(!item.adminEmail || item.adminEmail == ""){
+            Status.find((err, admins) => {
+              if (err) { 
+                res.type('html').status(500);
+                res.send('Error: ' + err); 
+              } else if (admins.length == 0) {
+                res.type('html').status(200);
+                res.send('There are no reports');
+              } else {
+                  var whichAdmin = Math.floor(Math.random() * admins.length);
+                  var addAdmin = admins[whichAdmin];
+                  item.adminEmail = addAdmin.email;
+                  item.save((err) => {
+                    if(err){
+                      res.type('html').status(500);
+                      res.send('Error: ' + err); 
+                    }
+                  })
+              }
+            })
+          } else {
+          //otherwise, push into the list of reports to display
           if(item.adminEmail == person.email){
             finalReports.push(item);
+          }
         }
       });
       res.render('reports.ejs', { reports: finalReports, person: req.session.user });
