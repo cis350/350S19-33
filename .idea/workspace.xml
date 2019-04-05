@@ -20,9 +20,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d5a38e6f-ef72-489a-9d85-3f05a64ebfa7" name="Default Changelist" comment="handling memo creation and editing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-app/data/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-app/data/Report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-app/views/status.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/node-app/views/status.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-app/views/student.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/node-app/views/student.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-app/routes/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-app/routes/report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-app/views/report.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/node-app/views/report.ejs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +54,7 @@
           <entry key="bat" value="1" />
           <entry key="createMemo" value="2" />
           <entry key="editMemo" value="1" />
-          <entry key="ejs" value="132" />
+          <entry key="ejs" value="136" />
           <entry key="gitignore" value="2" />
           <entry key="gradle" value="2" />
           <entry key="gradlew" value="1" />
@@ -76,7 +75,7 @@
           <entry key="IDEA_MODULE" value="3" />
           <entry key="JAVA" value="9" />
           <entry key="JavaScript" value="129" />
-          <entry key="PLAIN_TEXT" value="141" />
+          <entry key="PLAIN_TEXT" value="145" />
           <entry key="Properties" value="6" />
           <entry key="Scratch" value="1" />
           <entry key="XML" value="12" />
@@ -85,10 +84,10 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="createMemo" value="402" />
-          <entry key="ejs" value="2099" />
+          <entry key="ejs" value="2295" />
           <entry key="html" value="300" />
           <entry key="java" value="34" />
-          <entry key="js" value="6186" />
+          <entry key="js" value="6403" />
           <entry key="memoForm" value="164" />
           <entry key="txt" value="69" />
           <entry key="xml" value="43" />
@@ -98,8 +97,8 @@
         <counts>
           <entry key="HTML" value="300" />
           <entry key="JAVA" value="34" />
-          <entry key="JavaScript" value="6186" />
-          <entry key="PLAIN_TEXT" value="2734" />
+          <entry key="JavaScript" value="6403" />
+          <entry key="PLAIN_TEXT" value="2930" />
           <entry key="XML" value="43" />
         </counts>
       </usages-collector>
@@ -119,8 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node-app/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="52" column="23" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="23" />
+            <state relative-caret-position="379">
+              <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -128,8 +127,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node-app/views/reports.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="165" column="48" lean-forward="true" selection-start-line="165" selection-end-line="166" />
+            <state relative-caret-position="387">
+              <caret line="160" column="42" lean-forward="true" selection-start-line="148" selection-start-column="28" selection-end-line="160" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/node-app/views/report.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="61" column="44" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node-app/views/memos.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -144,37 +161,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node-app/views/status.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="43" column="11" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node-app/views/student.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="560">
               <caret line="59" column="7" lean-forward="true" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node-app/views/memos.ejs">
+        <entry file="file://$PROJECT_DIR$/node-app/views/students.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node-app/views/report.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="59" column="5" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+            <state relative-caret-position="237">
+              <caret line="85" column="10" lean-forward="true" selection-start-line="83" selection-start-column="2" selection-end-line="85" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -182,26 +181,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node-app/routes/report.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="118" column="28" lean-forward="true" selection-start-line="118" selection-start-column="28" selection-end-line="118" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/node-app/data/Report.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+            <state relative-caret-position="346">
+              <caret line="148" column="8" lean-forward="true" selection-start-line="148" selection-start-column="8" selection-end-line="148" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node-app/routes/status.js">
+        <entry file="file://$PROJECT_DIR$/node-app/views/events.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+            <state relative-caret-position="426">
+              <caret line="87" column="13" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="87" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node-app/data/Report.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="47" lean-forward="true" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -219,10 +218,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>form-sign</find>
-      <find>app.post</find>
-      <find>createM</find>
-      <find>sign</find>
       <find>showMemos</find>
       <find>createMemo</find>
       <find>checkL</find>
@@ -247,8 +242,12 @@
       <find>.save</find>
       <find>add_comment</find>
       <find>editMemo</find>
-      <find>addComment</find>
       <find>comment</find>
+      <find>addComment</find>
+      <find>reports</find>
+      <find>for</find>
+      <find>push</find>
+      <find>forEach</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -304,10 +303,10 @@
         <option value="$PROJECT_DIR$/node-app/views/login.ejs" />
         <option value="$PROJECT_DIR$/node-app/public/memoform.html" />
         <option value="$PROJECT_DIR$/node-app/index.js" />
-        <option value="$PROJECT_DIR$/node-app/views/report.ejs" />
-        <option value="$PROJECT_DIR$/node-app/routes/report.js" />
         <option value="$PROJECT_DIR$/node-app/public/eventform.html" />
         <option value="$PROJECT_DIR$/node-app/data/Report.js" />
+        <option value="$PROJECT_DIR$/node-app/routes/report.js" />
+        <option value="$PROJECT_DIR$/node-app/views/report.ejs" />
       </list>
     </option>
   </component>
@@ -778,13 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/views/events.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node-app/views/dashboard.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1495">
@@ -806,13 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/views/students.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="6" lean-forward="true" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node-app/public/eventform.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -823,7 +808,7 @@
     <entry file="file://$PROJECT_DIR$/node-app/routes/event.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="89" column="11" lean-forward="true" selection-start-line="89" selection-start-column="11" selection-end-line="89" selection-end-column="11" />
+          <caret line="94" column="11" lean-forward="true" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -834,10 +819,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/views/reports.ejs">
+    <entry file="file://$PROJECT_DIR$/node-app/views/status.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="165" column="48" lean-forward="true" selection-start-line="165" selection-end-line="166" />
+        <state relative-caret-position="15">
+          <caret line="43" column="11" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-app/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-app/data/Report.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="47" lean-forward="true" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-app/views/memos.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -848,52 +854,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/views/status.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="43" column="11" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node-app/views/student.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="560">
           <caret line="59" column="7" lean-forward="true" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/views/memos.ejs">
+    <entry file="file://$PROJECT_DIR$/node-app/views/students.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+        <state relative-caret-position="237">
+          <caret line="85" column="10" lean-forward="true" selection-start-line="83" selection-start-column="2" selection-end-line="85" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/index.js">
+    <entry file="file://$PROJECT_DIR$/node-app/views/events.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="52" column="23" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/views/report.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="59" column="5" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="426">
+          <caret line="87" column="13" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="87" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node-app/routes/report.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="118" column="28" lean-forward="true" selection-start-line="118" selection-start-column="28" selection-end-line="118" selection-end-column="28" />
+        <state relative-caret-position="346">
+          <caret line="148" column="8" lean-forward="true" selection-start-line="148" selection-start-column="8" selection-end-line="148" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-app/data/Report.js">
+    <entry file="file://$PROJECT_DIR$/node-app/views/reports.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+        <state relative-caret-position="387">
+          <caret line="160" column="42" lean-forward="true" selection-start-line="148" selection-start-column="28" selection-end-line="160" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-app/views/report.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="61" column="44" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
         </state>
       </provider>
     </entry>

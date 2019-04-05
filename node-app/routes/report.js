@@ -107,9 +107,9 @@ const closeReport = function(req, res){
               Report.find((err, reports) => {
                 if(!req.session.user){
                   res.redirect('login/');
-                } else if (err) { 
+                } else if (err) {
                   res.type('html').status(500);
-                  res.send('Error: ' + err); 
+                  res.send('Error: ' + err);
                 } else if (reports.length == 0) {
                   res.type('html').status(200);
                   res.send('There are no reports');
@@ -143,13 +143,16 @@ const addComment = function(req, res){
       res.send('No report with the id ' + id);
     }
     else {
-      report.comment = comment;
+      var comments = [];
+        reports.forEach(async (item) => {
+            comments.push(item);
+        });
       report.save((err) => {
         if(err) {
             res.type('html').status(500);
             res.send('Error: ' + err);
         } else {
-          res.render('report', { report: report });
+          res.render('report.ejs', { comments: comments, report: report });
         };
       });
     }
@@ -207,9 +210,9 @@ const getRead = function(req, res) {
   Report.find((err, reports) => {
     if(!req.session.user){
       res.redirect('login/');
-    } else if (err) { 
+    } else if (err) {
       res.type('html').status(500);
-      res.send('Error: ' + err); 
+      res.send('Error: ' + err);
     } else if (reports.length == 0) {
       res.type('html').status(200);
       res.send('There are no reports');
@@ -230,9 +233,9 @@ const getClosed = function(req, res) {
   Report.find((err, reports) => {
     if(!req.session.user){
       res.redirect('login/');
-    } else if (err) { 
+    } else if (err) {
       res.type('html').status(500);
-      res.send('Error: ' + err); 
+      res.send('Error: ' + err);
     } else if (reports.length == 0) {
       res.type('html').status(200);
       res.send('There are no reports');
@@ -253,9 +256,9 @@ const getUnread = function(req, res) {
   Report.find((err, reports) => {
     if(!req.session.user){
       res.redirect('login/');
-    } else if (err) { 
+    } else if (err) {
       res.type('html').status(500);
-      res.send('Error: ' + err); 
+      res.send('Error: ' + err);
     } else if (reports.length == 0) {
       res.type('html').status(200);
       res.send('There are no reports');
@@ -367,4 +370,3 @@ const routes = {
 };
 
 module.exports = routes;
-
