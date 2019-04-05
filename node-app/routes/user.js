@@ -98,6 +98,11 @@ const showSignup = function(req, res) {
 };
 
 const getDashboard = function(req, res) {
+  if (!req.session.user) {
+    res.redirect('login/');
+    return;
+  }
+
   const email = req.session.user.email;
 
   const queryObject = { "email" : email };
