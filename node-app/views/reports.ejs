@@ -147,6 +147,8 @@ window.onclick = function(event) {
                                   <td class="view-message dont-show"><%= report.studentName%> 
                                   <% if (!report.read) { %>
                                   <span class="label label-danger pull-right">unread</span></td></td>
+                                  <% } else { %>
+                                  <span class="label label-success pull-right">read</span></td></td>
                                   <% } %>
                                   <td class="view-message"><a href='/report?id=<%=report.id%>'+report.id><%= report.subject %> </a> </td>
                                   <td class="view-message inbox-small-cells"></td>
