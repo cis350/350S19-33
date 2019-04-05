@@ -96,6 +96,7 @@ const closeReport = function(req, res){
             res.send('No report with the id ' + id);
         }else{
             report.closed = true;
+            report.closedDate = Date.now();
             report.save((err) => {
             if(err){
               res.type('html').status(500);
