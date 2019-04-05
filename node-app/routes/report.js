@@ -1,6 +1,7 @@
 /* Routes for reports */
 
 const Report = require('../data/Report.js');
+const Comment = require('../data/Comment.js');
 const Memo = require('../data/Memo.js');
 const ObjectId = require('mongodb').ObjectID;
 
@@ -73,12 +74,24 @@ const getReport = function(req, res){
                 res.type('html').status(500);
                res.send('Error: ' + err);
              } else {
-              res.render('report', { report: report });
+                        Comment.find((err, comments) => {
+          if (err) {
+            res.send('Error' + err);
+          } else {
+          res.render('report.ejs', { comments: comments, report: report });
+        }
+      });
             }
             });
           } else {
-             res.render('report', { report: report });
-          }
+          Comment.find((err, comments) => {
+          if (err) {
+            res.send('Error' + err);
+          } else {
+          res.render('report.ejs', { comments: comments, report: report });
+        }
+      });
+                }
         }
     });
 };
@@ -143,17 +156,27 @@ const addComment = function(req, res){
       res.send('No report with the id ' + id);
     }
     else {
-      var comments = [];
-        reports.forEach(async (item) => {
-            comments.push(item);
-        });
-      report.save((err) => {
+      var newComment = new Comment({
+           reportId: id,
+            content: comment,
+           adminCommenting: person.email,
+           studentCommenting: report.studentUsername,
+           date: Date.now()
+      });
+      newComment.save((err) => {
         if(err) {
             res.type('html').status(500);
             res.send('Error: ' + err);
         } else {
+          Comment.find((err, comments) => {
+          if (err) {
+            res.send('Error' + err);
+          } 
+          else {
           res.render('report.ejs', { comments: comments, report: report });
-        };
+        }
+      });
+        }
       });
     }
   });

@@ -57,13 +57,10 @@ body {
     <p>Add a comment or a question!<p>
     <input type="text" name="comment" placeholder="Comment" style="width: 300px class="form-control" >
     <input type="submit" value="Add" class="btn">
+        <p><b>COMMENTS BELOW:</b> <p>
     <% comments.forEach((comment) => { %>
-                                  <p> comment<p>
+                                  <p> <%= "Admin " + comment.adminCommenting + " says " + comment.content %><p>
                                        <% }) %>
-
-
-
-    <p>Admin comments: <%=report.comment %> </p>
     </form>
   </body>
   </html>
