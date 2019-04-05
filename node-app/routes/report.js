@@ -76,7 +76,25 @@ const closeReport = function(req, res){
               res.type('html').status(500);
              res.send('Error: ' + err);
            } else {
-            res.render('reports.ejs', {report:report, person:req.session.user})
+              Report.find((err, reports) => {
+                if(!req.session.user){
+                  res.redirect('login/');
+                } else if (err) { 
+                  res.type('html').status(500);
+                  res.send('Error: ' + err); 
+                } else if (reports.length == 0) {
+                  res.type('html').status(200);
+                  res.send('There are no reports');
+                } else {
+                  var finalReports = [];
+                    reports.forEach(async (item) => {
+                      if(item.adminEmail == person.email){
+                        finalReports.push(item);
+                    }
+                  });
+                  res.render('reports.ejs', { reports: finalReports, person: req.session.user });
+                }
+            });
           }
           });
         }
@@ -188,6 +206,30 @@ const getRead = function(req, res) {
 });
 };
 
+const getClosed = function(req, res) {
+  const person = req.session.user;
+  console.log(person);
+  Report.find((err, reports) => {
+    if(!req.session.user){
+      res.redirect('login/');
+    } else if (err) { 
+      res.type('html').status(500);
+      res.send('Error: ' + err); 
+    } else if (reports.length == 0) {
+      res.type('html').status(200);
+      res.send('There are no reports');
+    } else {
+      var finalReports = [];
+        reports.forEach(async (item) => {
+          if(item.adminEmail == person.email && item.closed){
+            finalReports.push(item);
+        }
+      });
+      res.render('reports.ejs', { reports: finalReports, person: req.session.user });
+    }
+});
+};
+
 const getUnread = function(req, res) {
   const person = req.session.user;
   Report.find((err, reports) => {
@@ -286,7 +328,8 @@ const routes = {
     show_memos: showMemos,
     delete_memo: deleteMemo,
     add_comment: addComment,
-    get_unread: getUnread
+    get_unread: getUnread,
+    get_closed: getClosed
 };
 
 module.exports = routes;
