@@ -17,6 +17,7 @@ var reportSchema = new Report({
 	read: {type: Boolean, required: true},
 	closed: {type: Boolean, required: true},
 	closedDate: {type: Date},
+	comment: {type: String, required: false}
 });
 
 module.exports = mongoose.model('Report', reportSchema);

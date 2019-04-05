@@ -102,13 +102,13 @@ const closeReport = function(req, res){
 }
 
 const addComment = function(req, res){
-      const id = req.query._id;
+      const id = req.query.id;
       const comment = req.body.comment;
       const person = req.session.user;
 
       Report.findOne( {id: id}, (err, report) => {
         if (err) {
-          res.send('Error' + err);
+            res.send('Error' + err);
         }
         else if (!report) {
           res.type('html').status(200);
@@ -116,26 +116,20 @@ const addComment = function(req, res){
         }
         else {
           report.comment = comment;
-          res.render('report.ejs', {report:report, person: req.session.user});
-          }
+          report.save((err) => {
+            if(err){
+                res.type('html').status(500);
+                res.send('Error: ' + err);
+            } else {
+                req.session.comment = comment;
+                res.render('dashboard/');
+            }
         });
+
+};
+});
 };
 
-const editMemo = function(req, res) {
-    const searchId = req.query.id;
-
-    Memo.findOne( { id: searchId }, (err, memo) => {
-        if (err) {
-            res.type('html').status(500);
-            res.send('Error: ' + err);
-        } else if (!memo) {
-            res.type('html').status(200);
-            res.send('No memo with the id ' + searchId);
-        } else {
-            res.render('editMemo', { memo: memo });
-        }
-    });
-};
 
 const updateMemo = function(req,res){
     const searchId = req.body._id;
@@ -261,7 +255,7 @@ const saveMemo = function(req, res) {
     const description = req.body.description;
     const solution = req.body.solution;
     const id = ObjectId();
-    const reportId = req.body._id;
+    const reportId = req.body.id;
 
     const newMemo = new Memo({
         id: id,
@@ -271,7 +265,7 @@ const saveMemo = function(req, res) {
         school: school,
         date: date,
         description : description,
-        solution: solution,
+        solution: solution
 
     });
 
@@ -281,10 +275,10 @@ const saveMemo = function(req, res) {
         } else {
             newMemo.save((err) => {
                 if(err){
-                    res.redirect('reports?id=' + id);
+                    res.redirect('dashboard/');
                 } else{
                     req.session.memo = newMemo;
-                    res.redirect('reports?id=' + id);
+                    res.redirect('dashboard/');
                 }
 
             });
@@ -313,6 +307,22 @@ const deleteMemo = function(req,res){
               }
             });
             }
+    });
+};
+
+const editMemo = function(req, res) {
+    const id = req.query.id;
+
+    Memo.findOne({ "id" : id }, (err, memo) => {
+        if (err) {
+            res.type('html').status(500);
+            res.send('Error: ' + err);
+        } else if (!memo) {
+            res.type('html').status(200);
+            res.send('No memo with the id ' + id);
+        } else {
+            res.render('editMemo', { memo: memo });
+        }
     });
 };
 
