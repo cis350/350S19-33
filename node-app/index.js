@@ -57,7 +57,7 @@ app.use('/editForm', event.update_event, (req, res) => {
 //notification mailbox and individual reports
 app.get('/reports', report.get_reports);
 app.get('/report', report.get_report);
-app.get('/editMemo', report.edit_memo);
+app.get('/editMemo', (req, res) => {res.redirect('/public/memoform.html');});
 app.get('/createMemo', (req, res) => {res.redirect('/public/memoform.html');});
 app.get('/showMemos', report.show_memos);
 app.get('/deleteMemo', report.delete_memo);
@@ -66,12 +66,16 @@ app.get('/closed', report.get_closed);
 app.get('/read', report.get_read);
 app.get('/unread', report.get_unread);
 
-app.use('/handleForm', report.show_memos, (req, res) => {
+app.use('/showMForms', report.show_memos, (req, res) => {
     res.send("memo form handled");
 })
 
-app.use('/editMForm', report.update_memo, (req, res) => {
+app.use('/editMForm', report.save_memo, (req, res) => {
 	res.send("memo form handled");
+});
+
+app.use('/saveForm', report.save_memo, (req, res) => {
+    res.send("memo form handled");
 });
 
 app.post('addComment', report.add_comment);
