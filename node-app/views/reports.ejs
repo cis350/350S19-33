@@ -141,20 +141,20 @@ window.onclick = function(event) {
                                   <td class="view-message"><b>Subject</b></td>
                                   <td class="view-message inbox-small-cells"></td>
                                   <td class="view-message text-right"><b>Date</b></td>
+                                  <td class="view-message text-right"><b>Open Report</b></td>
+                                  <td class="view-message text-right"><b>Close Report</b></td>
                               </tr>
                             <% reports.forEach((report) => { %>
                               <tr class="unread">
                                   <td class="view-message dont-show"><%= report.studentName%> 
-                                  <% if (!report.read) { %>
+                                  <% if (!report.read && !report.closed) { %>
                                   <span class="label label-danger pull-right">unread</span></td></td>
-                                  <% } else { %>
+                                  <% } else if (report.read && !report.closed) { %>
                                   <span class="label label-success pull-right">read</span></td></td>
-                                  <% } %>
+                                  <% } else if (report.closed) { %>
+                                  <span class="label label-success pull-right">closed</span></td></td>
+                                   <% } %>
                                   <td class="view-message"><a href='/report?id=<%=report.id%>'+report.id><%= report.subject %> </a> </td>
-                                  <%if(!report.closed){ %>
-                                    <span class="label label-danger pull-right">CLOSED</span></td></td>
-                                  <%}%>
-                                  <td class="view-message"><a href="/reports/?id="+report.id><%= report.subject %> </a> </td>
                                   <td class="view-message inbox-small-cells"></td>
                                   <td class="view-message text-right"><%= report.date %></td>
                                   <td> <a href='/report?id=<%=report.id%>'> Open Report </a> </td>

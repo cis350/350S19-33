@@ -51,6 +51,8 @@ const getReport = function(req, res){
               res.render('report', { report: report });
             }
             });
+          } else {
+             res.render('report', { report: report });
           }
         }
     });
@@ -68,12 +70,17 @@ const closeReport = function(req, res){
             res.type('html').status(200);
             res.send('No report with the id ' + id);
         }else{
-            report.closed = !report.closed;
+            report.closed = true;
+            report.save((err) => {
+            if(err){
+              res.type('html').status(500);
+             res.send('Error: ' + err);
+           } else {
             res.render('reports.ejs', {report:report, person:req.session.user})
+          }
+          });
         }
-
-    })
-
+    });
 }
 
 const addComment = function(req, res){
@@ -111,11 +118,6 @@ const editMemo = function(req, res) {
         }
     });
 };
-
-
-
-
-
 
 const updateMemo = function(req,res){
     const searchId = req.body._id;
@@ -271,8 +273,6 @@ const deleteMemo = function(req,res){
             }
     });
 };
-
-
 
 
 const routes = {
