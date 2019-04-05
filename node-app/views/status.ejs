@@ -32,9 +32,9 @@ body {
   color: white;
 }
 </style>
+
 </head>
 <body>
-
 <div class="topnav">
   <a class="active" href="/logout">Log out</a>
   <a href="/status">Vacation statuses</a>
@@ -42,8 +42,48 @@ body {
   <a href="/events">Events</a>
   <a href="/dashboard">Dashboard</a>
 </div>
-
 </body>
+<head>
+
+<style>
+div {
+  background-color: #D3D3D3;
+  text-align: center;
+}
+</style>
+
+<html>
+<head>
+<style>
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+</head>
+<body>
+<div><p> <br />
+  <%= person.name %>, change your vacation status here:
+<form action="/changed" method="post">
+  <button class="button" type="submit" onclick="myFunction();">Change Status</button>
+  </p>
+  <br />
+</form>
+</div>
+</body>
+
+
 <table class="tg">
     <tr>
     <th class="tg-fymr">Admin</th>
@@ -56,9 +96,4 @@ body {
   </tr>
 <% }); %>
 </table>
-<p><%= person.name %>, change your vacation status here:
-<form action="/changed" method="post">
-  <button type="submit" onclick="myFunction();">Change Status</button>
-  </p>
-</form>
 </html>

@@ -16,7 +16,7 @@ var reportSchema = new Report({
 	reportForWhom: {type: String, required: true},
 	read: {type: Boolean, required: true},
 	closed: {type: Boolean, required: true},
-	closedDate: {type: Date, required: true}
+	closedDate: {type: Date}
 });
 
 module.exports = mongoose.model('Report', reportSchema);

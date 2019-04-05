@@ -29,9 +29,9 @@ const getReports = function(req, res) {
 };
 
 const getReport = function(req, res){
-   const id = req.query._id;
+   const id = req.query.id;
 
-   Report.findOne( { id: id}, (err, report) => {
+   Report.findOne({ id: id}, (err, report) => {
         if (err) {
             res.type('html').status(500);
             res.send('Error: ' + err);
@@ -39,7 +39,18 @@ const getReport = function(req, res){
             res.type('html').status(200);
             res.send('No report with the id ' + id);
         } else {
-            res.render('report', { report: report });
+            //update report to be false since you clicked it
+              console.log(report);
+              report.read = false;
+              console.log(report);
+           // report.save((err) => {
+            //if(err){
+            //  res.type('html').status(500);
+          //    res.send('Error: ' + err);
+          //  } else {
+              res.render('report', { report: report });
+         //   }
+         //   });
         }
     });
 };
