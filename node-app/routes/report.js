@@ -94,8 +94,11 @@ const closeReport = function(req, res){
         } else if(!report){
             res.type('html').status(200);
             res.send('No report with the id ' + id);
-        }else{
+        } else if (report.comment == "" || !report.comment){
+            res.send("You need to respond to the report before closing");
+        } else {
             report.closed = true;
+            report.closedDate = Date.now();
             report.save((err) => {
             if(err){
               res.type('html').status(500);
