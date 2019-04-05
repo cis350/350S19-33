@@ -84,16 +84,49 @@ div {
 </div>
 </body>
 
+<html>
+<head>
+<style>
+#statuses {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
-<table class="tg">
+#statuses td, #statuses th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#statuses tr:nth-child(even){background-color: #f2f2f2;}
+
+#statuses tr:hover {background-color: #ddd;}
+
+#statuses th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<table id="statuses" width=100% align=center class="tg">
     <tr>
-    <th class="tg-fymr">Admin</th>
-    <th class="tg-fymr">On Vacation</th>
+    <th align=center  class="tg-fymr">Admin</th>
+    <th align=center  class="tg-fymr">On Vacation</th>
   </tr>
   <% statuses.forEach((status) => { %>
   <tr>
-    <td class="tg-0lax"><%= status.name %></td>
-    <td id=<%=status.email%> class="tg-0lax"><%= status.onVacation%></td>
+    <% if(status.email == person.email) { %>
+    <td align=center  class="tg-0lax"><b><%= status.name %></b></td>
+    <td align=center  id=<%=status.email%> class="tg-0lax"><b><%= status.onVacation%></b></td>
+    <% } else { %>
+    <td align=center  class="tg-0lax"><%= status.name %></td>
+    <td align=center  id=<%=status.email%> class="tg-0lax"><%= status.onVacation%></td>
+    <% } %>
   </tr>
 <% }); %>
 </table>
