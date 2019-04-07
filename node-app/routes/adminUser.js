@@ -1,7 +1,7 @@
 /* Routes for user accounts */
 var session = require('client-sessions');
 
-const User = require('../data/User.js');
+const AdminUser = require('../data/AdminUser.js');
 const Status = require('../data/Status.js');
 const Report = require('../data/Report.js');
 
@@ -27,7 +27,7 @@ const checkLogin = function(req, res) {
 
   const queryObject = { "email" : email };
     
-  User.findOne( queryObject, (err, person) => {
+  AdminUser.findOne( queryObject, (err, person) => {
     if (err) {
       console.log('uh oh' + err);
       res.json({});
@@ -54,13 +54,13 @@ const signup = function(req, res) {
   const location = req.body.location;
   const phone = req.body.phone;
 
-  const newUser = new User({
+  const newUser = new AdminUser({
     email: email,
     password: password,
     name: name,
     school: school,
-    openReports: ['001', '002', '004'],
-    closedReports: ['003', '005'],
+    openReports: [],
+    closedReports: [],
     location: location,
     phone: phone,
   });
@@ -107,7 +107,7 @@ const getDashboard = function(req, res) {
 
   const queryObject = { "email" : email };
 
-  User.findOne( queryObject, (err, person) => {
+  AdminUser.findOne( queryObject, (err, person) => {
     if (err) {
       console.log('uh oh' + err);
       res.json({});
@@ -116,13 +116,6 @@ const getDashboard = function(req, res) {
       res.redirect('login/');
     }
     else {
-      const personObj = person.toObject();
-      const openReports = personObj.openReports && personObj.openReports.length;
-      const closedReports = personObj.closedReports && personObj.closedReports.length;
-      const data = {
-        openReports: openReports,
-        closedReports: closedReports,
-      }
       res.render('dashboard');
     }
   });

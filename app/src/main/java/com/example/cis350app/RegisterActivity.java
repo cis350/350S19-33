@@ -30,8 +30,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -39,13 +44,6 @@ import java.util.List;
  */
 public class RegisterActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * Need this so we can check if the username is taken already
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "dorothy:hello", "doro:bye"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -119,8 +117,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -128,10 +126,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Check for a valid username.
         if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        } else if (doesUsernameExist(username)) {
-            mUsernameView.setError(getString(R.string.error_username_taken));
             focusView = mUsernameView;
             cancel = true;
         }
@@ -147,20 +141,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             mAuthTask = new UserRegisterTask(username, password, school, age, gender);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean doesUsernameExist(String username) {
-        for (String credential : DUMMY_CREDENTIALS) {
-            String[] pieces = credential.split(":");
-            if (pieces[0].equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 3;
     }
 
     /**
@@ -242,11 +222,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserRegisterTask extends AsyncTask<Void, Void, String> {
 
         private final String mUsername;
         private final String mPassword;
@@ -263,27 +239,42 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: sign up through network service, add user to database.
-
+        protected String doInBackground(Void... params) {
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                URL url = new URL(
+                        "http://10.0.2.2:3000/studentSignup?username=" + mUsername +
+                                "&password=" + mPassword + "&school=" + mSchool + "&age=" + mAge +
+                                "&gender=" + mGender);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
 
-            return true;
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                String result = jo.getString("result");
+                return result;
+            } catch (Exception e) {
+                mAuthTask = null;
+                return e.getMessage();
+            }
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String result) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                Intent i = new Intent(getBaseContext(), LoginActivity.class);
+            if (result.equals("signed up")) {
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
                 startActivity(i);
+            } else if (result.equals("username taken")) {
+                mUsernameView.setError(getString(R.string.error_username_taken));
+                mUsernameView.requestFocus();
+            } else {
+//                mUsernameView.setError(getString(R.string.error_register));
+                mUsernameView.setError(result);
+                mUsernameView.requestFocus();
             }
         }
 

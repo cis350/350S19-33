@@ -8,7 +8,7 @@
     <string name="action_register">Don\'t have an account? Register here</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_no_such_user">This username does not exist</string>
-    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_login">Something went wrong, please try again</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <!-- Strings related to register -->
     <string name="prompt_reg_username">Username</string>
@@ -16,6 +16,8 @@
     <string name="prompt_school">School</string>
     <string name="prompt_age">Age</string>
     <string name="prompt_gender">Gender/Pronouns</string>
+    <string name="action_sign_up_short">Sign up</string>
+    <string name="error_register">Something went wrong, please try again</string>
     <string name="error_username_taken">This username is already taken, please choose another one</string>
     <!-- String related to reports -->
     <string name = "prompt_report_name">Name</string>

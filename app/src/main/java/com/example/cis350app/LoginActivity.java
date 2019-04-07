@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,8 +31,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -40,14 +46,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to database.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "dorothy:hello", "doro:bye"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * Keep track of the login tasks to ensure we can cancel them if requested.
      */
     private UserLoginTask mAuthTask = null;
 
@@ -117,28 +116,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
+        // Check for a valid username.
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
         // Check for a valid password.
         if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
-        if (!isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
 
-        // Check for a valid username.
-        if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        } else if (!doesUsernameExist(username)) {
-            mUsernameView.setError(getString(R.string.error_no_such_user));
-            focusView = mUsernameView;
-            cancel = true;
-        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -151,20 +142,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(username, password);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean doesUsernameExist(String username) {
-        for (String credential : DUMMY_CREDENTIALS) {
-            String[] pieces = credential.split(":");
-            if (pieces[0].equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 3;
     }
 
     /**
@@ -250,50 +227,51 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String username, String password) {
+            mUsername = username;
             mPassword = password;
         }
-
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+        protected String doInBackground(Void... params) {
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                URL url = new URL("http://10.0.2.2:3000/studentLogin?username=" + mUsername
+                + "&password=" + mPassword);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                System.out.println("here " + pieces[0] + pieces[1]);
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
 
-            return false;
+                JSONObject jo = new JSONObject(msg);
+                String authenticated = jo.getString("result");
+                return authenticated;
+            } catch (Exception e) {
+                return "error";
+            }
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String result) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                //change the location to be homeactivity
+            if (result.equals("logged in")) {
                 Intent i = new Intent(getBaseContext(), HomeActivity.class);
                 startActivity(i);
-            } else {
+            } else if (result.equals("no such user")) {
+                mUsernameView.setError(getString(R.string.error_no_such_user));
+                mUsernameView.requestFocus();
+            } else if (result.equals("wrong password")) {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            } else {
+                mPasswordView.setError(getString(R.string.error_login));
                 mPasswordView.requestFocus();
             }
         }

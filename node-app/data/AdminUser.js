@@ -4,7 +4,7 @@ mongoose.connect('mongodb+srv://dorothy:dorothy@cluster0-8qbcz.mongodb.net/test?
 
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var adminUserSchema = new Schema({
 	email: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
 	name: {type: String, required: true},
@@ -15,4 +15,4 @@ var userSchema = new Schema({
 	closedReports: {type: Array, required: true}
     });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('AdminUser', adminUserSchema);

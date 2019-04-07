@@ -18,7 +18,8 @@ app.set('view engine', 'ejs');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const user = require('./routes/user.js');
+const adminUser = require('./routes/adminUser.js');
+const studentUser = require('./routes/studentUser.js');
 const status = require('./routes/status.js');
 const event = require('./routes/event.js');
 const report = require('./routes/report.js');
@@ -26,13 +27,13 @@ const student = require('./routes/student.js');
 
 /***************************************/
 
-app.get('/login', user.get_login);
-app.post('/checkLogin', user.check_login);
-app.get('/signup', user.show_signup);
-app.post('/signup', user.signup);
-app.get('/dashboard', user.get_dashboard);
-app.get('/dashboarddata', user.get_dashboard_data);
-app.get('/logout', user.log_out);
+app.get('/login', adminUser.get_login);
+app.post('/checkLogin', adminUser.check_login);
+app.get('/signup', adminUser.show_signup);
+app.post('/signup', adminUser.signup);
+app.get('/dashboard', adminUser.get_dashboard);
+app.get('/dashboarddata', adminUser.get_dashboard_data);
+app.get('/logout', adminUser.log_out);
 
 //Michelle's status
 app.get('/status', status.get_statuses);
@@ -87,6 +88,10 @@ app.use('/createStudent', (req, res) => { res.redirect('/public/studentform.html
 app.use('/studentForm', student.save_student, (req, res) => {
 	res.send("stuent form handled");
 });
+
+// API
+app.get('/studentLogin', studentUser.check_login);
+app.get('/studentSignup', studentUser.signup);
 /*************************************************/
 
 app.use('/public', express.static('public'));
