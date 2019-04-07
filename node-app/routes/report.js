@@ -3,6 +3,7 @@
 const Report = require('../data/Report.js');
 const Comment = require('../data/Comment.js');
 const Memo = require('../data/Memo.js');
+const Notification = require('../data/Notification.js');
 const ObjectId = require('mongodb').ObjectID;
 
 const getReports = function(req, res) {
@@ -66,7 +67,6 @@ const getReport = function(req, res){
             res.send('No report with the id ' + id);
         } else {
             //the moment you clicked into the report, you read it
-              console.log(report);
               if(!report.read){
                 report.read = true;
                 report.save((err) => {
@@ -133,7 +133,23 @@ const closeReport = function(req, res){
                         finalReports.push(item);
                     }
                   });
-                  res.render('reports.ejs', { reports: finalReports, person: req.session.user });
+                  // generate notification for student
+                  const newNotif = new Notification({
+                    username: report.studentUsername,
+                    reportId: report.id,
+                    content: "Report " + report.subject + " was closed",
+                    date: Date.now(),
+                  });
+
+                  newNotif.save( (err) => { 
+                    if (err) {
+                      res.type('html').status(500);
+                      res.send('Error: ' + err);
+                    }
+                    else {
+                      res.render('reports.ejs', { reports: finalReports, person: req.session.user });
+                    }
+                  });
                 }
             });
           }

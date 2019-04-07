@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const adminUser = require('./routes/adminUser.js');
 const studentUser = require('./routes/studentUser.js');
+const notification = require('./routes/notification.js');
 const status = require('./routes/status.js');
 const event = require('./routes/event.js');
 const report = require('./routes/report.js');
@@ -92,6 +93,8 @@ app.use('/studentForm', student.save_student, (req, res) => {
 // API
 app.get('/studentLogin', studentUser.check_login);
 app.get('/studentSignup', studentUser.signup);
+app.get('/getNotifs', notification.get_notifs);
+
 /*************************************************/
 
 app.use('/public', express.static('public'));

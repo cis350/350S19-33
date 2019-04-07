@@ -2,6 +2,7 @@ package com.example.cis350app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cis350app.data.NotificationContent;
+import com.example.cis350app.data.NotificationContent.Notification;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * An activity representing a list of Notifications. This activity
@@ -31,6 +42,9 @@ public class NotificationListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    private static NotificationsTask notifTask = null;
+    public static List<Notification> ITEMS = new ArrayList<>();
+    public static Map<String, Notification> ITEM_MAP = new HashMap<String, Notification>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +54,21 @@ public class NotificationListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+
+        try {
+            notifTask = new NotificationsTask("alo");
+            ITEMS = new ArrayList<>();
+            ITEM_MAP = new HashMap<String, Notification>();
+            notifTask.execute((Void) null);
+            List<Notification> notifs = notifTask.get();
+            for (Notification n : notifs) {
+                ITEMS.add(n);
+                ITEM_MAP.put(n.id, n);
+            }
+            notifTask = null;
+        } catch (Exception e) {
+            notifTask = null;
+        }
 
 
         if (findViewById(R.id.notification_detail_container) != null) {
@@ -56,19 +85,19 @@ public class NotificationListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, NotificationContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ITEMS, mTwoPane));
     }
 
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final NotificationListActivity mParentActivity;
-        private final List<NotificationContent.Notification> mValues;
+        private final List<Notification> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotificationContent.Notification item = (NotificationContent.Notification) view.getTag();
+                Notification item = (Notification) view.getTag();
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
                     arguments.putString(NotificationDetailFragment.ARG_ITEM_ID, item.id);
@@ -88,7 +117,7 @@ public class NotificationListActivity extends AppCompatActivity {
         };
 
         SimpleItemRecyclerViewAdapter(NotificationListActivity parent,
-                                      List<NotificationContent.Notification> items,
+                                      List<Notification> items,
                                       boolean twoPane) {
             mValues = items;
             mParentActivity = parent;
@@ -104,7 +133,6 @@ public class NotificationListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).content);
 
             holder.itemView.setTag(mValues.get(position));
@@ -124,6 +152,45 @@ public class NotificationListActivity extends AppCompatActivity {
                 super(view);
                 mIdView = (TextView) view.findViewById(R.id.id_text);
                 mContentView = (TextView) view.findViewById(R.id.content);
+            }
+        }
+    }
+
+    /**
+     * Fetch notifications
+     */
+    public static class NotificationsTask extends AsyncTask<Void, Void, List<Notification>> {
+
+        private final String mUsername;
+
+        NotificationsTask(String username) {
+            mUsername = username;
+        }
+        @Override
+        protected List<Notification> doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/getNotifs?username=" + mUsername);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+
+                JSONObject jo = new JSONObject(msg);
+                JSONArray arr = jo.getJSONArray("result");
+                List<Notification> notifs = new ArrayList<>();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String content = obj.getString("content");
+                    String reportId = obj.getString("reportId");
+                    String date = obj.getString("date");
+                    Notification n = new Notification(content, date, reportId);
+                    notifs.add(n);
+                }
+                return notifs;
+            } catch (Exception e) {
+                return null;
             }
         }
     }
