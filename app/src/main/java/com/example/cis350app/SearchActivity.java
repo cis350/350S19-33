@@ -21,6 +21,10 @@ public class SearchActivity extends AppCompatActivity {
     ListView search_admin;
     ArrayAdapter<String> adapter;
 
+    private static ProfileTask profileTask = null;
+    public static List<Profile> ITEMS = new ArrayList<>();
+    public static Map<String, Profile> ITEM_MAP = new HashMap<String, Profile>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,5 +77,44 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Fetch notifications
+     */
+    public static class ProfileTask extends AsyncTask<Void, Void, List<Notification>> {
+
+        private final String mUsername;
+
+        NotificationsTask(String username) {
+            mUsername = username;
+        }
+        @Override
+        protected List<Notification> doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/getNotifs?username=" + mUsername);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+
+                JSONObject jo = new JSONObject(msg);
+                JSONArray arr = jo.getJSONArray("result");
+                List<Notification> notifs = new ArrayList<>();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String content = obj.getString("content");
+                    String reportId = obj.getString("reportId");
+                    String date = obj.getString("date");
+                    Notification n = new Notification(content, date, reportId);
+                    notifs.add(n);
+                }
+                return notifs;
+            } catch (Exception e) {
+                return null;
+            }
+        }
     }
 }

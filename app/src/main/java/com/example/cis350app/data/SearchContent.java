@@ -13,6 +13,11 @@ public class SearchContent {
 
     public static final Map<String, SearchContent.Profile> ITEM_MAP = new HashMap<String, SearchContent.Profile>();
 
+    public static void addItem(Notification item) {
+        ITEMS.add(item);
+        ITEM_MAP.put(item.id, item);
+    }
+
     static {
         SearchContent.Profile n1 = new SearchContent.Profile("Michelle Lok", "Teacher",
                 "Female", "3232869133", "hlok@wharton.upenn.edu",
