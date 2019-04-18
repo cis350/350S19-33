@@ -94,6 +94,7 @@ app.use('/studentForm', student.save_student, (req, res) => {
 app.get('/studentLogin', studentUser.check_login);
 app.get('/studentSignup', studentUser.signup);
 app.get('/getNotifs', notification.get_notifs);
+app.get('/getAdmins', adminUser.get_admins);
 
 /*************************************************/
 

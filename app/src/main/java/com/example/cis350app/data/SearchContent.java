@@ -17,38 +17,33 @@ public class SearchContent {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
-
-    static {
-        SearchContent.Profile n1 = new SearchContent.Profile("Michelle Lok", "Teacher",
-                "Female", "3232869133", "hlok@wharton.upenn.edu",
-                "JMHH102");
-        SearchContent.Profile n2 = new SearchContent.Profile("Chelsey Lin", "Counselor",
-                "Female", "32392932939", "clin@seas.upenn.edu",
-                "JMHH103");
-        SearchContent.Profile n3 = new SearchContent.Profile("Dorothy Chang", "Vice Principal",
-                "Female", "32392932939", "dchang@seas.upenn.edu",
-                "JMHH203");
-        SearchContent.Profile n4 = new SearchContent.Profile("April Chen", "Principal",
-                "Female", "32392932939", "achen@seas.upenn.edu",
-                "JMHH503");
-
-        //add to global variables
-        ITEMS.add(n1);
-        ITEMS.add(n2);
-        ITEMS.add(n3);
-        ITEMS.add(n4);
-
-        //add to map
-        ITEM_MAP.put(n1.name, n1);
-        ITEM_MAP.put(n2.name, n2);
-        ITEM_MAP.put(n3.name, n3);
-        ITEM_MAP.put(n4.name, n4);
-    }
-
-    //takes in the admin's full name and returns profile data
-    public static Profile getAdminData(String name){
-        return ITEM_MAP.get(name);
-    }
+//
+//    static {
+//        SearchContent.Profile n1 = new SearchContent.Profile("Michelle Lok", "Teacher",
+//                "Female", "3232869133", "hlok@wharton.upenn.edu",
+//                "JMHH102");
+//        SearchContent.Profile n2 = new SearchContent.Profile("Chelsey Lin", "Counselor",
+//                "Female", "32392932939", "clin@seas.upenn.edu",
+//                "JMHH103");
+//        SearchContent.Profile n3 = new SearchContent.Profile("Dorothy Chang", "Vice Principal",
+//                "Female", "32392932939", "dchang@seas.upenn.edu",
+//                "JMHH203");
+//        SearchContent.Profile n4 = new SearchContent.Profile("April Chen", "Principal",
+//                "Female", "32392932939", "achen@seas.upenn.edu",
+//                "JMHH503");
+//
+//        //add to global variables
+//        ITEMS.add(n1);
+//        ITEMS.add(n2);
+//        ITEMS.add(n3);
+//        ITEMS.add(n4);
+//
+//        //add to map
+//        ITEM_MAP.put(n1.name, n1);
+//        ITEM_MAP.put(n2.name, n2);
+//        ITEM_MAP.put(n3.name, n3);
+//        ITEM_MAP.put(n4.name, n4);
+//    }
 
     /**
      * A notification item

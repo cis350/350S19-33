@@ -22,7 +22,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
 
     private static ProfileTask profileTask = null;
-    public static List<Profile> ITEMS = new ArrayList<>();
+    public static ArrayList<Profile> ITEMS = new ArrayList<>();
     public static Map<String, Profile> ITEM_MAP = new HashMap<String, Profile>();
 
     @Override
@@ -32,13 +32,29 @@ public class SearchActivity extends AppCompatActivity {
 
         search_admin = (ListView) findViewById(R.id.search_admin);
 
+        try {
+            profileTask = new ProfileTask();
+            ITEMS = new ArrayList<>();
+            ITEM_MAP = new HashMap<String, Notification>();
+            profileTask.execute((Void) null);
+            List<Notification> admins = profileTask.get();
+            for (Profile n : admins) {
+                ITEMS.add(n);
+                ITEM_MAP.put(n.id, n);
+            }
+            notifTask = null;
+        } catch (Exception e) {
+            profileTask = null;
+        }
+
         ArrayList<String> arrayAdmin = new ArrayList<>();
         arrayAdmin.addAll(Arrays.asList(getResources().getStringArray(R.array.my_admins)));
 
         adapter = new ArrayAdapter<String>(
                 SearchActivity.this,
                 android.R.layout.simple_list_item_1,
-                arrayAdmin
+               // arrayAdmin <- OLD CODE
+                ITEMS
         );
 
         //put listeners on the admin items in the listviews
@@ -47,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
                 String adminSelected = search_admin.getItemAtPosition(position).toString();
-                Profile adminProfile = SearchContent.getAdminData(adminSelected);
+                Profile adminProfile = getAdminData(adminSelected);
                 intent.putExtra("AdminName", adminProfile);
                 startActivity(intent);
             }
@@ -55,6 +71,11 @@ public class SearchActivity extends AppCompatActivity {
 
         search_admin.setAdapter(adapter);
 
+    }
+
+    //takes in the admin's full name and returns profile data
+    public static Profile getAdminData(String name){
+        return ITEM_MAP.get(name);
     }
 
     //create a search bar that filters based on input
@@ -86,13 +107,10 @@ public class SearchActivity extends AppCompatActivity {
 
         private final String mUsername;
 
-        NotificationsTask(String username) {
-            mUsername = username;
-        }
         @Override
         protected List<Notification> doInBackground(Void... params) {
             try {
-                URL url = new URL("http://10.0.2.2:3000/getNotifs?username=" + mUsername);
+                URL url = new URL("http://10.0.2.2:3000/getAdmins");
                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
@@ -102,16 +120,19 @@ public class SearchActivity extends AppCompatActivity {
 
                 JSONObject jo = new JSONObject(msg);
                 JSONArray arr = jo.getJSONArray("result");
-                List<Notification> notifs = new ArrayList<>();
+                List<Notification> admins = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
-                    String content = obj.getString("content");
-                    String reportId = obj.getString("reportId");
-                    String date = obj.getString("date");
-                    Notification n = new Notification(content, date, reportId);
-                    notifs.add(n);
+                    String name = obj.getString("name");
+                    String role = obj.getString("role");
+                    String gender = obj.getString("gender");
+                    String phone = obj.getString("phone");
+                    String email = obj.getString("email");
+                    String location = obj.getString("location");
+                    Profile n = new Profile(name, role, gender, phone, email, location);
+                    admins.add(n);
                 }
-                return notifs;
+                return admins;
             } catch (Exception e) {
                 return null;
             }

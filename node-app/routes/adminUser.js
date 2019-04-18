@@ -97,6 +97,17 @@ const showSignup = function(req, res) {
   }
 };
 
+const getAdmins = function(req, res) {
+    Report.find((err, admins) => {
+        if (err) {
+          res.send({"result": "error"});
+        }
+        else {
+          res.send({"result": admins});
+        }
+    }
+  };
+
 const getDashboard = function(req, res) {
   if (!req.session.user) {
     res.redirect('login/');
@@ -190,7 +201,8 @@ const routes = {
   show_signup: showSignup,
   get_dashboard: getDashboard,
   get_dashboard_data: getDashboardData,
-  log_out: logOut
+  log_out: logOut,
+  get_admins: getAdmins
 };
 
 module.exports = routes;
