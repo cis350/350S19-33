@@ -189,7 +189,23 @@ const addComment = function(req, res){
             res.send('Error' + err);
           } 
           else {
-          res.render('report.ejs', { comments: comments, report: report });
+            // generate notification for student
+            const newNotif = new Notification({
+              username: report.studentUsername,
+              reportId: report.id,
+              content: "Report " + report.subject + " was commented on",
+              date: Date.now(),
+            });
+
+            newNotif.save( (err) => { 
+              if (err) {
+                res.type('html').status(500);
+                res.send('Error: ' + err);
+              }
+              else {
+                res.render('report.ejs', { comments: comments, report: report });
+              }
+            });
         }
       });
         }

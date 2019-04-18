@@ -105,7 +105,7 @@ const getAdmins = function(req, res) {
         else {
           res.send({"result": admins});
         }
-    }
+    });
   };
 
 const getDashboard = function(req, res) {
