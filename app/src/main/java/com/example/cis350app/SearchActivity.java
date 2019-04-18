@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +19,17 @@ import java.util.ArrayList;
 import android.content.Intent;
 import com.example.cis350app.data.SearchContent;
 import com.example.cis350app.data.SearchContent.Profile;
+import java.util.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -35,14 +50,14 @@ public class SearchActivity extends AppCompatActivity {
         try {
             profileTask = new ProfileTask();
             ITEMS = new ArrayList<>();
-            ITEM_MAP = new HashMap<String, Notification>();
+            ITEM_MAP = new HashMap<String, Profile>();
             profileTask.execute((Void) null);
-            List<Notification> admins = profileTask.get();
+            List<Profile> admins = profileTask.get();
             for (Profile n : admins) {
                 ITEMS.add(n);
-                ITEM_MAP.put(n.id, n);
+                ITEM_MAP.put(n.name, n);
             }
-            notifTask = null;
+            profileTask = null;
         } catch (Exception e) {
             profileTask = null;
         }
@@ -54,7 +69,7 @@ public class SearchActivity extends AppCompatActivity {
                 SearchActivity.this,
                 android.R.layout.simple_list_item_1,
                // arrayAdmin <- OLD CODE
-                ITEMS
+                arrayAdmin
         );
 
         //put listeners on the admin items in the listviews
@@ -103,12 +118,10 @@ public class SearchActivity extends AppCompatActivity {
     /**
      * Fetch notifications
      */
-    public static class ProfileTask extends AsyncTask<Void, Void, List<Notification>> {
-
-        private final String mUsername;
+    public static class ProfileTask extends AsyncTask<Void, Void, List<Profile>> {
 
         @Override
-        protected List<Notification> doInBackground(Void... params) {
+        protected List<Profile> doInBackground(Void... params) {
             try {
                 URL url = new URL("http://10.0.2.2:3000/getAdmins");
                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -120,7 +133,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 JSONObject jo = new JSONObject(msg);
                 JSONArray arr = jo.getJSONArray("result");
-                List<Notification> admins = new ArrayList<>();
+                List<Profile> admins = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     String name = obj.getString("name");

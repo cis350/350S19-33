@@ -13,9 +13,9 @@ public class SearchContent {
 
     public static final Map<String, SearchContent.Profile> ITEM_MAP = new HashMap<String, SearchContent.Profile>();
 
-    public static void addItem(Notification item) {
+    public static void addItem(Profile item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.name, item);
     }
 //
 //    static {
