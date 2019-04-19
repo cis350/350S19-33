@@ -86,6 +86,14 @@ package="com.example.cis350app">
         android:name=".EventDetailActivity"
         android:label="Events Detail">
     </activity>
+    <activity
+        android:name=".ResourceListActivity"
+        android:label="Resource List">
+    </activity>
+    <activity
+        android:name=".ResourceCreateActivity"
+        android:label="Resource Create">
+    </activity>
 </application>
 
 
