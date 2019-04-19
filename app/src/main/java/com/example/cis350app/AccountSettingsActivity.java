@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cis350app.data.NotificationContent;
+import com.example.cis350app.data.SearchContent;
 
 import org.json.JSONObject;
 
@@ -63,8 +64,13 @@ public class AccountSettingsActivity extends AppCompatActivity {
             myToast.setMargin(50,50);
             myToast.show();
         } else { //show the toast with changes
+            System.out.println("LoginActivity.getsessionUserName(): " + LoginActivity.getsessionUserName());
+            System.out.println("password.getText().toString(): " + password.getText().toString());
+            System.out.println("age.getText().toString(): " + age.getText().toString());
+            System.out.println("school.getText().toString(): " + school.getText().toString());
+            System.out.println("gender.getText().toString(): " + gender.getText().toString());
             task =  new acctSettingTask(LoginActivity.getsessionUserName(), password.getText().toString(),
-                    school.getText().toString(), age.getText().toString(), gender.getText().toString());
+                    age.getText().toString(), gender.getText().toString(), school.getText().toString());
             task.execute((Void) null);
         }
     }
@@ -88,16 +94,17 @@ public class AccountSettingsActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try {
                 URL url = new URL(
-                        "http://10.0.2.2:3000/change_info?username=" + mUsername +
+                        "http://10.0.2.2:3000/changeInfo?username=" + mUsername +
                                 "&password=" + mPassword + "&school=" + mSchool + "&age=" + mAge +
                                 "&gender=" + mGender);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
+                conn.setRequestMethod("GET");
                 conn.connect();
 
                 Scanner in = new Scanner(url.openStream());
                 String msg = in.nextLine();
                 JSONObject jo = new JSONObject(msg);
+
                 String result = jo.getString("result");
                 return result;
             } catch (Exception e) {

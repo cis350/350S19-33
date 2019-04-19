@@ -100,6 +100,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return mAuthTask.getUserName();
     }
 
+    //User this function to get the logged in user's username
+    public static void logout() {
+        mAuthTask = null;
+    }
+
     /**
      * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid username, missing fields, etc.), the
@@ -268,7 +273,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected void onPostExecute(final String result) {
-            mAuthTask = null;
+           // mAuthTask = null;
             showProgress(false);
 
             if (result.equals("logged in")) {

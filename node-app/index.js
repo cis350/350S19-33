@@ -93,8 +93,8 @@ app.use('/studentForm', student.save_student, (req, res) => {
 	res.send("stuent form handled");
 });
 
-//account settings change info
-app.post('changeInfo', studentUser.change_info);
+//accousnt settings change info
+app.get('/changeInfo', studentUser.change_info);
 
 // API
 app.get('/studentLogin', studentUser.check_login);

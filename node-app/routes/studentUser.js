@@ -61,10 +61,10 @@ const changeInfo = function(req, res) {
   const gender = req.query.gender;
 
   const queryObject = { "username" : username };
-    
+
   StudentUser.findOne( queryObject, (err, person) => {
     if (err) {
-      res.send({"result": false});
+      res.send({"result": "error"});
     }
     else if (!person) {
       res.send({"result": "no such user"});
@@ -84,7 +84,6 @@ const changeInfo = function(req, res) {
       }
        person.save((err) => {
               if(err){
-                res.type('html').status(500);
                res.send({"result": 'error'});
              } else {
               res.send({"result": 'edited'});
