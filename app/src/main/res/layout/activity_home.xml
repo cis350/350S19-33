@@ -8,111 +8,91 @@
 
 
     <Button
+        android:id="@+id/report_list2"
+        android:layout_width="395dp"
+        android:layout_height="82dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="metrics_action"
+        android:text="Metrics"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <Button
         android:id="@+id/report_list"
-        android:layout_width="350dp"
-        android:layout_height="121dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="82dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="reports_action"
         android:text="Reports"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toTopOf="@+id/reports"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="packed" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
 
     <Button
         android:id="@+id/reports"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="83dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="new_report_action"
         android:text="Create Report"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toTopOf="@+id/report_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/notifications"
-        app:layout_constraintVertical_bias="0.325" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="188dp" />
 
 
     <Button
         android:id="@+id/notifications"
-        android:layout_width="411dp"
-        android:layout_height="113dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="82dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="notifications_action"
         android:text="@string/hp_notifications"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toTopOf="@+id/acctsettings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="279dp" />
 
     <Button
         android:id="@+id/search"
-        android:layout_width="411dp"
-        android:layout_height="112dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="82dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="search_for_admin_action"
         android:text="@string/hp_search"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toTopOf="@+id/events"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notifications" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="369dp" />
 
     <Button
         android:id="@+id/acctsettings"
-        android:layout_width="411dp"
-        android:layout_height="112dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="82dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="acct_settings_action"
         android:text="@string/hp_accountsettings"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/events" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="550dp" />
 
     <Button
         android:id="@+id/events"
-        android:layout_width="411dp"
-        android:layout_height="113dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="83dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="events_action"
         android:text="@string/hp_events"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toTopOf="@+id/acctsettings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="459dp" />
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="411dp"
-        android:layout_height="113dp"
-        android:layout_margin="2dp"
+        android:layout_width="395dp"
+        android:layout_height="83dp"
         android:onClick="logout_action"
         android:text="@string/hp_logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acctsettings" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="640dp" />
 
 </android.support.constraint.ConstraintLayout>

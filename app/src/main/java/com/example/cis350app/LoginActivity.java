@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login tasks to ensure we can cancel them if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private static UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mUsernameView;
@@ -93,6 +93,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    //User this function to get the logged in user's username
+    public static String getsessionUserName() {
+        return mAuthTask.getUserName();
     }
 
     /**
@@ -236,6 +241,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mUsername = username;
             mPassword = password;
         }
+
         @Override
         protected String doInBackground(Void... params) {
             try {
@@ -254,6 +260,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             } catch (Exception e) {
                 return "error";
             }
+        }
+
+        public String getUserName(){
+            return mUsername;
         }
 
         @Override

@@ -45,6 +45,31 @@ const getStudent = function(req, res) {
   });
 };
     
+const getReportsForOneStudent = function(req, res) {
+  const searchUsername = req.query.username;
+
+  Student.findOne( { username: searchUsername }, (err, student) => {
+    if (err) {
+      res.type('html').status(500);
+      res.send('error');
+    } else if (!student) {
+      res.type('html').status(200);
+      res.send('No student with the username');
+    } else {
+      Report.find( { studentUsername : searchUsername }, (err, reports) => {
+        if (err) {
+          res.type('html').status(500);
+          res.send('error');
+        } else if (!reports) {
+          res.send('empty');
+        } else {
+          res.render({ 'reports': reports });
+        }
+      });
+    }
+  });
+};
+
 const saveStudent = function(req, res) {
   const username = req.body.username;
   const name = req.body.name;
@@ -73,6 +98,7 @@ const routes = {
   get_students: getStudents,
   get_student: getStudent,
   save_student: saveStudent,
+  get_reports_per_student: getReportsForOneStudent
 };
 
 module.exports = routes;

@@ -40,6 +40,9 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this, EventListActivity.class));
     }
 
+    public void metrics_action(View v){
+        startActivity(new Intent(HomeActivity.this, MetricsActivity.class));
+    }
     public void acct_settings_action(View v){
         startActivity(new Intent(HomeActivity.this, AccountSettingsActivity.class));
     }

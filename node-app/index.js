@@ -68,6 +68,9 @@ app.get('/closed', report.get_closed);
 app.get('/read', report.get_read);
 app.get('/unread', report.get_unread);
 
+//dashboard for android
+app.get('/metrics', student.get_reports_per_student);
+
 app.use('/showMForms', report.show_memos, (req, res) => {
     res.send("memo form handled");
 })
@@ -89,6 +92,9 @@ app.use('/createStudent', (req, res) => { res.redirect('/public/studentform.html
 app.use('/studentForm', student.save_student, (req, res) => {
 	res.send("stuent form handled");
 });
+
+//account settings change info
+app.post('changeInfo', studentUser.change_info);
 
 // API
 app.get('/studentLogin', studentUser.check_login);
