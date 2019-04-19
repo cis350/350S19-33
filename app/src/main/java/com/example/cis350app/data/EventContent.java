@@ -1,12 +1,14 @@
 package com.example.cis350app.data;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class EventContent {
 
@@ -15,7 +17,7 @@ public class EventContent {
     public static final Map<String, Event> ITEM_MAP = new HashMap<String, Event>();
 
     static {
-        List<Event> events = createDummyItems();
+        List<Event> events = getEventsFromDB();
         for (Event e : events) {
             addItem(e);
         }
@@ -26,20 +28,34 @@ public class EventContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static List<Event> createDummyItems() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Event e1 = new Event("0", "Mindfulness Workshop", "CAPS",
-                format.format(new Date()), "A workshop teaching mindfulness exercises");
-        Event e2 = new Event("1", "Addressing intergenerational trauma",
-                "Houston Hall", format.format(new Date()), "Group therapy");
-        Event e3 = new Event("2", "Coming Out Of The Closet", "LGBT Center",
-                format.format(new Date()), "Diving into gender and sexual identities");
-        e1.register();
-        List<Event> events = new ArrayList<>();
-        events.add(e1);
-        events.add(e2);
-        events.add(e3);
-        return events;
+    private static List<Event> getEventsFromDB() {
+        try {
+            URL url = new URL("http://10.0.2.2:3000/getAdmins"); //fix this
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            Scanner in = new Scanner(url.openStream());
+            String msg = in.nextLine();
+
+            JSONObject jo = new JSONObject(msg);
+            JSONArray arr = jo.getJSONArray("result");
+            List<Event> events = new ArrayList<>();
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                String id = obj.getString("id");
+                String name = obj.getString("name");
+                String location = obj.getString("gender");
+                String time = obj.getString("phone");
+                String host = obj.getString("email");
+                String description = obj.getString("location");
+                Event e = new Event(id, name, location, time, host, description);
+                events.add(e);
+            }
+            return events;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -50,22 +66,25 @@ public class EventContent {
         public final String name; // name of event
         public final String location; // location of event
         public final String time; //time of event
+        public final String host; //host of event
         public final String description; //description of event
         public final List<String> comments = new ArrayList<String>(); //comments on event
         public boolean register = false;
 
-        public Event(String id, String name, String location, String time, String description) {
+        public Event(String id, String name, String location, String time, String host,
+                     String description) {
             this.id = id;
             this.name = name;
             this.location = location;
             this.time = time;
+            this.host = host;
             this.description = description;
         }
 
         @Override
         public String toString() {
             String s = name + "\n" + "Location: " + location + "\n" + " Time: " + time +
-                   "\n" + "Description: " + description;
+                    "\n" + "Host: " + host + "\n" + "Description: " + description;
             return s;
         }
 
