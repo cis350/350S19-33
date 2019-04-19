@@ -90,7 +90,7 @@ app.get('/students', student.get_students);
 app.get('/student', student.get_student);
 app.use('/createStudent', (req, res) => { res.redirect('/public/studentform.html'); } );
 app.use('/studentForm', student.save_student, (req, res) => {
-	res.send("stuent form handled");
+	res.send("student form handled");
 });
 
 //accousnt settings change info
@@ -101,6 +101,7 @@ app.get('/studentLogin', studentUser.check_login);
 app.get('/studentSignup', studentUser.signup);
 app.get('/getNotifs', notification.get_notifs);
 app.get('/getAdmins', adminUser.get_admins);
+app.get('/getEvents', event.get_events);
 
 /*************************************************/
 

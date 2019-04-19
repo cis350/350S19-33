@@ -133,13 +133,25 @@ const deleteEvent = function(req, res) {
   });
 };
 
+const getEvents = function(req, res) {
+    Event.find((err, events) => {
+        if (err) {
+          res.send({"result": "error"});
+        }
+        else {
+          res.send({"result": events});
+        }
+    });
+  };
+
 const routes = {
   show_events: showEvents,
   show_event: showEvent,
   save_event: saveEvent,
   delete_event: deleteEvent,
   edit_event: editEvent,
-  update_event: updateEvent
+  update_event: updateEvent,
+  get_events: getEvents
 };
 
 module.exports = routes;
