@@ -98,7 +98,7 @@ const showSignup = function(req, res) {
 };
 
 const getAdmins = function(req, res) {
-    Report.find((err, admins) => {
+    AdminUser.find((err, admins) => {
         if (err) {
           res.send({"result": "error"});
         }

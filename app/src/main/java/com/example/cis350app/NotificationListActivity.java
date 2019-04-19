@@ -181,6 +181,7 @@ public class NotificationListActivity extends AppCompatActivity {
                 JSONArray arr = jo.getJSONArray("result");
                 List<Notification> notifs = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
+                    System.out.println("ENTERED");
                     JSONObject obj = arr.getJSONObject(i);
                     String content = obj.getString("content");
                     String reportId = obj.getString("reportId");

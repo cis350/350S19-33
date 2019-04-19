@@ -30,7 +30,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
 
     private static ProfileTask profileTask = null;
-    public static ArrayList<Profile> ITEMS = new ArrayList<>();
+    public static ArrayList<String> ITEMS = new ArrayList<>();
     public static Map<String, Profile> ITEM_MAP = new HashMap<String, Profile>();
 
     @Override
@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
             profileTask.execute((Void) null);
             List<Profile> admins = profileTask.get();
             for (Profile n : admins) {
-                ITEMS.add(n);
+                ITEMS.add(n.name);
                 ITEM_MAP.put(n.name, n);
             }
             profileTask = null;
@@ -62,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
                 SearchActivity.this,
                 android.R.layout.simple_list_item_1,
                // arrayAdmin <- OLD CODE
-                arrayAdmin
+                ITEMS
         );
 
         //put listeners on the admin items in the listviews
@@ -130,12 +130,10 @@ public class SearchActivity extends AppCompatActivity {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     String name = obj.getString("name");
-                    String role = obj.getString("role");
-                    String gender = obj.getString("gender");
                     String phone = obj.getString("phone");
                     String email = obj.getString("email");
                     String location = obj.getString("location");
-                    Profile n = new Profile(name, role, gender, phone, email, location);
+                    Profile n = new Profile(name, null, null, phone, email, location);
                     admins.add(n);
                 }
                 return admins;
