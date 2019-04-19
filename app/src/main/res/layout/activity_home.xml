@@ -132,7 +132,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="169dp"
         android:background="@color/colorPrimaryDark"
-        android:onClick="events_action"
+        android:onClick="resources_action"
         android:text="Student Resources"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintBottom_toBottomOf="parent"
