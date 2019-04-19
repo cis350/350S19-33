@@ -1,6 +1,1 @@
 /build
-*.iml
-.idea
-.idea/workspace.xml
-.gradle
-node_modules

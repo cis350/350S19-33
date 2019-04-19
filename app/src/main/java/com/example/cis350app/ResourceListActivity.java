@@ -15,6 +15,6 @@ public class ResourceListActivity extends AppCompatActivity {
     }
 
     public void create_resource(View view) {
-        startActivity(new Intent(ResourceActivity.this, ResourceCreateActivity.class));
+        startActivity(new Intent(ResourceListActivity.this, ResourceCreateActivity.class));
     }
 }
