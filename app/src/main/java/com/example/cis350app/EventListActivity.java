@@ -45,7 +45,7 @@ public class EventListActivity extends AppCompatActivity {
         try {
             eventTask = new EventListActivity.EventTask();
             ITEMS = new ArrayList<>();
-            ITEM_MAP = new HashMap<String, EventContent.Event>();
+            ITEM_MAP = new HashMap<>();
             eventTask.execute((Void) null);
             List<EventContent.Event> events = eventTask.get();
             for (EventContent.Event e : events) {

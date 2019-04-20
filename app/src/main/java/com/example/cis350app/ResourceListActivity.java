@@ -39,12 +39,12 @@ public class ResourceListActivity extends AppCompatActivity {
         try {
             resourceTask = new ResourceListActivity.ResourceTask();
             ITEMS = new ArrayList<>();
-            ITEM_MAP = new HashMap<String, ResourceContent.Resource>();
+            ITEM_MAP = new HashMap<>();
             resourceTask.execute((Void) null);
             List<ResourceContent.Resource> resources = resourceTask.get();
             for (ResourceContent.Resource r : resources) {
-                ITEMS.add(r.id);
-                ITEM_MAP.put(r.id, r);
+                ITEMS.add(r.name);
+                ITEM_MAP.put(r.name, r);
             }
             resourceTask = null;
         } catch (Exception e) {
