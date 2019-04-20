@@ -94,7 +94,8 @@ app.use('/studentForm', student.save_student, (req, res) => {
 });
 
 //accousnt settings change info
-app.get('/changeInfo', studentUser.change_info);
+app.get('/changeInfo', studentUser.change_info); 
+app.get('/getInfo', studentUser.get_info); //get current profile info
 
 // API
 app.get('/studentLogin', studentUser.check_login);

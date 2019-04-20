@@ -25,22 +25,29 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private acctSettingTask task = null;
-
+    private profileInfoTask profileTask = null;
+    private String editItems = "";
+    private EditText password;
+    private EditText age;
+    private EditText gender;
+    private EditText school;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acctsettings);
+
+        password = (EditText) findViewById(R.id.edit_password);
+        age = (EditText) findViewById(R.id.edit_age);
+        gender = (EditText) findViewById(R.id.edit_gender);
+        school = (EditText) findViewById(R.id.edit_school);
+
+        profileTask = new profileInfoTask(LoginActivity.getsessionUserName());
+        profileTask.execute((Void) null);
     }
 
     //to be changed
     public void edit(View v){
-        String editItems = "";
-        EditText password = (EditText) findViewById(R.id.edit_password);
-        EditText age = (EditText) findViewById(R.id.edit_age);
-        EditText gender = (EditText) findViewById(R.id.edit_gender);
-        EditText school = (EditText) findViewById(R.id.edit_school);
-
         //concatenate changes to editItems
         if(password.getText().toString().length() > 0){
             editItems = editItems + "You changed your password to " + password.getText().toString() + ".";
@@ -60,18 +67,66 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
         //if there are no changes, let toast know
         if(editItems.equals("")){
-            Toast myToast =Toast.makeText(getApplicationContext(), "You made no changes.",Toast.LENGTH_SHORT);
+            Toast myToast =Toast.makeText(getApplicationContext(), "You made no changes.",Toast.LENGTH_LONG);
             myToast.setMargin(50,50);
             myToast.show();
         } else { //show the toast with changes
-            System.out.println("LoginActivity.getsessionUserName(): " + LoginActivity.getsessionUserName());
-            System.out.println("password.getText().toString(): " + password.getText().toString());
-            System.out.println("age.getText().toString(): " + age.getText().toString());
-            System.out.println("school.getText().toString(): " + school.getText().toString());
-            System.out.println("gender.getText().toString(): " + gender.getText().toString());
             task =  new acctSettingTask(LoginActivity.getsessionUserName(), password.getText().toString(),
                     age.getText().toString(), gender.getText().toString(), school.getText().toString());
             task.execute((Void) null);
+        }
+    }
+
+    public class profileInfoTask extends AsyncTask<Void, Void, String> {
+        private final String mUsername;
+
+        profileInfoTask(String username) {
+            mUsername = username;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                System.out.println("line 91");
+                URL url = new URL(
+                        "http://10.0.2.2:3000/getInfo?username=" + mUsername);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+                System.out.println("line 95");
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                String result = jo.getString("result");
+                System.out.println("result: " + result);
+                return result;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final String result) {
+            try{
+                if (result.contains("error")) {
+                    Toast myToast =Toast.makeText(getApplicationContext(), "There was an error in editing. Try again.",
+                            Toast.LENGTH_LONG);
+                    myToast.setMargin(50,50);
+                    myToast.show();
+                } else {
+                    JSONObject resultOb = new JSONObject(result);
+                    password.setHint("Password: " + resultOb.getString("password"));
+                    school.setHint("School: " + resultOb.getString("school"));
+                    age.setHint("Age: " +resultOb.getString("age"));
+                    gender.setHint("Gender: " +resultOb.getString("gender"));
+                }
+            } catch (Exception e){
+                Toast myToast =Toast.makeText(getApplicationContext(), "There was an exception in JSON: " + e,
+                        Toast.LENGTH_LONG);
+                myToast.setMargin(50,50);
+                myToast.show();
+            }
         }
     }
 
@@ -115,11 +170,12 @@ public class AccountSettingsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final String result) {
             if (result.equals("edited")) {
-                Toast myToast =Toast.makeText(getApplicationContext(), "Successfully edited!",Toast.LENGTH_SHORT);
+                Toast myToast =Toast.makeText(getApplicationContext(), editItems,Toast.LENGTH_LONG);
                 myToast.setMargin(50,50);
                 myToast.show();
-            } else if (result.equals("error")) {
-                Toast myToast =Toast.makeText(getApplicationContext(), "There was an error in editing. Try again.",Toast.LENGTH_SHORT);
+            } else if (result.contains("error")) {
+                Toast myToast =Toast.makeText(getApplicationContext(), "There was an error in editing. Try again.",
+                        Toast.LENGTH_LONG);
                 myToast.setMargin(50,50);
                 myToast.show();
             }

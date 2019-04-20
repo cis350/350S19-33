@@ -64,27 +64,28 @@ const changeInfo = function(req, res) {
 
   StudentUser.findOne( queryObject, (err, person) => {
     if (err) {
-      res.send({"result": "error"});
+      res.send({"result": "error in find: " + err});
     }
     else if (!person) {
       res.send({"result": "no such user"});
     }
     else {
-      if(password != "" || !password){
+      if(password != "" && !password){
         person.password = password;
       }
-      if(school != "" || !school){
+      if(school != "" && !school){
         person.school = school;
       }
-      if(age != "" || !age){
+      if(age != "" && !age){
         person.age = age;
       }
-      if(gender != "" || !gender){
+      if(gender != "" && !gender){
         person.gender = gender;
       }
-       person.save((err) => {
+      person.save((err) => {
               if(err){
-               res.send({"result": 'error'});
+               res.send({"result": 'error in saving: with school + perosn : ' + person.toString() + 
+                + person.school + " " + err});
              } else {
               res.send({"result": 'edited'});
       }
@@ -93,10 +94,28 @@ const changeInfo = function(req, res) {
   });
 };
 
+const getInfo = function(req, res){
+  const username = req.query.username;
+
+  const queryObject = { "username" : username };
+
+  StudentUser.findOne( queryObject, (err, person) => {
+    if (err) {
+      res.send({"result": "error: " + err});
+    }
+    else if (!person) {
+      res.send({"result": "no such user"});
+    } else {
+      res.send({"result": person.toString()});
+     }
+  });
+}
+
 const routes = {
   check_login: checkLogin,
   signup: signup,
-  change_info: changeInfo
+  change_info: changeInfo,
+  get_info: getInfo
 };
 
 module.exports = routes;
