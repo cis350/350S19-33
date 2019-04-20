@@ -25,6 +25,7 @@ const status = require('./routes/status.js');
 const event = require('./routes/event.js');
 const report = require('./routes/report.js');
 const student = require('./routes/student.js');
+const resource = require('./routes/resource.js');
 
 /***************************************/
 
@@ -100,12 +101,19 @@ app.get('/getInfo', studentUser.get_info); //get current profile info
 //android app metrics dashboard
 app.get('/getMetrics', report.metric_count); 
 
+//android resources
+app.use('/createResource', (req, res) => { res.redirect('/public/resourceform.html'); } );
+app.use('/resourceForm', resource.save_resource_node, (req, res) => {
+  res.send({"result": "success"});
+});
+
 // API
 app.get('/studentLogin', studentUser.check_login);
 app.get('/studentSignup', studentUser.signup);
 app.get('/getNotifs', notification.get_notifs);
 app.get('/getAdmins', adminUser.get_admins);
 app.get('/getEvents', event.get_events);
+app.get('/saveResource', resource.save_resource);
 
 /*************************************************/
 
