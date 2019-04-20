@@ -10,7 +10,8 @@ var eventSchema = new Schema({
 	location: {type: String, required: true},
 	time: {type: String, required: true},
 	host: {type: String, required: true},
-	description: {type: String, required: true}
+	description: {type: String, required: true},
+	students: {type: [String], required: true}
     });
 
 module.exports = mongoose.model('Event', eventSchema);

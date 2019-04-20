@@ -15,12 +15,6 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_singleton);
 
-        /*
-        TextView mTextView = (TextView) findViewById(R.id.event_string);
-        EventContent.Event mItem = EventContent.ITEM_MAP.get(EventDetailFragment.ARG_ITEM_ID);
-        mTextView.setText(mItem.toString()); //populating textview here
-        */
-
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
         // (e.g. when rotating the screen from portrait to landscape).
