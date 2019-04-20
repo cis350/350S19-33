@@ -114,6 +114,7 @@ app.get('/getNotifs', notification.get_notifs);
 app.get('/getAdmins', adminUser.get_admins);
 app.get('/getEvents', event.get_events);
 app.get('/saveResource', resource.save_resource);
+app.get('/getResources', resource.get_resources);
 
 /*************************************************/
 

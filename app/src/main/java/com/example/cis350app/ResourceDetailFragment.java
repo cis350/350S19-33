@@ -1,14 +1,17 @@
 package com.example.cis350app;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.cis350app.data.ResourceContent;
 
 import org.json.JSONArray;
@@ -22,19 +25,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ResourceListActivity extends AppCompatActivity {
-    private static ResourceTask resourceTask = null;
+public class ResourceDetailFragment extends Fragment {
+    private static ResourceListActivity.ResourceTask resourceTask = null;
     public static ArrayList<String> ITEMS = new ArrayList<>();
     public static Map<String, ResourceContent.Resource> ITEM_MAP = new HashMap<String, ResourceContent.Resource>();
-    ListView resource_list;
-    ArrayAdapter<String> adapter;
+
+    public static final String ARG_ITEM_ID = "item_id";
+    private ResourceContent.Resource mItem;
+
+    public ResourceDetailFragment() {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resource_list);
-
-        resource_list = (ListView) findViewById(R.id.resourcesList);
 
         try {
             resourceTask = new ResourceListActivity.ResourceTask();
@@ -51,33 +55,33 @@ public class ResourceListActivity extends AppCompatActivity {
             resourceTask = null;
         }
 
-        adapter = new ArrayAdapter<String>(
-                ResourceListActivity.this,
-                android.R.layout.simple_list_item_1, //fix this
-                ITEMS
-        );
-
-        //put listeners on the admin items in the listviews
-        resource_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ResourceListActivity.this, ResourceDetailActivity.class);
-                String resourceSelected = resource_list.getItemAtPosition(position).toString();
-                ResourceContent.Resource r = getResource(resourceSelected);
-                intent.putExtra("item_id", r.id);
-                startActivity(intent);
+        if (getArguments().containsKey(ARG_ITEM_ID)) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            mItem = ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            Activity activity = this.getActivity();
+            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            if (appBarLayout != null) {
+                appBarLayout.setTitle(mItem.name);
             }
-        });
-
-        resource_list.setAdapter(adapter);
+        }
     }
 
-    public static ResourceContent.Resource getResource(String name){
-        return ITEM_MAP.get(name);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.resource_singleton, container, false);
+
+        // Show the dummy content as text in a TextView.
+        if (mItem != null) {
+            ((TextView) rootView.findViewById(R.id.resource_textview)).setText(mItem.toString());
+        }
+
+        return rootView;
     }
 
     public static class ResourceTask extends AsyncTask<Void, Void, List<ResourceContent.Resource>> {
-
 
         @Override
         protected List<ResourceContent.Resource> doInBackground(Void... params) {
@@ -108,7 +112,4 @@ public class ResourceListActivity extends AppCompatActivity {
         }
     }
 
-    public void create_resource(View view) {
-        startActivity(new Intent(ResourceListActivity.this, ResourceCreateActivity.class));
-    }
 }

@@ -45,9 +45,21 @@ const saveResourceNode = function(req, res) {
   });
 };
 
+const getResources = function(req, res) {
+    Resource.find((err, resources) => {
+        if (err) {
+          res.send({"result": "error"});
+        }
+        else {
+          res.send({"result": resources});
+        }
+    });
+  };
+
 const routes = {
   save_resource: saveResource,
-  save_resource_node: saveResourceNode
+  save_resource_node: saveResourceNode,
+  get_resources: getResources
 };
 
 module.exports = routes;

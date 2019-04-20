@@ -94,6 +94,10 @@ package="com.example.cis350app">
         android:name=".ResourceCreateActivity"
         android:label="Resource Create">
     </activity>
+    <activity
+        android:name=".ResourceDetailActivity"
+        android:label="Resource Detail">
+    </activity>
 </application>
 
 
