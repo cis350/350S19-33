@@ -87,19 +87,16 @@ public class AccountSettingsActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-                System.out.println("line 91");
                 URL url = new URL(
                         "http://10.0.2.2:3000/getInfo?username=" + mUsername);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
-                System.out.println("line 95");
 
                 Scanner in = new Scanner(url.openStream());
                 String msg = in.nextLine();
                 JSONObject jo = new JSONObject(msg);
                 String result = jo.getString("result");
-                System.out.println("result: " + result);
                 return result;
             } catch (Exception e) {
                 return null;
@@ -169,7 +166,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final String result) {
-            if (result.equals("edited")) {
+            if (result.contains("edited")) {
                 Toast myToast =Toast.makeText(getApplicationContext(), editItems,Toast.LENGTH_LONG);
                 myToast.setMargin(50,50);
                 myToast.show();

@@ -70,22 +70,21 @@ const changeInfo = function(req, res) {
       res.send({"result": "no such user"});
     }
     else {
-      if(password != "" && !password){
+      if(password != "" && password != null && password != undefined){
         person.password = password;
       }
-      if(school != "" && !school){
+      if(school != "" && school != null && school != undefined){
         person.school = school;
       }
-      if(age != "" && !age){
+      if(age != "" && age != null && age != undefined){
         person.age = age;
       }
-      if(gender != "" && !gender){
+      if(gender != "" && gender != null && gender != undefined){
         person.gender = gender;
       }
       person.save((err) => {
               if(err){
-               res.send({"result": 'error in saving: with school + perosn : ' + person.toString() + 
-                + person.school + " " + err});
+               res.send({"result": 'error'});
              } else {
               res.send({"result": 'edited'});
       }

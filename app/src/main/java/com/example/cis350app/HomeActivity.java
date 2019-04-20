@@ -17,7 +17,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
-
     }
 
     public void new_report_action(View v){

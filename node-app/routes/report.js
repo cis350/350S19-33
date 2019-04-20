@@ -408,6 +408,30 @@ const editMemo = function(req, res) {
     });
 };
 
+const metricCount = function(req, res) {
+  const searchUsername = req.query.username;
+  Report.find( { studentUsername : searchUsername }, (err, reports) => {
+        if (err) {
+          res.send({'result' : "error"});
+        } else if (!reports) {
+          res.send({'result' : "0"});
+        } else {
+          var numPending = 0;
+          var numClosed = 0;
+          for (var i = 0; i < reports.length; i++) {
+              const report = reports[i].toObject();
+              const closed = report.closed;
+              if (closed) {
+                  numClosed++;
+              } else {
+                  numPending++;
+              }
+          }
+          res.send({'result': "{'numClosed': " + numClosed + ", 'numPending': " + 
+            numPending + "}"});
+        }
+      });
+}
 
 const routes = {
     get_reports: getReports,
@@ -421,7 +445,8 @@ const routes = {
     delete_memo: deleteMemo,
     add_comment: addComment,
     get_unread: getUnread,
-    get_closed: getClosed
+    get_closed: getClosed,
+    metric_count: metricCount
 };
 
 module.exports = routes;

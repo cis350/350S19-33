@@ -20,11 +20,11 @@
     <string name="error_register">Something went wrong, please try again</string>
     <string name="error_username_taken">This username is already taken, please choose another one</string>
     <!-- String related to reports -->
-    <string name = "prompt_report_name">Name</string>
-    <string name = "prompt_report_date">Date</string>
-    <string name = "prompt_report_subject">Subject of Report</string>
-    <string name = "prompt_report_description">Description of Incident</string>
-    <string name = "prompt_report_person">Are you reporting on behalf of yourself or a friend?</string>
+    <string name="prompt_report_name">Name</string>
+    <string name="prompt_report_date">Date</string>
+    <string name="prompt_report_subject">Subject of Report</string>
+    <string name="prompt_report_description">Description of Incident</string>
+    <string name="prompt_report_person">Are you reporting on behalf of yourself or a friend?</string>
     <string name="error_field_required">This field is required</string>
     <!-- Strings related to mailbox -->
     <string name="title_notification_list">Notifications</string>
@@ -69,4 +69,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_report_metrics">report_metrics</string>
 </resources>

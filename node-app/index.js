@@ -93,9 +93,12 @@ app.use('/studentForm', student.save_student, (req, res) => {
 	res.send("student form handled");
 });
 
-//accousnt settings change info
+//account settings change info
 app.get('/changeInfo', studentUser.change_info); 
 app.get('/getInfo', studentUser.get_info); //get current profile info
+
+//android app metrics dashboard
+app.get('/getMetrics', report.metric_count); 
 
 // API
 app.get('/studentLogin', studentUser.check_login);

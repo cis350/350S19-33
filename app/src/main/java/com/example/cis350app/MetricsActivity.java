@@ -1,5 +1,11 @@
 package com.example.cis350app;
 
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
@@ -34,13 +40,12 @@ public class MetricsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metrics);
-        getSupportActionBar().hide();
 
         pendingTextView = (TextView) findViewById(R.id.numPending);
         closedTextview = (TextView) findViewById(R.id.numResolved);
 
         mAuthTask = new MetricTask(LoginActivity.getsessionUserName());
-
+        mAuthTask.execute((Void) null);
     }
 
     public class MetricTask extends AsyncTask<Void, Void, String> {
@@ -56,39 +61,39 @@ public class MetricsActivity extends AppCompatActivity {
             try {
                 URL url = new URL(
                         "http://10.0.2.2:3000/getMetrics?username=" + mUsername);
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
 
                 Scanner in = new Scanner(url.openStream());
                 String msg = in.nextLine();
                 JSONObject jo = new JSONObject(msg);
-                JSONArray arr = jo.getJSONArray("result");
-                int numPending = 0;
-                int numClosed = 0;
-                for (int i = 0; i < arr.length(); i++) {
-                    JSONObject obj = arr.getJSONObject(i);
-                    Boolean closed = obj.getBoolean("closed");
-                    if(closed){
-                        numClosed++;
+                System.out.println("jo : " + jo);
+                //if it is empty then set as 0
+                String returned = jo.getString("result");
+                if(!returned.equals("")) {
+                    if (returned == null || returned.equals("null") ||
+                            returned.equals("error")) {
+                        pendingTextView.setText("Error");
+                        closedTextview.setText("Error");
+                    } else if (returned.equals("0")){
+                        pendingTextView.setText("0");
+                        closedTextview.setText("0");
                     } else {
-                        numPending++;
+                        JSONObject metricObj = new JSONObject(returned);
+                        pendingTextView.setText(metricObj.getString("numPending"));
+                        closedTextview.setText(metricObj.getString("numClosed"));
                     }
+                } else {
+                    pendingTextView.setText("0");
+                    closedTextview.setText("0");
                 }
-                return numPending + " " + numClosed;
+                return "done";
             } catch (Exception e) {
                 mAuthTask = null;
-                return e.getMessage();
+                return "exception";
             }
-        }
-
-        @Override
-        protected void onPostExecute(final String result) {
-            String[] results = result.split(" ");
-            String numPending = results[0];
-            String numClosed = results[1];
-            pendingTextView.setText(numPending);
-            closedTextview.setText(numClosed);
         }
     }
 }
+
