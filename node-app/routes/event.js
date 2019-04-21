@@ -158,7 +158,13 @@ const registerStudent = function(req, res) {
       res.type('html').status(200);
       res.send('No event with the id ' + eventID);
     } else {
-      res.send({"result": "success"});
+      Event.find((err, events) => {
+        if (err) {
+          res.send({"result": "error"});
+        } else {
+          res.send({"result": events});
+        }
+      });
     }
   });
 };  

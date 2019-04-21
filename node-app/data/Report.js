@@ -6,7 +6,7 @@ var Report = mongoose.Schema;
 
 var reportSchema = new Report({
     id: {type: String, required: true, unique: false},
-    description: {type:String, required:true, unique: false}
+    description: {type:String, required:true, unique: false},
     memoId: {type: String, required: false},
 	adminEmail: {type: String, required: false},
 	date: {type: Date, required: true},

@@ -118,8 +118,6 @@ public class EventListActivity extends AppCompatActivity {
      * Fetch notifications
      */
     public static class EventTask extends AsyncTask<Void, Void, List<EventContent.Event>> {
-
-
         @Override
         protected List<EventContent.Event> doInBackground(Void... params) {
             try {
