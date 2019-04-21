@@ -10,5 +10,7 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ReportListActivity"
-    tools:listitem="@layout/report_list_content" />
+    tools:listitem="@layout/report_list_content"/>
+
+
 

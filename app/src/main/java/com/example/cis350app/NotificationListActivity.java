@@ -63,6 +63,7 @@ public class NotificationListActivity extends AppCompatActivity {
             notifTask.execute((Void) null);
             List<Notification> notifs = notifTask.get();
             for (Notification n : notifs) {
+                System.out.println(n);
                 ITEMS.add(n);
                 ITEM_MAP.put(n.id, n);
             }
@@ -187,6 +188,7 @@ public class NotificationListActivity extends AppCompatActivity {
                     String reportId = obj.getString("reportId");
                     String date = obj.getString("date");
                     Notification n = new Notification(content, date, reportId);
+                    System.out.println(n);
                     notifs.add(n);
                 }
                 return notifs;

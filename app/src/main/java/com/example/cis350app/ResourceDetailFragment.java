@@ -60,6 +60,8 @@ public class ResourceDetailFragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             mItem = ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            System.out.println(mItem);
+            System.out.println(ARG_ITEM_ID);
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {

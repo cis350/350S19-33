@@ -27,6 +27,7 @@ import com.example.cis350app.data.ReportContent;
 
 
 public class ReportActivity extends AppCompatActivity {
+    private EditText username;
     private EditText name;
     private EditText date;
     private EditText subject;
@@ -47,10 +48,11 @@ public class ReportActivity extends AppCompatActivity {
         //Initialize buttons and Edit Texts for form
         Button btnSubmit = (Button) findViewById(R.id.report_submit_button);
         //Button btnSrc = (Button) findViewById(R.id.buttonSrc);
+        username = (EditText) findViewById(R.id.report_username);
         name = (EditText) findViewById(R.id.report_name);
         date = (EditText) findViewById(R.id.report_date);
         subject = (EditText) findViewById(R.id.report_subject);
-       description = (EditText) findViewById(R.id.report_description);
+        description = (EditText) findViewById(R.id.report_description);
         person = (EditText) findViewById(R.id.report_person);
 
         //Listener on Submit button
@@ -62,10 +64,13 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void submitReport() {
 
         // Reset errors.
         //name.setError(null);
+        username.setError(null);
         name.setError(null);
         date.setError(null);
         subject.setError(null);
@@ -73,6 +78,7 @@ public class ReportActivity extends AppCompatActivity {
         person.setError(null);
 
         // Store values at the time of the register attempt.
+        String rep_username = username.getText().toString();
         String rep_name = name.getText().toString();
         String rep_date = date.getText().toString();
         String rep_subject = subject.getText().toString();
@@ -81,6 +87,14 @@ public class ReportActivity extends AppCompatActivity {
 
         boolean cancel = false;
         View focusView = null;
+
+
+        if(TextUtils.isEmpty(rep_username)){
+            username.setError("This field is required");
+            focusView = username;
+            cancel = true;
+
+        }
 
         if(TextUtils.isEmpty(rep_name)){
             name.setError("This field is required");
@@ -113,7 +127,7 @@ public class ReportActivity extends AppCompatActivity {
             focusView = person;
             cancel = true;
         } else {
-            CreateReportTask task = new CreateReportTask(rep_name, rep_date, rep_subject, rep_description, rep_person);
+            CreateReportTask task = new CreateReportTask(rep_username, rep_name, rep_date, rep_subject, rep_description, rep_person);
             task.execute((Void) null);
             task = null;
             // Show a progress spinner, and kick off a background task to
@@ -136,14 +150,16 @@ public class ReportActivity extends AppCompatActivity {
 
     //create report
     public class CreateReportTask extends AsyncTask<Void, Void, String> {
+        private final String mUsername;
         private final String mName;
         private final String mDate;
         private final String mSubject;
         private final String mDescription;
         private final String mPerson;
 
-        CreateReportTask(String username, String date, String subject, String description, String person) {
-            mName = username;
+        CreateReportTask(String username, String name, String date, String subject, String description, String person) {
+            mUsername = username;
+            mName = name;
             mDate = date;
             mSubject = subject;
             mDescription = description;
@@ -154,7 +170,7 @@ public class ReportActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try {
                 URL url = new URL(
-                        "http://10.0.2.2:3000/saveStudentReport?name=" + mName +
+                        "http://10.0.2.2:3000/saveStudentReport?username=" + mUsername + "&name=" + mName +
                                 "&date=" + mDate + "&subject=" + mSubject + "&description=" + mDescription +
                                 "&person=" + mPerson);
                 System.out.println(url);

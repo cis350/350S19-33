@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return mAuthTask.getUserName();
     }
 
+
     // Use this function to log out
     public static void logout() {
         mAuthTask = null;

@@ -435,9 +435,9 @@ const metricCount = function(req, res) {
 
 
 const getStudentReport = function(req, res) {
-  const searchName = req.query.name;
+  const searchName = req.query.username;
 
-  Report.find( { studentName : searchName }, (err, reports) => {
+  Report.find( { studentUsername : searchName }, (err, reports) => {
         if (err) {
           res.send({'result' : error});
         } else if (!reports) {
@@ -465,6 +465,7 @@ const getNotifications = function(req, res) {
 
 
 const saveStudentReport = function(req, res){
+    const username = req.query.username;
     const name = req.query.name;
     const date = req.query.date;
     const subject = req.query.subject;
@@ -474,6 +475,7 @@ const saveStudentReport = function(req, res){
 
     const newReport = new Report({
         id: id,
+        studentUsername: username,
         studentName: name,
         date: date,
         subject: subject,
@@ -573,7 +575,8 @@ const routes = {
     metric_count: metricCount,
     get_student_report: getStudentReport,
     save_student_report: saveStudentReport,
-    edit_report: editReport
+    edit_report: editReport,
+    delete_report: deleteReport
 };
 
 module.exports = routes;

@@ -20,6 +20,7 @@
     <string name="error_register">Something went wrong, please try again</string>
     <string name="error_username_taken">This username is already taken, please choose another one</string>
     <!-- String related to reports -->
+    <string name="prompt_report_username">Username</string>
     <string name="prompt_report_name">Name</string>
     <string name="prompt_report_date">Date</string>
     <string name="prompt_report_subject">Subject of Report</string>

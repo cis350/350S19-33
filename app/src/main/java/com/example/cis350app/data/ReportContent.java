@@ -15,22 +15,16 @@ public class ReportContent {
 
     public static final Map<String, Report> ITEM_MAP = new HashMap<String, Report>();
 
-    static {
-        List<Report> reports = createDummyItems();
-        for (Report r : reports) {
-            addItem(r);
-        }
-    }
-
-    private static void addItem(Report item) {
+    public static void addItem(ReportContent.Report item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    private static List<ReportContent.Report> createDummyItems() {
+
+    /*private static List<ReportContent.Report> createDummyItems() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ReportContent.Report r1 = new Report(
-                "0", "Thomas", format.format(new Date()), "Bullyiny",
+                "0", "thom", "Thomas", format.format(new Date()), "Bullyiny",
                 "I was bullied in the school cafeteria. I've tried to talk to the person " +
                         "who bullied me, and it's making me really anxious.", "Myself");
         ReportContent.Report r2 = new Report(
@@ -46,13 +40,14 @@ public class ReportContent {
         reports.add(r2);
         reports.add(r3);
         return reports;
-    }
+    }*/
 
     /**
      * A report item
      */
     public static class Report{
         public final String id; // unique ID of the report
+        public final String username;
         public final String name; //optional input for name, otherwise default is anon
         public final String date; //date report submitted
         public final String subject; // subject of report
@@ -60,9 +55,10 @@ public class ReportContent {
         public final String person; //TODO make boolean
         public final List<String> comments = new ArrayList<String>(); //comments on
 
-        public Report(String id, String name, String date, String subject, String description,
+        public Report(String id, String username, String name, String date, String subject, String description,
                       String person) {
             this.id = id;
+            this.username = username;
             this.name = name;
             this.date = date;
             this.subject = subject;
@@ -72,8 +68,7 @@ public class ReportContent {
 
         @Override
         public String toString() {
-            String s = name + "\n" + "Date: " + date + " Subject: " + subject +
-                    "Description: " + description + "Person" + person;
+            String s = "Name: " + name + "\n" + "Description: " + description;
             return s;
         }
 

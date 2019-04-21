@@ -2,16 +2,21 @@ package com.example.cis350app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+//import android.support.v7.widget.RecyclerView;
+//import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+
 
 import com.example.cis350app.data.ReportContent;
 
@@ -35,6 +40,8 @@ import java.util.Scanner;
  * item details side-by-side using two vertical panes.
  */
 public class ReportListActivity extends AppCompatActivity {
+    //rivate static ReportTask rT = null;
+
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -44,46 +51,80 @@ public class ReportListActivity extends AppCompatActivity {
     private static ReportTask reportTask = null;
     public static List<ReportContent.Report> ITEMS = new ArrayList<>();
     public static Map<String, ReportContent.Report> ITEM_MAP = new HashMap<String, ReportContent.Report>();
+    ListView reports_list;
+    ArrayAdapter<String> adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_list);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+       // toolbar.setTitle(getTitle());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        reports_list = (ListView) findViewById(R.id.reportsList);
+
 
         try {
-            reportTask = new ReportTask("alo");
+            String username = LoginActivity.getsessionUserName();
+            reportTask = new ReportTask(username);
             ITEMS = new ArrayList<>();
             ITEM_MAP = new HashMap<String, ReportContent.Report>();
             reportTask.execute((Void) null);
             List<ReportContent.Report> reports = reportTask.get();
-            for (ReportContent.Report r : reports) {
+            //System.out.println("report: "+  reports);
+            for (ReportContent.Report r : reports){
+                System.out.println(r);
                 ITEMS.add(r);
-                ITEM_MAP.put(r.id, r);
+                ITEM_MAP.put(r.name, r);
+                //System.out.println("tada" + ITEM_MAP.get(r.name));
+
             }
             reportTask = null;
         } catch (Exception e) {
             reportTask = null;
         }
-
-
-        if (findViewById(R.id.notification_detail_container) != null) {
+        //if (findViewById(R.id.notification_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
+          //  mTwoPane = true;
+        //}
 
-        View recyclerView = findViewById(R.id.report_list);
+        adapter = new ArrayAdapter(
+                ReportListActivity.this,
+                android.R.layout.simple_list_item_1, //fix this
+                ITEMS
+        );
+
+       /* View recyclerView = findViewById(R.id.report_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView((RecyclerView) recyclerView);*/
+
+
+        //reports_list.setAdapter(adapter);
+        reports_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ReportListActivity.this, ReportDetailActivity.class);
+                String reportSelected = reports_list.getItemAtPosition(position).toString();
+                System.out.println("bah" + reportSelected);
+                //ReportContent.Report r = getReport(reportSelected);
+                // System.out.println("this r" + r);
+                intent.putExtra("Name",reportSelected);
+                //System.out.println
+                startActivity(intent);
+            }
+        });
+
+        reports_list.setAdapter(adapter);
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+
+   /* private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ITEMS, mTwoPane));
     }
 
@@ -102,10 +143,10 @@ public class ReportListActivity extends AppCompatActivity {
                     arguments.putString(ReportDetailFragment.ARG_ITEM_ID, item.id);
                     ReportDetailFragment fragment = new ReportDetailFragment();
                     fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
+                    /*mParentActivity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.notification_detail_container, fragment)
-                            .commit();
-                } else {
+                            .commit();*/
+               /* } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, ReportDetailActivity.class);
                     intent.putExtra(ReportDetailFragment.ARG_ITEM_ID, item.id);
@@ -154,21 +195,26 @@ public class ReportListActivity extends AppCompatActivity {
             }
         }
     }
+*/
+    public static ReportContent.Report getReport(String name){
+
+        return ITEM_MAP.get(name);
+    }
 
     /**
      * Fetch notifications
      */
     public static class ReportTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
 
-        private final String mName;
+        private final String mUsername;
 
-        ReportTask(String studentName) {
-            mName = studentName;
+        ReportTask(String username) {
+            mUsername = username;
         }
         @Override
         protected List<ReportContent.Report> doInBackground(Void... params) {
             try {
-                URL url = new URL("http://10.0.2.2:3000/getReport?name=" + mName);
+                URL url = new URL("http://10.0.2.2:3000/getReport?username=" + mUsername);
                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
@@ -181,13 +227,18 @@ public class ReportListActivity extends AppCompatActivity {
                 List<ReportContent.Report> reports = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
-                    String id = "id";
-                    String name = obj.getString("name");
+                    String id = obj.getString("id");
+                    String username = obj.getString("studentUsername");
+                    String name = obj.getString("studentName");
                     String date = obj.getString("date");
                     String subject = obj.getString("subject");
-                    String description = obj.getString("description");
-                    String person = obj.getString("person");
-                    ReportContent.Report r = new ReportContent.Report(id, name, date, subject, description, person);
+                    String description = obj.getString("reportDescription");
+                    //System.out.println("description" + description);
+                    String person = obj.getString("reportForWhom");
+                    ReportContent.Report r = new ReportContent.Report(id, username, name, date, subject, description, person);
+                    //System.out.println("id" + r.id);
+                    System.out.println(r.username);
+                    System.out.println(r.description);
                     reports.add(r);
                 }
                 return reports;
@@ -195,6 +246,7 @@ public class ReportListActivity extends AppCompatActivity {
                 return null;
             }
         }
+
     }
 }
 
