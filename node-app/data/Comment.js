@@ -9,7 +9,8 @@ var commentSchema = new Comment({
 	content: {type: String, required: true},
 	adminCommenting: {type: String, required: true},
 	studentCommenting: {type: String, required: true},
-	date: {type: Date, required: true}
+	date: {type: Date, required: true},
+	role: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Comment', commentSchema);

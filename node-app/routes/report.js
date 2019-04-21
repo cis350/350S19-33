@@ -162,6 +162,7 @@ const addComment = function(req, res){
   const id = req.query.id;
   const comment = req.body.comment;
   const person = req.session.user;
+  const role = req.query.role;
 
   Report.findOne( {id: id}, (err, report) => {
     if (err) {
@@ -174,9 +175,10 @@ const addComment = function(req, res){
     else {
       var newComment = new Comment({
            reportId: id,
-            content: comment,
+           content: comment,
            adminCommenting: person.email,
            studentCommenting: report.studentUsername,
+           role: role,
            date: Date.now()
       });
       newComment.save((err) => {
