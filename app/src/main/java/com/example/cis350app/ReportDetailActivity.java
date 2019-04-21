@@ -87,7 +87,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                 }
             });*/
 
-        Button btnSubmitComment = (Button) findViewById(R.id.submit_comment);
+        Button btnSubmitComment = (Button) findViewById(R.id.submit_comment_button);
         final EditText newComment = (EditText) findViewById(R.id.new_comment);
 
         btnSubmitComment.setOnClickListener(new View.OnClickListener() {
