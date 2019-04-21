@@ -27,10 +27,10 @@ import java.util.Scanner;
  */
 public class EventListActivity extends AppCompatActivity {
     private static EventTask eventTask = null;
-    public static ArrayList<String> ITEMS = new ArrayList<>();
-    public static ArrayList<String> ITEMS_REGISTERED = new ArrayList<>();
-    public static ArrayList<String> ITEMS_UNREGISTERED = new ArrayList<>();
-    public static Map<String, EventContent.Event> ITEM_MAP = new HashMap<String, EventContent.Event>();
+    public static ArrayList<String> ITEMS = null;
+    public static ArrayList<String> ITEMS_REGISTERED = null;
+    public static ArrayList<String> ITEMS_UNREGISTERED = null;
+    public static Map<String, EventContent.Event> ITEM_MAP = null;
     public String currStudent;
     ListView event_list;
     ArrayAdapter<String> adapterRegistered;
@@ -54,6 +54,8 @@ public class EventListActivity extends AppCompatActivity {
             eventTask = new EventListActivity.EventTask();
             ITEMS = new ArrayList<>();
             ITEM_MAP = new HashMap<>();
+            ITEMS_REGISTERED = new ArrayList<>();
+            ITEMS_UNREGISTERED = new ArrayList<>();
             eventTask.execute((Void) null);
             List<EventContent.Event> events = eventTask.get();
             for (EventContent.Event e : events) {
@@ -135,6 +137,7 @@ public class EventListActivity extends AppCompatActivity {
                 String msg = in.nextLine();
                 JSONObject jo = new JSONObject(msg);
                 JSONArray arr = jo.getJSONArray("result");
+                System.out.println("result : " + arr);
                 List<EventContent.Event> events = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);

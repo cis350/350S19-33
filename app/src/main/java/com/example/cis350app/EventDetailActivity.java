@@ -63,6 +63,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     eventTask = new EventDetailActivity.EventTask();
                     eventTask.execute((Void) null);
                     eventTask = null;
+                    startActivity(new Intent(EventDetailActivity.this, HomeActivity.class));
                 } catch (Exception e) {
                     eventTask = null;
                 }
@@ -75,10 +76,11 @@ public class EventDetailActivity extends AppCompatActivity {
         comment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
+                    commentString = newComment.getText().toString();
                     commentTask = new EventDetailActivity.CommentTask();
                     commentTask.execute((Void) null);
                     commentTask = null;
-                    commentString = newComment.getText().toString();
+                    startActivity(new Intent(EventDetailActivity.this, HomeActivity.class));
                 } catch (Exception e) {
                     commentTask = null;
                 }
