@@ -50,6 +50,7 @@ public class ResourceCreateActivity extends AppCompatActivity {
                     resourceTask = new ResourceCreateActivity.ResourceTask(n, d);
                     resourceTask.execute((Void) null);
                     resourceTask = null;
+                    startActivity(new Intent(ResourceCreateActivity.this, ResourceListActivity.class));
                 } catch (Exception e) {
                     resourceTask = null;
                 }

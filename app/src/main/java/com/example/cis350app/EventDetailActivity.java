@@ -63,7 +63,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     eventTask = new EventDetailActivity.EventTask();
                     eventTask.execute((Void) null);
                     eventTask = null;
-                    startActivity(new Intent(EventDetailActivity.this, HomeActivity.class));
+                    startActivity(new Intent(EventDetailActivity.this, EventListActivity.class));
                 } catch (Exception e) {
                     eventTask = null;
                 }
@@ -80,7 +80,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     commentTask = new EventDetailActivity.CommentTask();
                     commentTask.execute((Void) null);
                     commentTask = null;
-                    startActivity(new Intent(EventDetailActivity.this, HomeActivity.class));
+                    startActivity(new Intent(EventDetailActivity.this, EventListActivity.class));
                 } catch (Exception e) {
                     commentTask = null;
                 }
