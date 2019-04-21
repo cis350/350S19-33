@@ -90,8 +90,6 @@ public class EventDetailFragment extends Fragment {
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.event_string)).setText(mItem.toString());
             if (mItem.comments != null) {
-                System.out.println("mitem has comments");
-                System.out.println("mitem comment string: " + mItem.commentString());
                 ((TextView) rootView.findViewById(R.id.comment_box)).setText(mItem.commentString());
             }
         }

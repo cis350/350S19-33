@@ -24,6 +24,9 @@ import org.json.JSONObject;
 public class EventDetailActivity extends AppCompatActivity {
     private static EventTask eventTask = null;
     private static String eventID = null;
+    private static CommentTask commentTask = null;
+    private static String commentString = null;
+    private EditText newComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +69,79 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        EditText comment = (EditText) findViewById(R.id.new_comment);
+        newComment = (EditText) findViewById(R.id.new_comment);
+
+        Button comment = (Button) findViewById(R.id.submit_comment);
+        comment.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    commentTask = new EventDetailActivity.CommentTask();
+                    commentTask.execute((Void) null);
+                    commentTask = null;
+                    commentString = newComment.getText().toString();
+                } catch (Exception e) {
+                    commentTask = null;
+                }
+            }
+        });
     }
 
     public static class EventTask extends AsyncTask<Void, Void, List<EventContent.Event>> {
+
         String currStudent = LoginActivity.getsessionUserName();
         @Override
         protected List<EventContent.Event> doInBackground(Void... params) {
             try {
-                System.out.println("url: " + "http://10.0.2.2:3000/registerStudent?id=" +
-                        eventID + "&username=" + currStudent);
                 URL url = new URL("http://10.0.2.2:3000/registerStudent?id=" +
                         eventID + "&username=" + currStudent);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                JSONArray arr = jo.getJSONArray("result");
+                List<EventContent.Event> events = new ArrayList<>();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String id = obj.getString("id");
+                    String name = obj.getString("name");
+                    String location = obj.getString("location");
+                    String time = obj.getString("time");
+                    String host = obj.getString("host");
+                    String description = obj.getString("description");
+                    JSONArray studentsJSON = obj.getJSONArray("students");
+                    String[] students = new String[studentsJSON.length()];
+                    for (int j = 0; j < studentsJSON.length(); j++) {
+                        students[j] = studentsJSON.optString(j);
+                    }
+                    JSONArray commentsJSON = obj.getJSONArray("comments");
+                    String[] comments = new String[commentsJSON.length()];
+                    for (int j = 0; j < commentsJSON.length(); j++) {
+                        comments[j] = commentsJSON.optString(j);
+                    }
+                    EventContent.Event e =
+                            new EventContent.Event(id, name, location, time, host, description, students, comments);
+                    events.add(e);
+                }
+
+                return events;
+
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+    public static class CommentTask extends AsyncTask<Void, Void, List<EventContent.Event>> {
+        @Override
+        protected List<EventContent.Event> doInBackground(Void... params) {
+            try {
+                System.out.println("url: " + "http://10.0.2.2:3000/addComment?id=" +
+                        eventID + "&comment=" + commentString);
+                URL url = new URL("http://10.0.2.2:3000/addComment?id=" +
+                        eventID + "&comment=" + commentString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
