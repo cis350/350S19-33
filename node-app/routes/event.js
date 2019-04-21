@@ -134,15 +134,34 @@ const deleteEvent = function(req, res) {
 };
 
 const getEvents = function(req, res) {
-    Event.find((err, events) => {
-        if (err) {
-          res.send({"result": "error"});
-        }
-        else {
-          res.send({"result": events});
-        }
-    });
-  };
+  Event.find((err, events) => {
+    if (err) {
+      res.send({"result": "error"});
+    } else {
+      res.send({"result": events});
+    }
+  });
+};
+
+const registerStudent = function(req, res) {
+  const eventID = req.query.id;
+  const studentUsername = req.query.username;
+
+  var query = { id: eventID };
+  var update = { $push: { students: studentUsername } };
+  var options = {new: true};
+  Event.findOneAndUpdate(query, update, options, function(err, event) {
+    if (err) {
+      res.type('html').status(500);
+      res.send('Error: ' + err);
+    } else if (!event) {
+      res.type('html').status(200);
+      res.send('No event with the id ' + eventID);
+    } else {
+      res.send({"result": "success"});
+    }
+  });
+};  
 
 const routes = {
   show_events: showEvents,
@@ -151,7 +170,8 @@ const routes = {
   delete_event: deleteEvent,
   edit_event: editEvent,
   update_event: updateEvent,
-  get_events: getEvents
+  get_events: getEvents,
+  register_student: registerStudent
 };
 
 module.exports = routes;
