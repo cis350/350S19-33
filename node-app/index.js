@@ -121,6 +121,7 @@ app.get('/studentReports', report.get_student_report);
 app.get('/saveStudentReport', report.save_student_report);
 app.get('/editReport', report.edit_report);
 app.get('/registerStudent', event.register_student);
+app.get('/addComment', event.add_comment);
 
 /*************************************************/
 

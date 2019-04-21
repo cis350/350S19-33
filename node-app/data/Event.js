@@ -11,7 +11,8 @@ var eventSchema = new Schema({
 	time: {type: String, required: true},
 	host: {type: String, required: true},
 	description: {type: String, required: true},
-	students: {type: [String], required: true}
+	students: {type: [String], required: true},
+	comments: {type: [String], required: true}
     });
 
 module.exports = mongoose.model('Event', eventSchema);

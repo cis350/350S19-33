@@ -37,7 +37,7 @@ public class EventContent {
 
         @Override
         public String toString() {
-            String s = name + "\n" + "Location: " + location + "\n" + " Time: " + time +
+            String s = name + "\n" + "Location: " + location + "\n" + "Time: " + time +
                     "\n" + "Host: " + host + "\n" + "Description: " + description;
             return s;
         }

@@ -89,6 +89,10 @@ public class EventDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.event_string)).setText(mItem.toString());
+
+            if (mItem.comments != null) {
+
+            }
         }
 
         return rootView;

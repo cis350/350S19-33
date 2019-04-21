@@ -6,6 +6,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.os.AsyncTask;
@@ -64,6 +65,8 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        EditText comment = (EditText) findViewById(R.id.new_comment);
     }
 
     public static class EventTask extends AsyncTask<Void, Void, List<EventContent.Event>> {

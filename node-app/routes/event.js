@@ -189,6 +189,26 @@ const registerStudent = function(req, res) {
   });
 };  
 
+const addComment = function(req, res) {
+  const eventID = req.query.id;
+  const comment = req.query.comment;
+
+  var query = { id: eventID };
+  var update = { $push: { comments: comment } };
+  var options = {new: true};
+  Event.findOneAndUpdate(query, update, options, function(err, event) {
+    if (err) {
+      res.type('html').status(500);
+      res.send('Error: ' + err);
+    } else if (!event) {
+      res.type('html').status(200);
+      res.send('No event with the id ' + eventID);
+    } else {
+      res.send({"result": "success"});
+    }
+  });
+};  
+
 const routes = {
   show_events: showEvents,
   show_event: showEvent,
@@ -197,7 +217,8 @@ const routes = {
   edit_event: editEvent,
   update_event: updateEvent,
   get_events: getEvents,
-  register_student: registerStudent
+  register_student: registerStudent,
+  add_comment: addComment
 };
 
 module.exports = routes;
