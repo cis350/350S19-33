@@ -147,10 +147,7 @@ const registerStudent = function(req, res) {
   const eventID = req.query.id;
   const studentUsername = req.query.username;
 
-  var query = { id: eventID };
-  var update = { $push: { students: studentUsername } };
-  var options = {new: true};
-  Event.findOneAndUpdate(query, update, options, function(err, event) {
+  Event.findOne( { id: eventID }, (err, event) => {
     if (err) {
       res.type('html').status(500);
       res.send('Error: ' + err);
@@ -158,13 +155,36 @@ const registerStudent = function(req, res) {
       res.type('html').status(200);
       res.send('No event with the id ' + eventID);
     } else {
-      Event.find((err, events) => {
-        if (err) {
-          res.send({"result": "error"});
-        } else {
-          res.send({"result": events});
+      let isRegistered = false;
+      for (let i = 0; i < event.students.length; i++) {
+        if (event.students[i] == studentUsername) {
+          isRegistered = true;
         }
-      });
+      }
+      let update = { $push: { students: studentUsername } };
+      if (isRegistered) {
+        update = { $pull: { students: studentUsername } };
+        console.log("is registered, update set to pull");
+      }
+      var query = { id: eventID };
+      var options = {new: true};
+      Event.findOneAndUpdate(query, update, options, function(err, event) {
+        if (err) {
+          res.type('html').status(500);
+          res.send('Error: ' + err);
+        } else if (!event) {
+          res.type('html').status(200);
+          res.send('No event with the id ' + eventID);
+        } else {
+          Event.find((err, events) => {
+            if (err) {
+              res.send({"result": "error"});
+            } else {
+              res.send({"result": events});
+            }
+          });
+        }
+      })
     }
   });
 };  
