@@ -56,7 +56,8 @@ public class NotificationListActivity extends AppCompatActivity {
         toolbar.setTitle(getTitle());
 
         try {
-            notifTask = new NotificationsTask("alo");
+            String username = LoginActivity.getsessionUserName();
+            notifTask = new NotificationsTask(username);
             ITEMS = new ArrayList<>();
             ITEM_MAP = new HashMap<String, Notification>();
             notifTask.execute((Void) null);

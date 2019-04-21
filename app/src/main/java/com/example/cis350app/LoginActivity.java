@@ -95,12 +95,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    //User this function to get the logged in user's username
+    // Use this function to get the logged in user's username
     public static String getsessionUserName() {
         return mAuthTask.getUserName();
     }
 
-    //User this function to get the logged in user's username
+    // Use this function to log out
     public static void logout() {
         mAuthTask = null;
     }
