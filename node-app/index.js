@@ -115,6 +115,12 @@ app.get('/getAdmins', adminUser.get_admins);
 app.get('/getEvents', event.get_events);
 app.get('/saveResource', resource.save_resource);
 app.get('/getResources', resource.get_resources);
+app.get('/getReport', report.get_student_report);
+app.get('/saveResource', resource.save_resource);
+app.get('/studentReports', report.get_student_report);
+app.get('/saveStudentReport', report.save_student_report);
+app.get('/editReport', report.edit_report);
+
 
 /*************************************************/
 

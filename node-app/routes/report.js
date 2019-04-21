@@ -433,6 +433,89 @@ const metricCount = function(req, res) {
       });
 }
 
+
+const getStudentReport = function(req, res) {
+  const searchUsername = req.query.username;
+  Report.find( { studentUsername : searchUsername }, (err, reports) => {
+        if (err) {
+          res.send({'result' : "error"});
+        } else if (!reports) {
+          res.send({'result' : "0"});
+        } else {
+          res.send({'result': reports});
+        }
+      });
+}
+
+const saveStudentReport = function(req, res){
+    const name = req.body.name;
+    const date = req.body.date;
+    const subject = req.body.subject;
+    const description = req.body.description;
+    const person = req.body.person;
+    const id = ObjectId();
+
+    const newReport = new Report({
+        id: id,
+        studentName: name,
+        date: date,
+        subject: subject,
+        description: description,
+        reportForWhom: person
+        });
+
+        newReport.save( (err) => {
+                if (err) {
+                  res.send({"result": "report couldn't save "});
+                }
+                else {
+                  res.send({"result": "report submitted"});
+                }
+              });
+   };
+
+
+const editReport = function(req, res) {
+  const name = req.query.name;
+  const date = req.query.date;
+  const subject = req.query.school;
+  const description = req.query.age;
+  const person = req.query.gender;
+  const id = req.query.id;
+
+  Report.findOne({ id: id}, (err, report) => {
+    if (err) {
+      res.send({"result": "error in find: " + err});
+    }
+    else if (!report) {
+      res.send({"result": "no such user"});
+    }
+    else {
+      if(date != "" && date != null && date != undefined){
+        report.date = date;
+      }
+      if(subject != "" && subject != null && subject != undefined){
+              report.subject = subject;
+      }
+      if(description != "" && description != null && description != undefined){
+        report.reportDescription = description;
+      }
+      if(person != "" && person != null && person != person){
+        report.reportForWhom = person;
+      }
+      report.save((err) => {
+              if(err){
+               res.send({"result": 'error'});
+             } else {
+              res.send({"result": 'edited'});
+      }
+    });
+     }
+  });
+};
+
+
+
 const routes = {
     get_reports: getReports,
     get_report: getReport,
@@ -446,7 +529,10 @@ const routes = {
     add_comment: addComment,
     get_unread: getUnread,
     get_closed: getClosed,
-    metric_count: metricCount
+    metric_count: metricCount,
+    get_student_report: getStudentReport,
+    save_student_report: saveStudentReport,
+    edit_report: editReport
 };
 
 module.exports = routes;
