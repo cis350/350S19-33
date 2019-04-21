@@ -70,8 +70,6 @@ public class ResourceCreateActivity extends AppCompatActivity {
         @Override
         protected List<ResourceContent.Resource> doInBackground(Void... params) {
             try {
-                System.out.println("url: " + "http://10.0.2.2:3000/saveResource?name=" +
-                        nameString + "&description=" + descriptionString);
                 URL url = new URL("http://10.0.2.2:3000/saveResource?name=" +
                         nameString + "&description=" + descriptionString);
                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();

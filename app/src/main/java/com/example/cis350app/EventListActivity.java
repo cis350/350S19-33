@@ -28,12 +28,15 @@ import java.util.Scanner;
 public class EventListActivity extends AppCompatActivity {
     private static EventTask eventTask = null;
     public static ArrayList<String> ITEMS = new ArrayList<>();
+    public static ArrayList<String> ITEMS_REGISTERED = new ArrayList<>();
+    public static ArrayList<String> ITEMS_UNREGISTERED = new ArrayList<>();
     public static Map<String, EventContent.Event> ITEM_MAP = new HashMap<String, EventContent.Event>();
-    //public String currStudent = LoginActivity.getsessionUserName();
+    public String currStudent;
     ListView event_list;
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapterRegistered;
+    ArrayAdapter<String> adapterUnregistered;
 
-    private ListView registeredList, unregisteredList;
+    private ListView event_list_unregistered, event_list_registered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class EventListActivity extends AppCompatActivity {
         setContentView(R.layout.event_list);
 
         event_list = (ListView) findViewById(R.id.event_list_unregistered);
+
+        event_list_registered = (ListView)findViewById(R.id.event_list_registered);
+        event_list_unregistered = (ListView)findViewById(R.id.event_list_unregistered);
+
+        currStudent = LoginActivity.getsessionUserName();
 
         try {
             eventTask = new EventListActivity.EventTask();
@@ -51,31 +59,60 @@ public class EventListActivity extends AppCompatActivity {
             for (EventContent.Event e : events) {
                 ITEMS.add(e.name);
                 ITEM_MAP.put(e.name, e);
+                boolean isRegistered = false;
+                for (String s : e.students) {
+                    if (s.equals(currStudent)) {
+                        isRegistered = true;
+                    }
+                }
+                if (isRegistered) {
+                    ITEMS_REGISTERED.add(e.name);
+                } else {
+                    ITEMS_UNREGISTERED.add(e.name);
+                }
+
             }
             eventTask = null;
         } catch (Exception e) {
             eventTask = null;
         }
 
-        adapter = new ArrayAdapter<String>(
+        adapterRegistered = new ArrayAdapter<String>(
                 EventListActivity.this,
                 android.R.layout.simple_list_item_1, //fix this
-                ITEMS
+                ITEMS_REGISTERED
+        );
+
+        adapterUnregistered = new ArrayAdapter<String>(
+                EventListActivity.this,
+                android.R.layout.simple_list_item_1, //fix this
+                ITEMS_UNREGISTERED
         );
 
         //put listeners on the admin items in the listviews
-        event_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        event_list_registered.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(EventListActivity.this, EventDetailActivity.class);
-                String eventSelected = event_list.getItemAtPosition(position).toString();
+                String eventSelected = event_list_registered.getItemAtPosition(position).toString();
+                EventContent.Event e = getEvent(eventSelected);
+                intent.putExtra("item_id", e.id);
+                startActivity(intent);
+            }
+        });
+        event_list_unregistered.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(EventListActivity.this, EventDetailActivity.class);
+                String eventSelected = event_list_unregistered.getItemAtPosition(position).toString();
                 EventContent.Event e = getEvent(eventSelected);
                 intent.putExtra("item_id", e.id);
                 startActivity(intent);
             }
         });
 
-        event_list.setAdapter(adapter);
+        event_list_registered.setAdapter(adapterRegistered);
+        event_list_unregistered.setAdapter(adapterUnregistered);
     }
 
     public static EventContent.Event getEvent(String name){
@@ -84,8 +121,6 @@ public class EventListActivity extends AppCompatActivity {
 
     /*
 
-        registeredList = (ListView)findViewById(R.id.event_list_registered);
-        unregisteredList = (ListView)findViewById(R.id.event_list_unregistered);
 
         List<EventContent.Event> registeredEvents = getRegistered().get(0);
         List<EventContent.Event> unRegisteredEvents = getRegistered().get(1);
