@@ -346,7 +346,7 @@ const saveMemo = function(req, res) {
         name: name,
         school: school,
         date: date,
-        description : description,
+        reportDescription : description,
         solution: solution
 
     });
@@ -448,11 +448,11 @@ const getStudentReport = function(req, res) {
 }
 
 const saveStudentReport = function(req, res){
-    const name = req.body.name;
-    const date = req.body.date;
-    const subject = req.body.subject;
-    const description = req.body.description;
-    const person = req.body.person;
+    const name = req.query.name;
+    const date = req.query.date;
+    const subject = req.query.subject;
+    const description = req.query.description;
+    const person = req.query.person;
     const id = ObjectId();
 
     const newReport = new Report({
@@ -460,13 +460,13 @@ const saveStudentReport = function(req, res){
         studentName: name,
         date: date,
         subject: subject,
-        description: description,
+        reportDescription: description,
         reportForWhom: person
         });
 
         newReport.save( (err) => {
                 if (err) {
-                  res.send({"result": "report couldn't save "});
+                  res.send({"result": err});
                 }
                 else {
                   res.send({"result": "report submitted"});

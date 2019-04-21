@@ -47,11 +47,11 @@ public class ReportActivity extends AppCompatActivity {
         //Initialize buttons and Edit Texts for form
         Button btnSubmit = (Button) findViewById(R.id.report_submit_button);
         //Button btnSrc = (Button) findViewById(R.id.buttonSrc);
-        final EditText name = (EditText) findViewById(R.id.report_name);
-        final EditText date = (EditText) findViewById(R.id.report_date);
-        final EditText subject = (EditText) findViewById(R.id.report_subject);
-        final EditText description = (EditText) findViewById(R.id.report_description);
-        final EditText person = (EditText) findViewById(R.id.report_person);
+        name = (EditText) findViewById(R.id.report_name);
+        date = (EditText) findViewById(R.id.report_date);
+        subject = (EditText) findViewById(R.id.report_subject);
+       description = (EditText) findViewById(R.id.report_description);
+        person = (EditText) findViewById(R.id.report_person);
 
         //Listener on Submit button
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class ReportActivity extends AppCompatActivity {
         }
 
         // Check for a subject
-        if (!TextUtils.isEmpty(rep_subject)) {
+        if (TextUtils.isEmpty(rep_subject)) {
             subject.setError(getString(R.string.error_field_required));
             focusView = subject;
             cancel = true;
@@ -112,12 +112,10 @@ public class ReportActivity extends AppCompatActivity {
             person.setError("This field is required");
             focusView = person;
             cancel = true;
-        }
-        if (cancel) {
-            // There was an error; don't attempt register and focus the first
-            // form field with an error.
-            focusView.requestFocus();
         } else {
+            CreateReportTask task = new CreateReportTask(rep_name, rep_date, rep_subject, rep_description, rep_person);
+            task.execute((Void) null);
+            task = null;
             // Show a progress spinner, and kick off a background task to
             // perform the user register attempt.
             // showProgress(true);
@@ -156,9 +154,10 @@ public class ReportActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try {
                 URL url = new URL(
-                        "http://10.0.2.2:3000/saveStudentReport?username=" + mName +
-                                "&password=" + mDate + "&school=" + mSubject + "&age=" + mDescription +
-                                "&gender=" + mPerson);
+                        "http://10.0.2.2:3000/saveStudentReport?name=" + mName +
+                                "&date=" + mDate + "&subject=" + mSubject + "&description=" + mDescription +
+                                "&person=" + mPerson);
+                System.out.println(url);
                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
@@ -174,12 +173,6 @@ public class ReportActivity extends AppCompatActivity {
             }
         }
 
-        protected void onPostExecute(final String result) {
-            if (result.equals("report submitted")) {
-                Intent i = new Intent(getBaseContext(), HomeActivity.class);
-                startActivity(i);
-            }
-        }
 
         /*@Override
         protected void onPostExecute(final String result) {
