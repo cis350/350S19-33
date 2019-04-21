@@ -47,6 +47,10 @@ package="com.example.cis350app">
             android:value="com.example.cis350app.ReportListActivity" />
     </activity>
     <activity
+        android:name=".ReportActivity"
+        android:label="Create a Report"/>
+
+    <activity
         android:name=".ReportListActivity"
         android:label="Reports"
         android:theme="@style/AppTheme.NoActionBar" />

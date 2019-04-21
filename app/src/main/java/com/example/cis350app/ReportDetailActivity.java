@@ -2,6 +2,8 @@ package com.example.cis350app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.AsyncTask;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -15,11 +17,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
+
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import android.view.View;
+import android.view.View.OnClickListener;
+
 
 import android.preference.PreferenceManager;
 
 public class ReportDetailActivity extends AppCompatActivity{
-
+    private static DeleteReportTask deleteTask = null;
 
     /**
      * An activity representing a single Report detail screen. This
@@ -91,13 +110,17 @@ public class ReportDetailActivity extends AppCompatActivity{
 
         Button btnDelete = (Button) findViewById(R.id.delete_submit_button);
 
-        btnDelete.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-            }
-        });
-
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    try {
+                       // deleteTask = new ReportDetailActivity.DeleteReportTask();
+                        deleteTask.execute((Void) null);
+                        deleteTask = null;
+                    } catch (Exception e) {
+                        deleteTask = null;
+                    }
+                }
+            });
 
 
     /*private void loadSavedPreferences() {
@@ -189,5 +212,33 @@ public class ReportDetailActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    public static class DeleteReportTask extends AsyncTask<Void, Void, String> {
+
+        private final String mId;
+
+        DeleteReportTask(String id) {
+            mId = id;
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
+                System.out.println(url);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                String result = jo.getString("result");
+                return result;
+            } catch (Exception e) {
+
+                return e.getMessage();
+            }
+        }
+
+    }
 
 }

@@ -14,6 +14,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import android.view.View;
+import android.view.View.OnClickListener;
 
 
 
@@ -89,12 +97,15 @@ public class ReportDetailFragment extends Fragment {
 
             }
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.report_singleton, container, false);
+
 
         // Show the dummy content as text in a TextView.
         //if (mItem != null) {
@@ -106,32 +117,4 @@ public class ReportDetailFragment extends Fragment {
         return rootView;
     }
 
-    public static class DeleteReportTask extends AsyncTask<Void, Void, String> {
-
-        private final String mId;
-
-        DeleteReportTask(String id) {
-            mId = id;
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
-                System.out.println(url);
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.connect();
-
-                Scanner in = new Scanner(url.openStream());
-                String msg = in.nextLine();
-                JSONObject jo = new JSONObject(msg);
-                String result = jo.getString("result");
-                return result;
-            } catch (Exception e) {
-
-                return e.getMessage();
-            }
-        }
-
-    }
 }
