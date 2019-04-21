@@ -435,10 +435,11 @@ const metricCount = function(req, res) {
 
 
 const getStudentReport = function(req, res) {
-  const searchUsername = req.query.username;
-  Report.find( { studentUsername : searchUsername }, (err, reports) => {
+  const searchName = req.query.name;
+
+  Report.find( { studentName : searchName }, (err, reports) => {
         if (err) {
-          res.send({'result' : "error"});
+          res.send({'result' : error});
         } else if (!reports) {
           res.send({'result' : "0"});
         } else {
@@ -446,6 +447,22 @@ const getStudentReport = function(req, res) {
         }
       });
 }
+
+const getNotifications = function(req, res) {
+  const username = req.query.username;
+
+  const queryObject = { "username" : username };
+
+  Notification.find(queryObject, (err, notifs) => {
+    if (err) {
+      res.send({"result": "error"});
+    }
+    else {
+      res.send({"result": notifs});
+    }
+  });
+};
+
 
 const saveStudentReport = function(req, res){
     const name = req.query.name;
@@ -472,6 +489,30 @@ const saveStudentReport = function(req, res){
                   res.send({"result": "report submitted"});
                 }
               });
+   };
+
+   const deleteReport = function(req,res){
+         const id = req.query.id;
+
+         const queryObject = { "id" : id };
+
+         Report.deleteOne({ "id" : id }, function (err) {
+           if (err) {
+             return handleError(err);
+           } else {
+               Report.find( (err, reports) => {
+                 if (err) {
+                   res.type('html').status(500);
+                   res.send('Error: ' + err);
+                 } else if (reports.length == 0) {
+                   res.type('html').status(200);
+                   res.send('There are no reports');
+                 } else {
+                   res.send({"result": "report deleted"});
+                 }
+               });
+               }
+       });
    };
 
 
@@ -505,7 +546,7 @@ const editReport = function(req, res) {
       }
       report.save((err) => {
               if(err){
-               res.send({"result": 'error'});
+               res.send({"result": error});
              } else {
               res.send({"result": 'edited'});
       }

@@ -160,15 +160,15 @@ public class ReportListActivity extends AppCompatActivity {
      */
     public static class ReportTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
 
-        private final String mUsername;
+        private final String mName;
 
-        ReportTask(String username) {
-            mUsername = username;
+        ReportTask(String studentName) {
+            mName = studentName;
         }
         @Override
         protected List<ReportContent.Report> doInBackground(Void... params) {
             try {
-                URL url = new URL("http://10.0.2.2:3000/getReport?username=" + mUsername);
+                URL url = new URL("http://10.0.2.2:3000/getReport?name=" + mName);
                 HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
