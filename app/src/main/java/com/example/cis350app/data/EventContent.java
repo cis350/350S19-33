@@ -21,11 +21,11 @@ public class EventContent {
         public final String time; //time of event
         public final String host; //host of event
         public final String description; //description of event
-        public final List<String> comments = new ArrayList<String>(); //comments on event
+        public final String[] comments; //comments on event
         public final String[] students; //students registered for the event
 
         public Event(String id, String name, String location, String time, String host,
-                     String description, String[] students) {
+                     String description, String[] students, String[] comments) {
             this.id = id;
             this.name = name;
             this.location = location;
@@ -33,6 +33,7 @@ public class EventContent {
             this.host = host;
             this.description = description;
             this.students = students;
+            this.comments = comments;
         }
 
         @Override
@@ -42,12 +43,13 @@ public class EventContent {
             return s;
         }
 
-        public List<String> getComments() {
-            return comments;
-        }
-
-        public void addComment(String comment) {
-            comments.add(comment);
+        public String commentString() {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < comments.length; i++) {
+                sb.append(comments[i]);
+                sb.append("\n");
+            }
+            return sb.toString();
         }
     }
 }

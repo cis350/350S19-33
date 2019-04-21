@@ -89,12 +89,12 @@ public class EventDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.event_string)).setText(mItem.toString());
-
             if (mItem.comments != null) {
-
+                System.out.println("mitem has comments");
+                System.out.println("mitem comment string: " + mItem.commentString());
+                ((TextView) rootView.findViewById(R.id.comment_box)).setText(mItem.commentString());
             }
         }
-
         return rootView;
     }
 
@@ -126,8 +126,13 @@ public class EventDetailFragment extends Fragment {
                     for (int j = 0; j < studentsJSON.length(); j++) {
                         students[j] = studentsJSON.optString(j);
                     }
+                    JSONArray commentsJSON = obj.getJSONArray("comments");
+                    String[] comments = new String[commentsJSON.length()];
+                    for (int j = 0; j < commentsJSON.length(); j++) {
+                        comments[j] = commentsJSON.optString(j);
+                    }
                     EventContent.Event e =
-                            new EventContent.Event(id, name, location, time, host, description, students);
+                            new EventContent.Event(id, name, location, time, host, description, students, comments);
                     events.add(e);
                 }
                 return events;

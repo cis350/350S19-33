@@ -100,8 +100,13 @@ public class EventDetailActivity extends AppCompatActivity {
                     for (int j = 0; j < studentsJSON.length(); j++) {
                         students[j] = studentsJSON.optString(j);
                     }
+                    JSONArray commentsJSON = obj.getJSONArray("comments");
+                    String[] comments = new String[commentsJSON.length()];
+                    for (int j = 0; j < commentsJSON.length(); j++) {
+                        comments[j] = commentsJSON.optString(j);
+                    }
                     EventContent.Event e =
-                            new EventContent.Event(id, name, location, time, host, description, students);
+                            new EventContent.Event(id, name, location, time, host, description, students, comments);
                     events.add(e);
                 }
 
