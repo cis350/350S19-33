@@ -216,6 +216,63 @@ const addComment = function(req, res){
   });
 }
 
+const addCommentAndroid = function(req, res){
+  const id = req.query.id;
+  const comment = req.body.comment;
+  const person = req.query.userName;
+  const role = "student";
+
+  Report.findOne( {id: id}, (err, report) => {
+    if (err) {
+        res.send('Error' + err);
+    }
+    else if (!report) {
+      res.type('html').status(200);
+      res.send('No report with the id ' + id);
+    }
+    else {
+      var newComment = new Comment({
+           reportId: id,
+           content: comment,
+           adminCommenting: person.email,
+           studentCommenting: report.studentUsername,
+           role: role,
+           date: Date.now()
+      });
+      newComment.save((err) => {
+        if(err) {
+            res.type('html').status(500);
+            res.send('Error: ' + err);
+        } else {
+          Comment.find((err, comments) => {
+          if (err) {
+            res.send('Error' + err);
+          } 
+          else {
+            // generate notification for student
+            const newNotif = new Notification({
+              username: report.studentUsername,
+              reportId: report.id,
+              content: "Report " + report.subject + " was commented on",
+              date: Date.now(),
+            });
+
+            newNotif.save( (err) => { 
+              if (err) {
+                res.type('html').status(500);
+                res.send('Error: ' + err);
+              }
+              else {
+                res.render('report.ejs', { comments: comments, report: report });
+              }
+            });
+        }
+      });
+        }
+      });
+    }
+  });
+}
 
 const updateMemo = function(req,res){
     const searchId = req.body._id;
@@ -578,7 +635,9 @@ const routes = {
     get_student_report: getStudentReport,
     save_student_report: saveStudentReport,
     edit_report: editReport,
-    delete_report: deleteReport
+    delete_report: deleteReport,
+    add_comment_android: addCommentAndroid
+
 };
 
 module.exports = routes;

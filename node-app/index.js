@@ -85,6 +85,7 @@ app.use('/saveForm', report.save_memo, (req, res) => {
 });
 
 app.post('/addComment', report.add_comment);
+app.get('/addCommentAndroid', report.add_comment_android);
 
 //Chelsey's search 
 app.get('/students', student.get_students);
