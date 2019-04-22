@@ -53,6 +53,8 @@ const signup = function(req, res) {
   const school = req.body.school;
   const location = req.body.location;
   const phone = req.body.phone;
+  const gender = req.body.gender;
+  const role = req.body.role;
 
   const newUser = new AdminUser({
     email: email,
@@ -63,6 +65,8 @@ const signup = function(req, res) {
     closedReports: [],
     location: location,
     phone: phone,
+    gender: gender,
+    role: role,
   });
 
   const newStatus = new Status({

@@ -1,6 +1,7 @@
 /* Routes for reports */
 
 const Report = require('../data/Report.js');
+const Status = require('../data/Status.js');
 const Comment = require('../data/Comment.js');
 const Memo = require('../data/Memo.js');
 const Notification = require('../data/Notification.js');

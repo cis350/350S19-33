@@ -133,7 +133,9 @@ public class SearchActivity extends AppCompatActivity {
                     String phone = obj.getString("phone");
                     String email = obj.getString("email");
                     String location = obj.getString("location");
-                    Profile n = new Profile(name, "counselor", "female", phone, email, location);
+                    String gender = obj.getString("gender");
+                    String role = obj.getString("role");
+                    Profile n = new Profile(name, role, gender, phone, email, location);
                     admins.add(n);
                 }
                 return admins;
