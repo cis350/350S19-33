@@ -59,6 +59,7 @@ app.use('/editForm', event.update_event, (req, res) => {
 
 //notification mailbox and individual reports
 app.get('/reports', report.get_reports);
+app.get('/forward', report.forward_report);
 app.get('/report', report.get_report);
 app.get('/editMemo', (req, res) => {res.redirect('/public/memoform.html');});
 app.get('/createMemo', (req, res) => {res.redirect('/public/memoform.html');});
@@ -66,6 +67,7 @@ app.get('/showMemos', report.show_memos);
 app.get('/deleteMemo', report.delete_memo);
 app.get('/toClose', report.close_report);
 app.get('/closed', report.get_closed);
+app.get('/pending', report.get_pending);
 app.get('/read', report.get_read);
 app.get('/unread', report.get_unread);
 
