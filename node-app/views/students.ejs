@@ -82,7 +82,7 @@ body {
 <input type="text" id="filter_users" onkeyup="myFunction()" placeholder="Search for Students">
 <ul id="users-list">
   <% students.forEach((student) => { %>
-  <li><a href='/student?username=<%=student.username%>'> <%= student.name %> </a></li>
+  <li><a href='/student?username=<%=student.username%>'> <%= student.username %> </a></li>
   <% }) %>
 </ul>
 </body>

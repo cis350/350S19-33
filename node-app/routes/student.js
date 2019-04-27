@@ -2,7 +2,7 @@
 var session = require('client-sessions');
 const ObjectId = require('mongodb').ObjectID;
 
-const Student = require('../data/Student.js');
+const Student = require('../data/StudentUser.js');
 const Report = require('../data/Report.js');
 
 const getStudents = function(req, res) {
