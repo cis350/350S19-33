@@ -76,6 +76,7 @@ tr:hover {
       <th scope="col">Name</th>
       <th scope="col">Location</th>
       <th scope="col">Time</th>
+      <th scope="col">Date</th>
     </tr>
   </thead>
   <tbody>
@@ -84,6 +85,7 @@ tr:hover {
         <th> <a href='/event?id=<%=event.id%>'> <%= event.name %> </a>  </th>
         <td> <%= event.location %> </td>
         <td> <%= event.time %> </td>
+        <td> <%= event.date %> </td>
       </tr>
     <% }); %>
   </tbody>
