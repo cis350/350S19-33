@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.view.Menu;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.net.URL;
 
@@ -178,23 +179,20 @@ public class ReportActivity extends AppCompatActivity {
             }
         }
 
-
-        /*@Override
+        @Override
         protected void onPostExecute(final String result) {
-            showProgress(false);
-
-            if (result.equals("signed up")) {
-                Intent i = new Intent(getBaseContext(), ReportListActivity.class);
-                startActivity(i);
-            } else if (result.equals("username taken")) {
-                mUsernameView.setError(getString(R.string.error_username_taken));
-                mUsernameView.requestFocus();
+            if (result.contains("report submitted")) {
+                Toast myToast =Toast.makeText(getApplicationContext(), "You successfully created a report!",
+                        Toast.LENGTH_LONG);
+                myToast.setMargin(50,50);
+                myToast.show();
             } else {
-//                mUsernameView.setError(getString(R.string.error_register));
-                mUsernameView.setError(result);
-                mUsernameView.requestFocus();
+                Toast myToast =Toast.makeText(getApplicationContext(), "There was a problem in creating a report.",
+                        Toast.LENGTH_LONG);
+                myToast.setMargin(50,50);
+                myToast.show();
             }
-        }*/
+        }
 
     }
 
