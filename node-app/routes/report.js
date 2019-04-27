@@ -200,8 +200,7 @@ const addComment = function(req, res){
                     var newComment = new Comment({
                         reportId: id,
                         content: comment,
-                        adminCommenting: person.email,
-                        studentCommenting: report.studentUsername,
+                        user: person.email,
                         role: role,
                         date: Date.now()
                     });

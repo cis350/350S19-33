@@ -138,9 +138,9 @@ window.onclick = function(event) {
     <% comments.forEach((comment) => { %>
         <% if (report.id == comment.reportId) { %>
                 <% if (comment.role == "admin") { %>
-                                  <p> <%= "Admin " + comment.adminCommenting + " says " + comment.content %><p>
+                                  <p> <%= "Admin " + comment.user + " says " + comment.content %><p>
                                     <% } else { %>
-                                    <%= "Student " + comment.studentCommenting + " says " + comment.content %>
+                                    <%= "Student " + comment.user + " says " + comment.content %>
                                                                         <% } } %>
                                        <% }) %>
     </form>
