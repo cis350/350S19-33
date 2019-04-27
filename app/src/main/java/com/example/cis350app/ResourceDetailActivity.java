@@ -1,7 +1,10 @@
 package com.example.cis350app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class ResourceDetailActivity extends AppCompatActivity {
     @Override
@@ -30,5 +33,13 @@ public class ResourceDetailActivity extends AppCompatActivity {
                     .add(R.id.resource_singleton_container, fragment)
                     .commit();
         }
+        ImageButton home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

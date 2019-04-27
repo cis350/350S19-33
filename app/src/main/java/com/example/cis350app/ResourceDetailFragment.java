@@ -1,6 +1,8 @@
 package com.example.cis350app;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -78,6 +81,15 @@ public class ResourceDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.resource_textview)).setText(mItem.toString());
+            ((ImageButton) rootView.findViewById(R.id.home_button)).
+                    setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(getContext(), HomeActivity.class);
+                            startActivity(i);
+                        }
+                    }
+            );
         }
 
         return rootView;

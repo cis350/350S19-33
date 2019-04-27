@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import com.example.cis350app.data.ResourceContent;
 
@@ -70,6 +70,15 @@ public class ResourceListActivity extends AppCompatActivity {
         });
 
         resource_list.setAdapter(adapter);
+
+        ImageButton home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     public static ResourceContent.Resource getResource(String name){
