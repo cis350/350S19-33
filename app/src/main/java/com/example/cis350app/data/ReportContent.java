@@ -53,10 +53,10 @@ public class ReportContent {
         public final String subject; // subject of report
         public final String description; //description of incident
         public final String person; //TODO make boolean
-        public List<String> comments = new ArrayList<String>(); //comments on
+       public List<String> comments = new ArrayList<String>(); //comments on
 
         public Report(String id, String username, String name, String date, String subject, String description,
-                      String person, List<String> comments) {
+                      String person) {
             this.id = id;
             this.username = username;
             this.name = name;
@@ -64,7 +64,7 @@ public class ReportContent {
             this.subject = subject;
             this.description = description;
             this.person = person;
-            this.comments = comments;
+            //this.comments = comments;
         }
 
         @Override

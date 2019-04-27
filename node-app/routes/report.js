@@ -248,7 +248,7 @@ const addComment = function(req, res){
 
 const addCommentAndroid = function(req, res){
     const id = req.query.id;
-    const comment = req.body.comment;
+    const comment = req.query.comment;
     const person = req.query.userName;
     const role = "student";
     

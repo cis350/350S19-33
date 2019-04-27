@@ -129,21 +129,6 @@ public class ReportDetailActivity extends AppCompatActivity {
                 mTextView.setText(editTextValue);
             }*/
 
-        Button btnDelete = (Button) findViewById(R.id.delete_submit_button);
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    // deleteTask = new ReportDetailActivity.DeleteReportTask();
-                    deleteTask.execute((Void) null);
-                    deleteTask = null;
-                } catch (Exception e) {
-                    deleteTask = null;
-                }
-            }
-        });
-
-
     /*private void loadSavedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -177,7 +162,9 @@ public class ReportDetailActivity extends AppCompatActivity {
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
+            //eventID = getIntent().getStringExtra(EventDetailFragment.ARG_ITEM_ID);
             id = getIntent().getStringExtra(ReportDetailFragment.ARG_ITEM_ID);
+            System.out.println("got id: " + id);
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
@@ -189,6 +176,23 @@ public class ReportDetailActivity extends AppCompatActivity {
                     .add(R.id.report_detail_container, fragment)
                     .commit();
         }
+        Button btnDelete = (Button) findViewById(R.id.delete_submit_button);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    System.out.println("asdfasdfasdf");
+                    deleteTask = new ReportDetailActivity.DeleteReportTask(id);
+                    deleteTask.execute((Void) null);
+                    deleteTask = null;
+                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+                } catch (Exception e) {
+                    deleteTask = null;
+                }
+            }
+        });
+
+
 
 
     }
@@ -230,42 +234,43 @@ public class ReportDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-        public static class DeleteReportTask extends AsyncTask<Void, Void, String> {
+    public static class DeleteReportTask extends AsyncTask<Void, Void, String> {
 
-            private final String mId;
+        private final String mId;
 
-            DeleteReportTask(String id) {
-                mId = id;
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
-                    URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
-                    System.out.println(url);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.connect();
-
-                    Scanner in = new Scanner(url.openStream());
-                    String msg = in.nextLine();
-                    JSONObject jo = new JSONObject(msg);
-                    String result = jo.getString("result");
-                    return result;
-                } catch (Exception e) {
-
-                    return e.getMessage();
-                }
-            }
-
+        DeleteReportTask(String id) {
+            mId = id;
         }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                System.out.println("hello print url");
+                URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
+                System.out.println(url);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                String result = jo.getString("result");
+                return result;
+            } catch (Exception e) {
+
+                return e.getMessage();
+            }
+        }
+
+    }
 
     public static class CommentTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
         @Override
         protected List<ReportContent.Report> doInBackground(Void... params) {
             try {
-                System.out.println("url: " + "http://10.0.2.2:3000/addComment?id=" +
-                        id + "&comment=" + commentString);
+                //System.out.println("url: " + "http://10.0.2.2:3000/addCommentAndroid?id=" +
+                     //   id + "&username" + username + "&comment=" + commentString);
                 URL url = new URL("http://10.0.2.2:3000/addComment?id=" +
                         id + "&comment=" + commentString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -276,7 +281,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                 String msg = in.nextLine();
                 JSONObject jo = new JSONObject(msg);
                 JSONArray arr = jo.getJSONArray("result");
-                List<ReportContent.Report> events = new ArrayList<>();
+                List<ReportContent.Report> reports = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     String id = obj.getString("id");
@@ -287,17 +292,17 @@ public class ReportDetailActivity extends AppCompatActivity {
                     String description = obj.getString("reportDescription");
                     //System.out.println("description" + description);
                     String person = obj.getString("reportForWhom");
-                    JSONArray commentsJSON = obj.getJSONArray("comments");
+                    /*JSONArray commentsJSON = obj.getJSONArray("comments");
                     List<String> comments = new ArrayList<String>(){};
                     for (int j = 0; j < commentsJSON.length(); j++) {
                         comments.add(commentsJSON.optString(j));
-                    }
+                    }*/
                     ReportContent.Report r =
-                            new ReportContent.Report(id, name, username, date, subject, description, person, comments);
-                    events.add(r);
+                            new ReportContent.Report(id, name, username, date, subject, description, person);
+                    reports.add(r);
                 }
 
-                return events;
+                return reports;
 
             } catch (Exception e) {
                 return null;
@@ -305,5 +310,4 @@ public class ReportDetailActivity extends AppCompatActivity {
         }
     }
 
-    }
-
+}
