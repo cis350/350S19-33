@@ -19,17 +19,19 @@ public class EventContent {
         public final String name; // name of event
         public final String location; // location of event
         public final String time; //time of event
+        public final String date; //date of event
         public final String host; //host of event
         public final String description; //description of event
         public final String[] comments; //comments on event
         public final String[] students; //students registered for the event
 
-        public Event(String id, String name, String location, String time, String host,
+        public Event(String id, String name, String location, String time, String date, String host,
                      String description, String[] students, String[] comments) {
             this.id = id;
             this.name = name;
             this.location = location;
             this.time = time;
+            this.date = date;
             this.host = host;
             this.description = description;
             this.students = students;
@@ -39,7 +41,8 @@ public class EventContent {
         @Override
         public String toString() {
             String s = name + "\n" + "Location: " + location + "\n" + "Time: " + time +
-                    "\n" + "Host: " + host + "\n" + "Description: " + description;
+                    "\n" + "Date: " + date + "\n" + "Host: " + host + "\n" +
+                    "Description: " + description;
             return s;
         }
 

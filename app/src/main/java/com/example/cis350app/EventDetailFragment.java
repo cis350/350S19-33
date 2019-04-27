@@ -117,6 +117,7 @@ public class EventDetailFragment extends Fragment {
                     String name = obj.getString("name");
                     String location = obj.getString("location");
                     String time = obj.getString("time");
+                    String date = obj.getString("date");
                     String host = obj.getString("host");
                     String description = obj.getString("description");
                     JSONArray studentsJSON = obj.getJSONArray("students");
@@ -130,7 +131,8 @@ public class EventDetailFragment extends Fragment {
                         comments[j] = commentsJSON.optString(j);
                     }
                     EventContent.Event e =
-                            new EventContent.Event(id, name, location, time, host, description, students, comments);
+                            new EventContent.Event(id, name, location, time, date, host,
+                                    description, students, comments);
                     events.add(e);
                 }
                 return events;
