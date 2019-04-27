@@ -200,7 +200,7 @@ const addComment = function(req, res){
                     var newComment = new Comment({
                         reportId: id,
                         content: comment,
-                        user: person.email,
+                        user: person.name,
                         role: role,
                         date: Date.now()
                     });
@@ -248,7 +248,7 @@ const addComment = function(req, res){
 
 const addCommentAndroid = function(req, res){
     const id = req.query.id;
-    const comment = req.body.comment;
+    const comment = req.query.comment;
     const person = req.query.userName;
     const role = "student";
     
@@ -620,6 +620,7 @@ const saveStudentReport = function(req, res){
                     res.send({"result": err});
                 }
                 else {
+                    console.log("Success!");
                     res.send({"result": "report submitted"});
                 }
             });
