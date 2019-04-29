@@ -67,25 +67,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         }
 
 
-            /*final EditText mEdit = (EditText)v.findViewById(R.id.crime_title);
 
-            mTitleField.setText(mCrime.getTitle());
-
-            mTitleField.addTextChangedListener(new TextWatcher() {
-
-                // the user's changes are saved here
-                public void onTextChanged(CharSequence c, int start, int before, int count) {
-                    mCrime.setTitle(c.toString());
-                }
-
-                public void beforeTextChanged(CharSequence c, int start, int count, int after) {
-                    // this space intentionally left blank
-                }
-
-                public void afterTextChanged(Editable c) {
-                    // this one too
-                }
-            });*/
 
         Button btnSubmitComment = (Button) findViewById(R.id.submit_comment_button);
         final EditText newComment = (EditText) findViewById(R.id.new_comment);
@@ -98,7 +80,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                     commentTask = new CommentTask();
                     commentTask.execute((Void) null);
                     commentTask = null;
-                    startActivity(new Intent(ReportDetailActivity.this, EventListActivity.class));
+                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
                 } catch (Exception e) {
                     commentTask = null;
                 }
@@ -108,49 +90,6 @@ public class ReportDetailActivity extends AppCompatActivity {
         Button btnEdit = (Button) findViewById(R.id.edit_submit_button);
         final EditText mEdit = (EditText) findViewById(R.id.report_detail);
 
-
-        //btnEdit.setEnabled(false);
-
-       /* btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //editTextValue = mEdit.getText().toString();
-//                   /mTextView.setText(editTextValue);
-                //onBackPressed();
-            }
-        });
-*/
-
-
-
-          /*  protected void onRestoreInstanceState(Bundle savedInstanceState) {
-                super.onRestoreInstanceState(savedInstanceState);
-                editTextValue = mEditText.getText().toString();
-                mTextView.setText(editTextValue);
-            }*/
-
-    /*private void loadSavedPreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        mEdit.setText(sharedPreferences.getString("string_et1",""));
-
-    }
-    private void savePreferences(String key) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
-        editor.commit();
-    }
-    public void saveData(){
-        savePreferences("string_et1", et1.getText().toString());
-    }
-    @Override
-    public void onBackPressed(){
-        saveData();
-        super.onBackPressed();
-    }*/
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -162,9 +101,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
-            //eventID = getIntent().getStringExtra(EventDetailFragment.ARG_ITEM_ID);
+
             id = getIntent().getStringExtra(ReportDetailFragment.ARG_ITEM_ID);
-            System.out.println("got id: " + id);
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
@@ -181,7 +119,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    System.out.println("asdfasdfasdf");
+
                     deleteTask = new ReportDetailActivity.DeleteReportTask(id);
                     deleteTask.execute((Void) null);
                     deleteTask = null;
@@ -204,7 +142,6 @@ public class ReportDetailActivity extends AppCompatActivity {
     }
 
     public void LoadPreferences() {
-        System.out.println("LoadPrefe");
         SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         Boolean state = sharedPreferences.getBoolean("state", false);
         findViewById(R.id.edit_submit_button).setEnabled(state);
@@ -245,9 +182,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-                System.out.println("hello print url");
                 URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
-                System.out.println(url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
