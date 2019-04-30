@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.ScrollView;
 
 import android.os.AsyncTask;
 import com.example.cis350app.data.EventContent;
@@ -27,7 +29,6 @@ public class EventDetailFragment extends Fragment {
     private static EventListActivity.EventTask eventTask = null;
     public static ArrayList<String> ITEMS = new ArrayList<>();
     public static Map<String, EventContent.Event> ITEM_MAP = new HashMap<String, EventContent.Event>();
-    //public String currStudent = LoginActivity.getsessionUserName();
     ListView event_list;
     ArrayAdapter<String> adapter;
 
@@ -74,6 +75,7 @@ public class EventDetailFragment extends Fragment {
             // to load content from a content provider.
             mItem = ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
             Activity activity = this.getActivity();
+            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mItem.name);
@@ -90,7 +92,13 @@ public class EventDetailFragment extends Fragment {
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.event_string)).setText(mItem.toString());
             if (mItem.comments != null) {
-                ((TextView) rootView.findViewById(R.id.comment_box)).setText(mItem.commentString());
+
+
+                TextView tv = new TextView(this.getContext());
+                tv.setText(mItem.commentString());
+                ScrollView sc = (ScrollView) rootView.findViewById(R.id.comment_box);
+                sc.addView(tv);
+                //((ScrollView) rootView.findViewById(R.id.comment_box)).setText(mItem.commentString());
             }
         }
         return rootView;
