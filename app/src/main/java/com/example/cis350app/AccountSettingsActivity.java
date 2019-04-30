@@ -180,4 +180,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     }
 
+    public void home_button(View view) {
+        startActivity(new Intent(AccountSettingsActivity.this, HomeActivity.class));
+    }
+
 }
