@@ -87,6 +87,7 @@
         android:layout_marginEnd="54dp"
         android:layout_marginRight="54dp"
         android:layout_marginBottom="443dp"
+        android:background="#008577"
         android:text="Register/Unregister for this event"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +122,7 @@
         android:layout_marginEnd="138dp"
         android:layout_marginRight="138dp"
         android:layout_marginBottom="168dp"
-        android:background="#4A9C67"
+        android:background="#008577"
         android:text="Submit Comment"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,4 +130,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/home_button"
+        android:layout_width="45dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="183dp"
+        android:layout_marginLeft="183dp"
+        android:layout_marginTop="599dp"
+        android:layout_marginEnd="183dp"
+        android:layout_marginRight="183dp"
+        android:layout_marginBottom="89dp"
+        android:background="#008577"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_home_black_24dp" />
 </android.support.constraint.ConstraintLayout>

@@ -11,3 +11,4 @@
     app:layoutManager="LinearLayoutManager"
     tools:context=".NotificationListActivity"
     tools:listitem="@layout/notification_list_content" />
+

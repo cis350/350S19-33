@@ -75,7 +75,7 @@ public class ResourceContent {
 
         @Override
         public String toString() {
-            String s = name + "\n" + "Description: " + description;
+            String s = name + "qzxq" + "Description: \n" + description;
             return s;
         }
 

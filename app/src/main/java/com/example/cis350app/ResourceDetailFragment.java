@@ -80,7 +80,11 @@ public class ResourceDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.resource_textview)).setText(mItem.toString());
+            String[] s = mItem.toString().split("qzxq");
+            String name = s[0];
+            String desc = s[1];
+            ((TextView) rootView.findViewById(R.id.title)).setText(name);
+            ((TextView) rootView.findViewById(R.id.description)).setText(desc);
             ((ImageButton) rootView.findViewById(R.id.home_button)).
                     setOnClickListener(new View.OnClickListener() {
                         @Override
