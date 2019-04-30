@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.content.Intent;
 
@@ -90,6 +91,15 @@ public class EventListActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, //fix this
                 ITEMS_UNREGISTERED
         );
+
+        ImageButton home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
+                startActivity(i);
+            }
+        });
 
         //put listeners on the admin items in the listviews
         event_list_registered.setOnItemClickListener(new AdapterView.OnItemClickListener() {

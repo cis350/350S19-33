@@ -42,4 +42,8 @@ public class ResourceDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void create_resource(View view) {
+        startActivity(new Intent(ResourceDetailActivity.this, ResourceCreateActivity.class));
+    }
 }

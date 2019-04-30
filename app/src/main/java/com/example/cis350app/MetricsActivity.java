@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,15 @@ public class MetricsActivity extends AppCompatActivity {
 
         mAuthTask = new MetricTask(LoginActivity.getsessionUserName());
         mAuthTask.execute((Void) null);
+
+        ImageButton home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     public class MetricTask extends AsyncTask<Void, Void, String> {

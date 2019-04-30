@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Button;
 import android.os.AsyncTask;
@@ -84,6 +85,15 @@ public class EventDetailActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     commentTask = null;
                 }
+            }
+        });
+
+        ImageButton home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), HomeActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -186,5 +196,9 @@ public class EventDetailActivity extends AppCompatActivity {
                 return null;
             }
         }
+    }
+
+    public void home_button(View view) {
+        startActivity(new Intent(EventDetailActivity.this, HomeActivity.class));
     }
 }
