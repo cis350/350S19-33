@@ -192,9 +192,10 @@ public class ReportListActivity extends AppCompatActivity {
                     String date = obj.getString("date");
                     String subject = obj.getString("subject");
                     String description = obj.getString("reportDescription");
-                    //System.out.println("description" + description);
+                    System.out.println("description" + description);
                     String person = obj.getString("reportForWhom");
-                    /*JSONArray commentsJSON = obj.getJSONArray("comments");
+                   // JSONArray commentsJSON = obj.getJSONArray("comments");
+                    /*System.out.println("comm JSON" + commentsJSON);
                     List<String> comments = new ArrayList<String>(){};
                     for (int j = 0; j < commentsJSON.length(); j++) {
                         comments.add(commentsJSON.optString(j));

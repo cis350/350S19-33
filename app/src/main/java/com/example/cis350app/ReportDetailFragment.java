@@ -116,9 +116,13 @@ public class ReportDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         //if (mItem != null) {
         // ((TextView) rootView.findViewById(R.id.report_textview)).setText(mItem.toString());
-        System.out.println(getArguments());
-        ((TextView) rootView.findViewById(R.id.report_textview)).setText(getArguments().toString());
-        //}
+        System.out.println("these are arguments" + getArguments());
+        if(mItem != null) {
+            ((TextView) rootView.findViewById(R.id.report_textview)).setText(mItem.toString());
+            //}
+        }
+
+
 
         return rootView;
     }

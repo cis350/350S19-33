@@ -9,15 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//copy!!!
+public class CommentContent {
 
-public class ReportContent {
+    public static final List<Comment> ITEMS = new ArrayList<Comment>();
 
-    public static final List<Report> ITEMS = new ArrayList<Report>();
+    public static final Map<String, Comment> ITEM_MAP = new HashMap<String, Comment>();
 
-    public static final Map<String, Report> ITEM_MAP = new HashMap<String, Report>();
-
-    public static void addItem(ReportContent.Report item) {
+    public static void addItem(CommentContent.Comment item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
@@ -47,46 +45,33 @@ public class ReportContent {
     /**
      * A report item
      */
-    public static class Report{
+    public static class Comment{
         public final String id; // unique ID of the report
-        public final String username;
-        public final String name; //optional input for name, otherwise default is anon
-        public final String date; //date report submitted
-        public final String subject; // subject of report
-        public final String description; //description of incident
-        public final String person; //TODO make boolean
-       public List<String> comments = new ArrayList<String>(); //comments on
+        public final String reportId;
+        public final String content; //optional input for name, otherwise default is anon
+        public final String user; //date report submitted
+        public final String role; // subject of report
+        public final String date; //description of incident
 
-        public Report(String id, String username, String name, String date, String subject, String description,
-                      String person ) {
+
+        public Comment(String id, String reportId, String content, String user, String role, String date) {
             this.id = id;
-            this.username = username;
-            this.name = name;
+            this.reportId = reportId;
+            this.content = content;
+            this.user = user;
+            this.role = role;
             this.date = date;
-            this.subject = subject;
-            this.description = description;
-            this.person = person;
+            //this.person = person;
             //this.comments = comments;
         }
 
         @Override
         public String toString() {
-            String comments = commentString();
-            String s = "Name: " + name + "\n" + "Description: " + description + "Comments:" + comments;
-            return s;
+            //String comments = commentString();
+            String c = role + ":" +content;
+            return c;
         }
 
-        public String commentString() {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < comments.size(); i++) {
-                sb.append(comments.indexOf(i));
-                sb.append("\n");
-            }
-            return sb.toString();
-        }
 
-        public void addComment(String comment) {
-            comments.add(comment);
-        }
     }
 }
