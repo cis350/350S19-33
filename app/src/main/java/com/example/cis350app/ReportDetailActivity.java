@@ -3,6 +3,7 @@ package com.example.cis350app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -22,7 +24,8 @@ import java.util.Map;
 import java.util.Scanner;
 import com.example.cis350app.data.ReportContent;
 import com.example.cis350app.data.CommentContent;
-
+import android.content.Context;
+import android.widget.ListView;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -39,6 +42,7 @@ import android.view.View.OnClickListener;
 
 import android.preference.PreferenceManager;
 
+//FILE BETTER SAVE
 public class ReportDetailActivity extends AppCompatActivity {
     private static DeleteReportTask deleteTask = null;
     private static String id;
@@ -46,7 +50,10 @@ public class ReportDetailActivity extends AppCompatActivity {
     private static CommentTask commentTask = null;
     public static List<CommentContent.Comment> ITEMS = new ArrayList<>();
     public static Map<String, CommentContent.Comment> ITEM_MAP = new HashMap<String, CommentContent.Comment>();
-
+    public static Context context;
+    public List<CommentContent.Comment> comments = new ArrayList<>();
+    public ArrayAdapter contentAdapter;
+    public ListView listview;
 
     /**
      * An activity representing a single Report detail screen. This
@@ -59,8 +66,11 @@ public class ReportDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+        context = ReportDetailActivity.this;
+
 
 
         // Show the Up button in the action bar.
@@ -82,6 +92,10 @@ public class ReportDetailActivity extends AppCompatActivity {
                     commentTask = new CommentTask(id);
                     commentTask.execute((Void) null);
                     commentTask = null;
+                    //comments.add()
+                    //create addCommentTask()
+                    //create set On Click Listener and then add that comment to the comments list
+
                     startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
                 } catch (Exception e) {
                     commentTask = null;
@@ -124,11 +138,19 @@ public class ReportDetailActivity extends AppCompatActivity {
             ITEM_MAP = new HashMap<String, CommentContent.Comment>();
             commentTask.execute((Void) null);;
             List<CommentContent.Comment> comments = commentTask.get();
-            for (CommentContent.Comment c : comments) {
-                System.out.println(c);
+            //String comm = addCommentTas.get();
+            Log.v("32", "com" + comments);
+            ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail_comment, comments);
+            Log.v("35", "" + contentAdapter);
+            listview = (ListView) findViewById(R.id.comment_list);
+            Log.v("74", "whoop");
+            listview.setAdapter(contentAdapter);
+
+            /*for (CommentContent.Comment c : comments) {
+                System.out.println("comasdf" + c);
                 ITEMS.add(c);
                 ITEM_MAP.put(c.id, c);
-            }
+            }*/
             commentTask = null;
         } catch (Exception e) {
             commentTask = null;
@@ -150,6 +172,22 @@ public class ReportDetailActivity extends AppCompatActivity {
         });
 
 
+        //View recyclerView = findViewById(R.id.comment_list);
+        //assert recyclerView != null;
+        //setupRecyclerView((RecyclerView) recyclerView);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+        //        R.id.comment_list, comments);
+        //sp.setAdapter(adapter);
+
+       // mDialog.dismiss();
+        Log.v("11", "wsaup");
+        listview = (ListView) findViewById(R.id.comment_list);
+        System.out.println("asdf" + contentAdapter);
+        Log.v("12", "lalala");
+        CommentTask ct = new CommentTask(id);
+        //Log.v("13", "ct" + ct);
+        ct.execute((Void) null);
+        //List<CommentContent.Comment> comms = ct.get();
 
 
     }
@@ -222,6 +260,8 @@ public class ReportDetailActivity extends AppCompatActivity {
     public static class CommentTask extends AsyncTask<Void, Void, List<CommentContent.Comment>> {
 
         private final String mId;
+        public List<CommentContent.Comment> comments = new ArrayList<>();
+
 
         CommentTask(String id) {
             mId = id;
@@ -237,26 +277,59 @@ public class ReportDetailActivity extends AppCompatActivity {
 
                 Scanner in = new Scanner(url.openStream());
                 String msg = in.nextLine();
-
+                Log.v("2", "hello");
                 JSONObject jo = new JSONObject(msg);
+                Log.v("3", msg);
                 JSONArray arr = jo.getJSONArray("result");
-                List<CommentContent.Comment> comments = new ArrayList<>();
+                Log.v("4", arr.toString());
+                //Log.v("5", "" + arr.length());
                 for (int i = 0; i < arr.length(); i++) {
+
                     JSONObject obj = arr.getJSONObject(i);
-                    String id = obj.getString("id");
+                    Log.v("5", obj.toString());
+                    String id = obj.getString("_id");
                     String reportId = obj.getString("reportId");
+                    Log.v("1", "reportID" + reportId);
                     String content = obj.getString("content");
                     String user = obj.getString("user");
                     String role = obj.getString("role");
                     String date = obj.getString("date");
                     CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
+                    Log.v("6", "" + c);
+                    System.out.println("comment" + c );
                     comments.add(c);
                 }
+                 ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail, comments);
+
+                System.out.println("adap comments" + comments);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
+                //create array adapter
+                //ListView
                 return comments;
             } catch (Exception e) {
                 return null;
             }
         }
+
+        /*protected void onPostExecute(String result){
+            // convert result string in name and phone array and pass to contentAdapet
+            // Content adapter is extended from array adapter and used to display data in listview which is working fine.
+            Log.v
+            ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail, comments);
+            Log.v("44", "cont" + contentAdapter);
+            Log.v()
+        //ListView listView = (ListView) findViewById(R.id.comment_list);
+            //ReportDetailActivity.this.setAdapter(contentAdapter);
+        }
+        //protected void onPostExecute(Void unused) {
+            // Pass the result data back to the main activity
+
+         //   ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+           //         R.id.comment_list, comments);
+           // sp.setAdapter(adapter);
+
+            //mDialog.dismiss();
+        //}*/
 
     }
 
