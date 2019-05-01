@@ -1,9 +1,12 @@
 package com.example.cis350app;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import  android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.view.View;
@@ -36,6 +39,9 @@ public class ResourceCreateActivity extends AppCompatActivity {
         setContentView(R.layout.create_resource);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Window w = getWindow();
+        w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         Button submit = (Button) findViewById(R.id.save_resource_button);
 
@@ -96,5 +102,9 @@ public class ResourceCreateActivity extends AppCompatActivity {
                 return null;
             }
         }
+    }
+
+    public void home_button(View view) {
+        startActivity(new Intent(ResourceCreateActivity.this, HomeActivity.class));
     }
 }
