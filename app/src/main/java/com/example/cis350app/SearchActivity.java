@@ -144,4 +144,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void home_button(View view) {
+        startActivity(new Intent(SearchActivity.this, HomeActivity.class));
+    }
 }
