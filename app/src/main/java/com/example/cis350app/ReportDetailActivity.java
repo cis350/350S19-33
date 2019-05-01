@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import com.example.cis350app.data.ReportContent;
+import com.example.cis350app.data.CommentContent;
 
 
 import java.net.HttpURLConnection;
@@ -43,6 +44,8 @@ public class ReportDetailActivity extends AppCompatActivity {
     private static String id;
     private static String commentString = null;
     private static CommentTask commentTask = null;
+    public static List<CommentContent.Comment> ITEMS = new ArrayList<>();
+    public static Map<String, CommentContent.Comment> ITEM_MAP = new HashMap<String, CommentContent.Comment>();
 
 
     /**
@@ -68,7 +71,6 @@ public class ReportDetailActivity extends AppCompatActivity {
 
 
 
-
         Button btnSubmitComment = (Button) findViewById(R.id.submit_comment_button);
         final EditText newComment = (EditText) findViewById(R.id.new_comment);
 
@@ -77,7 +79,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     commentString = newComment.getText().toString();
-                    commentTask = new CommentTask();
+                    commentTask = new CommentTask(id);
                     commentTask.execute((Void) null);
                     commentTask = null;
                     startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
@@ -113,6 +115,23 @@ public class ReportDetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.report_detail_container, fragment)
                     .commit();
+        }
+
+        try {
+            //String username = LoginActivity.getsessionUserName();
+            commentTask = new CommentTask(id);
+            ITEMS = new ArrayList<>();
+            ITEM_MAP = new HashMap<String, CommentContent.Comment>();
+            commentTask.execute((Void) null);;
+            List<CommentContent.Comment> comments = commentTask.get();
+            for (CommentContent.Comment c : comments) {
+                System.out.println(c);
+                ITEMS.add(c);
+                ITEM_MAP.put(c.id, c);
+            }
+            commentTask = null;
+        } catch (Exception e) {
+            commentTask = null;
         }
         Button btnDelete = (Button) findViewById(R.id.delete_submit_button);
 
@@ -200,14 +219,55 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     }
 
-    public static class CommentTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
+    public static class CommentTask extends AsyncTask<Void, Void, List<CommentContent.Comment>> {
+
+        private final String mId;
+
+        CommentTask(String id) {
+            mId = id;
+        }
+
+        @Override
+        protected List<CommentContent.Comment> doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/getComment?reportId=" + mId);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+
+                JSONObject jo = new JSONObject(msg);
+                JSONArray arr = jo.getJSONArray("result");
+                List<CommentContent.Comment> comments = new ArrayList<>();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String id = obj.getString("id");
+                    String reportId = obj.getString("reportId");
+                    String content = obj.getString("content");
+                    String user = obj.getString("user");
+                    String role = obj.getString("role");
+                    String date = obj.getString("date");
+                    CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
+                    comments.add(c);
+                }
+                return comments;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+    }
+
+    /*public static class CommentTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
         @Override
         protected List<ReportContent.Report> doInBackground(Void... params) {
             try {
-                //System.out.println("url: " + "http://10.0.2.2:3000/addCommentAndroid?id=" +
-                     //   id + "&username" + username + "&comment=" + commentString);
+
                 URL url = new URL("http://10.0.2.2:3000/addComment?id=" +
                         id + "&comment=" + commentString);
+                System.out.println(url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
@@ -227,11 +287,11 @@ public class ReportDetailActivity extends AppCompatActivity {
                     String description = obj.getString("reportDescription");
                     //System.out.println("description" + description);
                     String person = obj.getString("reportForWhom");
-                    /*JSONArray commentsJSON = obj.getJSONArray("comments");
+                   /* JSONArray commentsJSON = obj.getJSONArray("comments");
                     List<String> comments = new ArrayList<String>(){};
                     for (int j = 0; j < commentsJSON.length(); j++) {
                         comments.add(commentsJSON.optString(j));
-                    }*/
+                    }
                     ReportContent.Report r =
                             new ReportContent.Report(id, name, username, date, subject, description, person);
                     reports.add(r);
@@ -243,6 +303,6 @@ public class ReportDetailActivity extends AppCompatActivity {
                 return null;
             }
         }
-    }
+    }*/
 
 }

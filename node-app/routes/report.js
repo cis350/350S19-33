@@ -246,6 +246,7 @@ const addComment = function(req, res){
     });
 }
 
+
 const addCommentAndroid = function(req, res){
     const id = req.query.id;
     const comment = req.query.comment;
@@ -550,6 +551,20 @@ const metricCount = function(req, res) {
     });
 }
 
+const getComment = function(req, res){
+    const reportId = req.query.reportId;
+
+    Comment.find({reportId: reportId}, (err,comments) =>{
+        if(err){
+            res.send({'result': error});
+        }else if(!comments){
+            res.send({'result' : "0"});
+        } else{
+            res.send({'result' : comments});
+        }
+    });
+}
+
 
 const getStudentReport = function(req, res) {
     const searchName = req.query.username;
@@ -740,7 +755,8 @@ const routes = {
     delete_report: deleteReport,
     add_comment_android: addCommentAndroid,
     forward_report: forwardReport,
-    get_pending: getPending
+    get_pending: getPending,
+    get_comment: getComment
 };
 
 module.exports = routes;
