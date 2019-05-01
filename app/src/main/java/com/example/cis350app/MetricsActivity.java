@@ -29,6 +29,33 @@ public class MetricsActivity extends AppCompatActivity {
         closedTextview = (TextView) findViewById(R.id.numResolved);
         noActionTextview = (TextView) findViewById(R.id.numUnAction);
 
+        pendingTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v1) {
+                Intent launchActivity1= new Intent(MetricsActivity.this,ReportListActivity.class);
+                startActivity(launchActivity1);
+            }
+        });
+
+        closedTextview.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v1) {
+                Intent launchActivity1= new Intent(MetricsActivity.this,ReportListActivity.class);
+                startActivity(launchActivity1);
+
+            }
+        });
+
+        noActionTextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v1) {
+                Intent launchActivity1= new Intent(MetricsActivity.this,ReportListActivity.class);
+                startActivity(launchActivity1);
+
+            }
+        });
+
         mAuthTask = new MetricTask(LoginActivity.getsessionUserName());
         mAuthTask.execute((Void) null);
 
