@@ -39,7 +39,7 @@ import java.util.Scanner;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-//CORRECT FILEEEE UGH
+
 public class ReportListActivity extends AppCompatActivity {
 
     /**
