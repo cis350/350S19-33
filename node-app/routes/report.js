@@ -176,6 +176,9 @@ const closeReport = function(req, res){
     });
 }
 
+
+
+
 const addComment = function(req, res){
     const id = req.query.id;
     const comment = req.body.comment;
@@ -248,12 +251,17 @@ const addComment = function(req, res){
 
 
 const addCommentAndroid = function(req, res){
-    const id = req.query.id;
-    const comment = req.query.comment;
+    const id = req.query.reportId;
+    console.log(req.query.reportId);
+    //const user = req.query.username;
+    const comment = req.query.content;
     const person = req.query.userName;
     const role = "student";
+
+    console.log("hello");
     
     Report.findOne( {id: id}, (err, report) => {
+    console.log("id" + id);
         if (err) {
             res.send('Error' + err);
         }
@@ -265,9 +273,8 @@ const addCommentAndroid = function(req, res){
             var newComment = new Comment({
                 reportId: id,
                 content: comment,
-                adminCommenting: person.email,
-                studentCommenting: report.studentUsername,
-                role: role,
+                user: report.studentUsername,
+                role: "student",
                 date: Date.now()
             });
             newComment.save((err) => {
@@ -648,7 +655,7 @@ const saveStudentReport = function(req, res){
 
 const deleteReport = function(req,res){
     const id = req.query.id;
-    
+
     const queryObject = { "id" : id };
     
     Report.deleteOne({ "id" : id }, function (err) {

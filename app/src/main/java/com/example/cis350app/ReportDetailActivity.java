@@ -277,31 +277,23 @@ public class ReportDetailActivity extends AppCompatActivity {
 
                 Scanner in = new Scanner(url.openStream());
                 String msg = in.nextLine();
-                Log.v("2", "hello");
                 JSONObject jo = new JSONObject(msg);
-                Log.v("3", msg);
                 JSONArray arr = jo.getJSONArray("result");
-                Log.v("4", arr.toString());
-                //Log.v("5", "" + arr.length());
                 for (int i = 0; i < arr.length(); i++) {
 
                     JSONObject obj = arr.getJSONObject(i);
                     Log.v("5", obj.toString());
                     String id = obj.getString("_id");
                     String reportId = obj.getString("reportId");
-                    Log.v("1", "reportID" + reportId);
                     String content = obj.getString("content");
                     String user = obj.getString("user");
                     String role = obj.getString("role");
                     String date = obj.getString("date");
                     CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
-                    Log.v("6", "" + c);
-                    System.out.println("comment" + c );
                     comments.add(c);
                 }
                  ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail, comments);
 
-                System.out.println("adap comments" + comments);
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
                 //create array adapter
                 //ListView
@@ -332,6 +324,112 @@ public class ReportDetailActivity extends AppCompatActivity {
         //}*/
 
     }
+
+    public class CreateReportTask extends AsyncTask<Void, Void, String> {
+        private final String mName;
+        private final String mDate;
+        private final String mSubject;
+        private final String mDescription;
+        private final String mPerson;
+
+        CreateReportTask(String name, String date, String subject, String description, String person) {
+            mName = name;
+            mDate = date;
+            mSubject = subject;
+            mDescription = description;
+            mPerson = person;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                String mUsername = LoginActivity.getsessionUserName();
+                URL url = new URL(
+                        "http://10.0.2.2:3000/saveStudentReport?username=" + mUsername + "&name=" + mName +
+                                "&date=" + mDate + "&subject=" + mSubject + "&description=" + mDescription +
+                                "&person=" + mPerson);
+                System.out.println(url);
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                String result = jo.getString("result");
+                return result;
+            } catch (Exception e) {
+
+                return e.getMessage();
+            }
+        }
+
+
+    }
+
+    public static class AddCommentTask extends AsyncTask<Void, Void, List<CommentContent.Comment>> {
+
+        private final String mReportId;
+        private final String mContent;
+        private final String mUser;
+        private final String mRole;
+        private final String mDate;
+        public List<CommentContent.Comment> comments = new ArrayList<>();
+
+
+        AddCommentTask(String id, String content, String user, String role, String date) {
+            mReportId = id;
+            mContent = content;
+            mUser = user;
+            mRole = role;
+            mDate = date;
+
+        }
+
+        @Override
+        protected List<CommentContent.Comment> doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
+                        "&content=" + mContent + "&user=" + mUser + "&role=" + mRole + "&date=" + mDate);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                Log.v("2", "hello");
+                JSONObject jo = new JSONObject(msg);
+                Log.v("3", msg);
+                JSONArray arr = jo.getJSONArray("result");
+                Log.v("4", arr.toString());
+                //Log.v("5", "" + arr.length());
+                for (int i = 0; i < arr.length(); i++) {
+
+                    JSONObject obj = arr.getJSONObject(i);
+                    String id = obj.getString("_id");
+                    String reportId = obj.getString("reportId");
+                    String content = obj.getString("content");
+                    String user = obj.getString("user");
+                    String role = obj.getString("role");
+                    String date = obj.getString("date");
+                    CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
+                    System.out.println("comment" + c);
+                    comments.add(c);
+                }
+
+
+                System.out.println("adap comments" + comments);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
+                //create array adapter
+                //ListView
+                return comments;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+
 
     /*public static class CommentTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
         @Override

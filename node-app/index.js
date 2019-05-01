@@ -125,6 +125,7 @@ app.get('/saveStudentReport', report.save_student_report);
 app.get('/editReport', report.edit_report);
 app.get('/registerStudent', event.register_student);
 app.get('/addComment', event.add_comment);
+app.get('/addReportComment', report.add_comment);
 app.get('/addCommentAndroid', report.add_comment_android);
 app.get('/deleteReport', report.delete_report);
 app.get('/getComment', report.get_comment);
