@@ -125,7 +125,7 @@ const closeReport = function(req, res){
         } else if(!report){
             res.type('html').status(200);
             res.send('No report with the id ' + id);
-        } else if (report.comment == "" || !report.comment){
+        } else if (!report.adminCommented){
             res.send("You need to respond to the report before closing");
         } else {
             report.closed = true;
@@ -535,16 +535,19 @@ const metricCount = function(req, res) {
         } else {
             var numPending = 0;
             var numClosed = 0;
+            var numNoAction = 0;
             for (var i = 0; i < reports.length; i++) {
                 const report = reports[i].toObject();
-                const closed = report.closed;
-                if (closed) {
+                if (report.closed) {
                     numClosed++;
-                } else {
+                } else if (report.adminCommented) {
                     numPending++;
+                } else {
+                    numNoAction++;
                 }
             }
-            res.send({'result': "{'numClosed': " + numClosed + ", 'numPending': " + 
+            res.send({'result': "{'numClosed': " + numClosed + 
+                ", 'numNoAction': " + numNoAction + ", 'numPending': " + 
                 numPending + "}"});
         }
     });

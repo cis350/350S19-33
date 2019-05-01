@@ -1,41 +1,24 @@
 package com.example.cis350app;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.cis350app.data.NotificationContent;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class MetricsActivity extends AppCompatActivity {
     private MetricTask mAuthTask = null;
     private TextView pendingTextView = null;
     private TextView closedTextview = null;
+    private TextView noActionTextview = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +27,7 @@ public class MetricsActivity extends AppCompatActivity {
 
         pendingTextView = (TextView) findViewById(R.id.numPending);
         closedTextview = (TextView) findViewById(R.id.numResolved);
+        noActionTextview = (TextView) findViewById(R.id.numUnAction);
 
         mAuthTask = new MetricTask(LoginActivity.getsessionUserName());
         mAuthTask.execute((Void) null);
@@ -86,17 +70,21 @@ public class MetricsActivity extends AppCompatActivity {
                             returned.equals("error")) {
                         pendingTextView.setText("Error");
                         closedTextview.setText("Error");
+                        noActionTextview.setText("Error");
                     } else if (returned.equals("0")){
                         pendingTextView.setText("0");
                         closedTextview.setText("0");
+                        noActionTextview.setText("0");
                     } else {
                         JSONObject metricObj = new JSONObject(returned);
                         pendingTextView.setText(metricObj.getString("numPending"));
                         closedTextview.setText(metricObj.getString("numClosed"));
+                        noActionTextview.setText(metricObj.getString("numNoAction"));
                     }
                 } else {
                     pendingTextView.setText("0");
                     closedTextview.setText("0");
+                    noActionTextview.setText("0");
                 }
                 return "done";
             } catch (Exception e) {
