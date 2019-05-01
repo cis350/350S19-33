@@ -54,6 +54,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     public List<CommentContent.Comment> comments = new ArrayList<>();
     public ArrayAdapter contentAdapter;
     public ListView listview;
+    private static AddCommentTask addCommentTask = null;
 
     /**
      * An activity representing a single Report detail screen. This
@@ -89,9 +90,12 @@ public class ReportDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     commentString = newComment.getText().toString();
-                    commentTask = new CommentTask(id);
-                    commentTask.execute((Void) null);
-                    commentTask = null;
+                    Log.v("6", "" + commentString);
+                    addCommentTask = new AddCommentTask(id, commentString);
+                    Log.v("7", "string");
+                    addCommentTask.execute((Void) null);
+                    addCommentTask = null;
+                    Log.v("9", "messy");
                     //comments.add()
                     //create addCommentTask()
                     //create set On Click Listener and then add that comment to the comments list
@@ -180,10 +184,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         //sp.setAdapter(adapter);
 
        // mDialog.dismiss();
-        Log.v("11", "wsaup");
         listview = (ListView) findViewById(R.id.comment_list);
         System.out.println("asdf" + contentAdapter);
-        Log.v("12", "lalala");
         CommentTask ct = new CommentTask(id);
         //Log.v("13", "ct" + ct);
         ct.execute((Void) null);
@@ -367,22 +369,20 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     }
 
+
     public static class AddCommentTask extends AsyncTask<Void, Void, List<CommentContent.Comment>> {
 
         private final String mReportId;
         private final String mContent;
-        private final String mUser;
-        private final String mRole;
-        private final String mDate;
+        //private final String mUser;
+
         public List<CommentContent.Comment> comments = new ArrayList<>();
 
 
-        AddCommentTask(String id, String content, String user, String role, String date) {
+        AddCommentTask(String id, String content) {
             mReportId = id;
             mContent = content;
-            mUser = user;
-            mRole = role;
-            mDate = date;
+
 
         }
 
@@ -390,21 +390,16 @@ public class ReportDetailActivity extends AppCompatActivity {
         protected List<CommentContent.Comment> doInBackground(Void... params) {
             try {
                 URL url = new URL("http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
-                        "&content=" + mContent + "&user=" + mUser + "&role=" + mRole + "&date=" + mDate);
+                        "&content=" + mContent);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.connect();
 
                 Scanner in = new Scanner(url.openStream());
                 String msg = in.nextLine();
-                Log.v("2", "hello");
                 JSONObject jo = new JSONObject(msg);
-                Log.v("3", msg);
                 JSONArray arr = jo.getJSONArray("result");
-                Log.v("4", arr.toString());
-                //Log.v("5", "" + arr.length());
                 for (int i = 0; i < arr.length(); i++) {
-
                     JSONObject obj = arr.getJSONObject(i);
                     String id = obj.getString("_id");
                     String reportId = obj.getString("reportId");
@@ -429,51 +424,5 @@ public class ReportDetailActivity extends AppCompatActivity {
         }
     }
 
-
-
-    /*public static class CommentTask extends AsyncTask<Void, Void, List<ReportContent.Report>> {
-        @Override
-        protected List<ReportContent.Report> doInBackground(Void... params) {
-            try {
-
-                URL url = new URL("http://10.0.2.2:3000/addComment?id=" +
-                        id + "&comment=" + commentString);
-                System.out.println(url);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.connect();
-
-                Scanner in = new Scanner(url.openStream());
-                String msg = in.nextLine();
-                JSONObject jo = new JSONObject(msg);
-                JSONArray arr = jo.getJSONArray("result");
-                List<ReportContent.Report> reports = new ArrayList<>();
-                for (int i = 0; i < arr.length(); i++) {
-                    JSONObject obj = arr.getJSONObject(i);
-                    String id = obj.getString("id");
-                    String username = obj.getString("studentUsername");
-                    String name = obj.getString("studentName");
-                    String date = obj.getString("date");
-                    String subject = obj.getString("subject");
-                    String description = obj.getString("reportDescription");
-                    //System.out.println("description" + description);
-                    String person = obj.getString("reportForWhom");
-                   /* JSONArray commentsJSON = obj.getJSONArray("comments");
-                    List<String> comments = new ArrayList<String>(){};
-                    for (int j = 0; j < commentsJSON.length(); j++) {
-                        comments.add(commentsJSON.optString(j));
-                    }
-                    ReportContent.Report r =
-                            new ReportContent.Report(id, name, username, date, subject, description, person);
-                    reports.add(r);
-                }
-
-                return reports;
-
-            } catch (Exception e) {
-                return null;
-            }
-        }
-    }*/
 
 }

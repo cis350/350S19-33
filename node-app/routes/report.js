@@ -252,14 +252,10 @@ const addComment = function(req, res){
 
 const addCommentAndroid = function(req, res){
     const id = req.query.reportId;
-    console.log(req.query.reportId);
-    //const user = req.query.username;
     const comment = req.query.content;
     const person = req.query.userName;
     const role = "student";
 
-    console.log("hello");
-    
     Report.findOne( {id: id}, (err, report) => {
     console.log("id" + id);
         if (err) {
