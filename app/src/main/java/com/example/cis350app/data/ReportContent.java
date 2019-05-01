@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//copy!!!
+
 public class ReportContent {
 
     public static final List<Report> ITEMS = new ArrayList<Report>();
@@ -56,7 +58,7 @@ public class ReportContent {
        public List<String> comments = new ArrayList<String>(); //comments on
 
         public Report(String id, String username, String name, String date, String subject, String description,
-                      String person) {
+                      String person ) {
             this.id = id;
             this.username = username;
             this.name = name;
