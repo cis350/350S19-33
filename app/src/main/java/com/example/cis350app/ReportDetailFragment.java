@@ -21,8 +21,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.example.cis350app.data.ReportContent.Report;
+import com.example.cis350app.data.CommentContent;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +33,7 @@ public class ReportDetailFragment extends Fragment {
     public static Map<String, Report> ITEM_MAP = new HashMap<>();
     private static String commentString = null;
     private static DeleteReportTask deleteTask = null;
+    private static AddCommentTask addCommentTask = null;
 
     private Report mItem;
 
@@ -76,32 +79,29 @@ public class ReportDetailFragment extends Fragment {
         }
 
         //submit comment button
-        /*
-        Button btnSubmitComment = (Button) findViewById(R.id.submit_comment_button);
-        final EditText newComment = (EditText) findViewById(R.id.new_comment);
+
+        Button btnSubmitComment = (Button) rootView.findViewById(R.id.submit);
+        final EditText newComment = (EditText) rootView.findViewById(R.id.new_comment);
 
         btnSubmitComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     commentString = newComment.getText().toString();
-                    Log.v("6", "" + commentString);
-                    addCommentTask = new AddCommentTask(id, commentString);
-                    Log.v("7", "string");
+                    addCommentTask = new AddCommentTask(mItem.id, commentString);
                     addCommentTask.execute((Void) null);
                     addCommentTask = null;
-                    Log.v("9", "messy");
                     //comments.add()
                     //create addCommentTask()
                     //create set On Click Listener and then add that comment to the comments list
 
-                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+                    startActivity(new Intent(getContext(), ReportListActivity.class));
                 } catch (Exception e) {
-                    commentTask = null;
+                    addCommentTask = null;
                 }
             }
         });
-        */
+
 
         //edit button
         Button btnEdit = (Button) rootView.findViewById(R.id.edit_submit_button);
@@ -156,5 +156,60 @@ public class ReportDetailFragment extends Fragment {
         }
 
     }
+
+    public static class AddCommentTask extends AsyncTask<Void, Void, List<CommentContent.Comment>> {
+
+        private final String mReportId;
+        private final String mContent;
+        //private final String mUser;
+
+        public List<CommentContent.Comment> comments = new ArrayList<>();
+
+
+        AddCommentTask(String id, String content) {
+            mReportId = id;
+            mContent = content;
+
+
+        }
+
+        @Override
+        protected List<CommentContent.Comment> doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
+                        "&content=" + mContent);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                JSONArray arr = jo.getJSONArray("result");
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String id = obj.getString("_id");
+                    String reportId = obj.getString("reportId");
+                    String content = obj.getString("content");
+                    String user = obj.getString("user");
+                    String role = obj.getString("role");
+                    String date = obj.getString("date");
+                    CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
+                    System.out.println("comment" + c);
+                    comments.add(c);
+                }
+
+
+                System.out.println("adap comments" + comments);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
+                //create array adapter
+                //ListView
+                return comments;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
 
 }
