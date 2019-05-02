@@ -40,15 +40,18 @@ public class ReportDetailFragment extends Fragment {
     public ReportDetailFragment() {
     }
 
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.report_singleton);
 
         // Load the dummy content specified by the fragment
         // arguments. In a real-world scenario, use a Loader
         // to load content from a content provider.
         mItem = (Report) getArguments().getSerializable("report");
-        System.out.println("mitem: " + mItem.toString());
         Activity activity = this.getActivity();
 
     }
@@ -56,6 +59,9 @@ public class ReportDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        System.out.println("ON CREATE VIEW!!!!");
+
         View rootView = inflater.inflate(R.layout.report_singleton, container, false);
 
         Activity activity = this.getActivity();
@@ -107,13 +113,14 @@ public class ReportDetailFragment extends Fragment {
         Button btnEdit = (Button) rootView.findViewById(R.id.edit_submit_button);
         final EditText mEdit = (EditText) rootView.findViewById(R.id.report_detail);
 
-
         //delete button
         Button btnDelete = (Button) rootView.findViewById(R.id.delete_button);
+        System.out.println("delete button null: " + btnDelete == null);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
+                    System.out.println("ONCLICK DELETE");
                     String id = mItem.id;
                     deleteTask = new ReportDetailFragment.DeleteReportTask(id);
                     deleteTask.execute((Void) null);
@@ -139,6 +146,7 @@ public class ReportDetailFragment extends Fragment {
         @Override
         protected String doInBackground(Void... params) {
             try {
+                System.out.println("delete url: " + "http://10.0.2.2:3000/deleteReport?id=" + mId);
                 URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
@@ -176,6 +184,8 @@ public class ReportDetailFragment extends Fragment {
         @Override
         protected List<CommentContent.Comment> doInBackground(Void... params) {
             try {
+                System.out.println("comment url: " + "http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
+                        "&content=" + mContent);
                 URL url = new URL("http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
                         "&content=" + mContent);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -199,7 +209,6 @@ public class ReportDetailFragment extends Fragment {
                     comments.add(c);
                 }
 
-
                 System.out.println("adap comments" + comments);
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
                 //create array adapter
@@ -210,6 +219,8 @@ public class ReportDetailFragment extends Fragment {
             }
         }
     }
+
+
 
 
 }

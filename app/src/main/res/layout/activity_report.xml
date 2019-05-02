@@ -62,21 +62,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout10"
             app:layout_constraintStart_toStartOf="@+id/textInputLayout10"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
-
-            <EditText
-                android:id="@+id/report_date"
-                android:layout_width="355dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_report_date"
-                android:imeActionId="6"
-                android:imeActionLabel="Submit Report"
-                android:imeOptions="actionUnspecified"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-        </android.support.design.widget.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayout10"
