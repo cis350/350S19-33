@@ -79,25 +79,6 @@ public class NotificationListActivity extends AppCompatActivity {
         );
 
         //put listeners on the admin items in the listviews
-        /*
-        notification_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(NotificationListActivity.this, NotificationDetailActivity.class);
-                String resourceSelected = notification_list.getItemAtPosition(position).toString();
-                System.out.println("Resource selected : " + resourceSelected);
-                NotificationContent.Notification n = getNotification(resourceSelected);
-                System.out.println("IN NOTIFICATION LIST ACTIVITY, LISTENING ON ITEMS");
-
-                System.out.println("n id: " + n.id);
-                System.out.println("n notification: " + n.toString());
-                intent.putExtra("item_id", n.id);
-                intent.putExtra("item_map", n);
-                startActivity(intent);
-            }
-        });
-*/
-        //put listeners on the admin items in the listviews
         notification_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

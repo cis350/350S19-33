@@ -1,58 +1,31 @@
 package com.example.cis350app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.AsyncTask;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Button;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.Menu;
-import android.text.TextUtils;
+import android.widget.TextView;
+
+import com.example.cis350app.data.ReportContent.Report;
+
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
-
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.HashMap;
-
-import android.view.View;
-import android.view.View.OnClickListener;
-
-
-
-import com.example.cis350app.data.ReportContent;
-
+import java.util.Map;
 
 public class ReportDetailFragment extends Fragment {
-    private static ReportListActivity.ReportTask reportTask = null;
     public static ArrayList<String> ITEMS = new ArrayList<>();
-    public static Map<String, ReportContent.Report> ITEM_MAP = new HashMap<String, ReportContent.Report>();
+    public static Map<String, Report> ITEM_MAP = new HashMap<>();
+    private static String commentString = null;
+    //private static DeleteReportTask deleteTask = null;
 
-    public static final String ARG_ITEM_ID = "id";
-    private ReportContent.Report mItem;
+    private Report mItem;
 
     public ReportDetailFragment() {
     }
@@ -61,49 +34,12 @@ public class ReportDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            String username = LoginActivity.getsessionUserName();
-            reportTask = new ReportListActivity.ReportTask(username);
-            //reportTask = new ReportListActivity.ReportTask();
-            ITEMS = new ArrayList<>();
-            ITEM_MAP = new HashMap<String, ReportContent.Report>();
-            reportTask.execute((Void) null);
-            List<ReportContent.Report> report = reportTask.get();
-            //System.out.println("get report"+ report);
-            for (ReportContent.Report r : report) {
-                //System.out.println("get the report  " + r);
-                //System.out.println("get the report id " + r.id);
-                ITEMS.add(r.id);
-                ITEM_MAP.put(r.id, r);
-            }
-            reportTask = null;
-        } catch (Exception e) {
-            reportTask = null;
-        }
-
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            System.out.println("ARGS"+ getArguments());
-            System.out.println("get id from:" + ARG_ITEM_ID);
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-            System.out.println("mItem" + mItem);
-            //mItem = ReportActivity.CreateReportTaskgetArguments();
-            //System.out.println(ITEM_MAP.get(ITEM_MAPARG_ITEM_ID));
-            //mItem = toString.(getArguments());
-            //System.out.println(mItem);
-            //mItem = NotificationListActivity.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-            System.out.println(mItem);
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                //appBarLayout.setTitle(mItem.name);
-                appBarLayout.setTitle("Your Report");
-
-            }
-        }
-
+        // Load the dummy content specified by the fragment
+        // arguments. In a real-world scenario, use a Loader
+        // to load content from a content provider.
+        mItem = (Report) getArguments().getSerializable("report");
+        System.out.println("mitem: " + mItem.toString());
+        Activity activity = this.getActivity();
 
     }
 
@@ -112,17 +48,78 @@ public class ReportDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.report_singleton, container, false);
 
+        Activity activity = this.getActivity();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         // Show the dummy content as text in a TextView.
-        //if (mItem != null) {
-        // ((TextView) rootView.findViewById(R.id.report_textview)).setText(mItem.toString());
-        System.out.println("these are arguments" + getArguments());
-        if(mItem != null) {
-            ((TextView) rootView.findViewById(R.id.report_textview)).setText(mItem.toString());
-            //}
+        if (mItem != null) {
+            ((TextView) rootView.findViewById(R.id.subject)).setText("Subject: " + mItem.subject);
+            ((TextView) rootView.findViewById(R.id.closed)).setText("Closed: " + Boolean.toString(mItem.closed));
+            ((TextView) rootView.findViewById(R.id.student)).setText("Student Username: " + mItem.username);
+            ((TextView) rootView.findViewById(R.id.date)).setText("Date: " + mItem.date);
+            ((TextView) rootView.findViewById(R.id.desc)).setText("Description: " + mItem.description);
+            ((ImageButton) rootView.findViewById(R.id.home_button)).
+                    setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(getContext(), HomeActivity.class);
+                            startActivity(i);
+                        }
+                    });
         }
 
+        //submit comment button
+        /*
+        Button btnSubmitComment = (Button) findViewById(R.id.submit_comment_button);
+        final EditText newComment = (EditText) findViewById(R.id.new_comment);
 
+        btnSubmitComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    commentString = newComment.getText().toString();
+                    Log.v("6", "" + commentString);
+                    addCommentTask = new AddCommentTask(id, commentString);
+                    Log.v("7", "string");
+                    addCommentTask.execute((Void) null);
+                    addCommentTask = null;
+                    Log.v("9", "messy");
+                    //comments.add()
+                    //create addCommentTask()
+                    //create set On Click Listener and then add that comment to the comments list
+
+                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+                } catch (Exception e) {
+                    commentTask = null;
+                }
+            }
+        });
+        */
+
+        //edit button
+        /*
+        Button btnEdit = (Button) findViewById(R.id.edit_submit_button);
+        final EditText mEdit = (EditText) findViewById(R.id.report_detail);
+         */
+
+        //delete button
+        /*
+        Button btnDelete = (Button) findViewById(R.id.delete_submit_button);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+
+                    deleteTask = new ReportDetailActivity.DeleteReportTask(id);
+                    deleteTask.execute((Void) null);
+                    deleteTask = null;
+                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+                } catch (Exception e) {
+                    deleteTask = null;
+                }
+            }
+        });
+         */
 
         return rootView;
     }

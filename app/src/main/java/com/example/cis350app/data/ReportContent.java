@@ -2,6 +2,7 @@ package com.example.cis350app.data;
 
 import android.text.format.DateFormat;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class ReportContent {
     /**
      * A report item
      */
-    public static class Report{
+    public static class Report implements Serializable {
         public final String id; // unique ID of the report
         public final String username;
         public final String name; //optional input for name, otherwise default is anon
@@ -55,10 +56,11 @@ public class ReportContent {
         public final String subject; // subject of report
         public final String description; //description of incident
         public final String person; //TODO make boolean
+        public final boolean closed;
        public List<String> comments = new ArrayList<String>(); //comments on
 
         public Report(String id, String username, String name, String date, String subject, String description,
-                      String person ) {
+                      String person, boolean closed ) {
             this.id = id;
             this.username = username;
             this.name = name;
@@ -66,14 +68,8 @@ public class ReportContent {
             this.subject = subject;
             this.description = description;
             this.person = person;
+            this.closed = closed;
             //this.comments = comments;
-        }
-
-        @Override
-        public String toString() {
-            String comments = commentString();
-            String s = "Name: " + name + "\n" + "Description: " + description + "Comments:" + comments;
-            return s;
         }
 
         public String commentString() {
