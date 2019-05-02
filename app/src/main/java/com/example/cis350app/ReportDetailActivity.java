@@ -5,19 +5,29 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.cis350app.data.CommentContent;
 import com.example.cis350app.data.ReportContent.Report;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ReportDetailActivity extends AppCompatActivity {
     Report rep = null;
     private static DeleteReportTask deleteTask = null;
+    private static AddCommentTask addCommentTask = null;
+    private static String commentString = null;
+    private EditText newComment;
+
 
 
     @Override
@@ -50,6 +60,29 @@ public class ReportDetailActivity extends AppCompatActivity {
             }
         });
 
+        newComment = (EditText) findViewById(R.id.new_comment);
+
+        Button comment = (Button) findViewById(R.id.submit);
+        comment.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    commentString = newComment.getText().toString();
+                    addCommentTask = new ReportDetailActivity.AddCommentTask(rep.id, commentString);
+                    addCommentTask.execute((Void) null);
+                    addCommentTask = null;
+                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+                } catch (Exception e) {
+                    addCommentTask = null;
+                }
+            }
+        });
+
+        EditText newcomment = (EditText) findViewById(R.id.new_comment);
+        System.out.println("edit text null: " + newcomment == null);
+
+        System.out.println("get text to string: " + newcomment.getText().toString());
+
+        //commentString = ((EditText) findViewById(R.id.new_comment)).getText().toString();
     }
 
     public void home_button(View view) {
@@ -96,6 +129,76 @@ public class ReportDetailActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void submit_comment(View v) {
+        try {
+            addCommentTask = new AddCommentTask(rep.id, commentString);
+            addCommentTask.execute((Void) null);
+            addCommentTask = null;
+            //comments.add()
+            //create addCommentTask()
+            //create set On Click Listener and then add that comment to the comments list
+
+            startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+        } catch (Exception e) {
+            addCommentTask = null;
+        }
+    }
+
+    public static class AddCommentTask extends AsyncTask<Void, Void, List<CommentContent.Comment>> {
+
+        private final String mReportId;
+        private final String mContent;
+        //private final String mUser;
+
+        public List<CommentContent.Comment> comments = new ArrayList<>();
+
+
+        AddCommentTask(String id, String content) {
+            mReportId = id;
+            mContent = content;
+
+
+        }
+
+        @Override
+        protected List<CommentContent.Comment> doInBackground(Void... params) {
+            try {
+                System.out.println("comment url: " + "http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
+                        "&content=" + mContent);
+                URL url = new URL("http://10.0.2.2:3000/addCommentAndroid?reportId=" + mReportId +
+                        "&content=" + mContent);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                JSONArray arr = jo.getJSONArray("result");
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String id = obj.getString("_id");
+                    String reportId = obj.getString("reportId");
+                    String content = obj.getString("content");
+                    String user = obj.getString("user");
+                    String role = obj.getString("role");
+                    String date = obj.getString("date");
+                    CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
+                    System.out.println("comment" + c);
+                    comments.add(c);
+                }
+
+                System.out.println("adap comments" + comments);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
+                //create array adapter
+                //ListView
+                return comments;
+            } catch (Exception e) {
+                return null;
+            }
+        }
     }
 
 }
