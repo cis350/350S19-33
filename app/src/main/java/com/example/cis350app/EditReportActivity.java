@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.example.cis350app.data.NotificationContent;
 import com.example.cis350app.data.SearchContent;
+import com.example.cis350app.data.ReportContent;
 
 import org.json.JSONObject;
 
@@ -23,7 +26,7 @@ import java.util.Scanner;
 import java.util.Date;
 
 public class EditReportActivity extends AppCompatActivity {
-
+    ReportContent.Report rep = null;
     private TextView mTextMessage;
     private EditReportTask task = null;
     private String editItems = "";
@@ -31,12 +34,24 @@ public class EditReportActivity extends AppCompatActivity {
     //private EditText date;
     private EditText subject;
     private EditText description;
+    String reportID;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editreport);
 
+    if (savedInstanceState == null) {
+        // Create the detail fragment and add it to the activity
+        // using a fragment transaction.
+        Bundle arguments = new Bundle();
+
+        reportID = getIntent().getStringExtra("reportID");
+        System.out.println("thisid" + reportID);
+
+    }
+
+        Button btnSubmit = (Button) findViewById(R.id.submit_report_button);
         name = (EditText) findViewById(R.id.edit_name);
        // date = (EditText) findViewById(R.id.edit_date);
         subject = (EditText) findViewById(R.id.edit_subject);
@@ -44,10 +59,16 @@ protected void onCreate(Bundle savedInstanceState) {
 
         //profileTask = new profileInfoTask(LoginActivity.getsessionUserName());
         //profileTask.execute((Void) null);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            editReport();
+        }
+    });
         }
 
 //to be changed
-public void edit(View v){
+public void editReport(){
         //concatenate changes to editItems
         if(name.getText().toString().length() > 0){
         editItems = editItems + "You changed your password to " + name.getText().toString() + ".";
@@ -69,28 +90,25 @@ public void edit(View v){
         } else { //show the toast with changes
             Date daDate = new Date();
             Date rep_date = daDate;
-        task =  new EditReportTask(LoginActivity.getsessionUserName(), name.getText().toString(),
-        daDate, subject.getText().toString(), description.getText().toString());
+        Log.v("34", "reportID");
+        task =  new EditReportTask(reportID, name.getText().toString(),
+    subject.getText().toString(), description.getText().toString());
+
         task.execute((Void) null);
         }
         }
 
-
-
-
-
 public static class EditReportTask extends AsyncTask<Void, Void, String>{
     private final String mId;
     private final String mName;
-    private final Date mDate;
+    //private final Date mDate;
     private final String mSubject;
     private final String mDescription;
 
-    EditReportTask(String id, String name, Date date, String subject, String description)
+    EditReportTask(String id, String name, String subject, String description)
     {
         mId = id;
         mName = name;
-        mDate = date;
         mSubject = subject;
         mDescription = description;
     }
@@ -98,8 +116,8 @@ public static class EditReportTask extends AsyncTask<Void, Void, String>{
     @Override
     protected String doInBackground(Void...params){
         try{
-            URL url = new URL("http://10.0.2.2:3000/editReport?id=" + mId + "&name=" + mName + "&Date=" + mDate
-                    + "&Subject=" + mSubject + "&Description=" + mDescription);
+            URL url = new URL("http://10.0.2.2:3000/editReport?id=" + mId + "&name=" + mName
+                    + "&subject=" + mSubject + "&description=" + mDescription);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();

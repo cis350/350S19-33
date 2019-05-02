@@ -34,6 +34,7 @@ import java.util.Scanner;
 
 public class ReportListActivity extends AppCompatActivity {
     private static ReportTask reportTask = null;
+
     public static List<String> ITEMS = new ArrayList<>();
     public static Map<String, Report> ITEM_MAP = new HashMap<String, Report>();
     ListView report_list;
@@ -86,9 +87,17 @@ public class ReportListActivity extends AppCompatActivity {
 
     }
 
+    public static String getReportID() {
+        return reportTask.getID();
+
+    }
+
+
+
     public static class ReportTask extends AsyncTask<Void, Void, List<Report>> {
 
         private final String mUsername;
+        public String id;
 
         ReportTask(String username) {
             mUsername = username;
@@ -109,7 +118,7 @@ public class ReportListActivity extends AppCompatActivity {
                 List<Report> reports = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
-                    String id = obj.getString("id");
+                     String id = obj.getString("id");
                     String username = obj.getString("studentUsername");
                     String name = obj.getString("studentName");
                     String date = obj.getString("date");
@@ -133,6 +142,10 @@ public class ReportListActivity extends AppCompatActivity {
             } catch (Exception e) {
                 return null;
             }
+
+        }
+        public String getID(){
+            return id;
         }
 
     }
@@ -140,6 +153,7 @@ public class ReportListActivity extends AppCompatActivity {
     public static Report getReport(String name){
         return ITEM_MAP.get(name);
     }
+    public static Report getReportID(String id){return ITEM_MAP.get(id);}
 
     public void home_button(View view) {
         startActivity(new Intent(ReportListActivity.this, HomeActivity.class));

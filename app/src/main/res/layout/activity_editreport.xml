@@ -98,7 +98,7 @@
 
 
                 <Button
-                    android:id="@+id/username_register_button"
+                    android:id="@+id/submit_report_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

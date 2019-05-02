@@ -677,10 +677,9 @@ const deleteReport = function(req,res){
 
 const editReport = function(req, res) {
     const name = req.query.name;
-    const date = req.query.date;
-    const subject = req.query.school;
-    const description = req.query.age;
-    const person = req.query.gender;
+    const subject = req.query.subject;
+    const description = req.query.description;
+
     const id = req.query.id;
     console.log(id);
     
@@ -692,18 +691,17 @@ const editReport = function(req, res) {
             res.send({"result": "no such user"});
         }
         else {
-            if(date != "" && date != null && date != undefined){
-                report.date = date;
+            if(name != "" && name != null && name != undefined){
+                report.studentName = name;
             }
             if(subject != "" && subject != null && subject != undefined){
-                report.subject = subject;
+                            report.subject = subject;
             }
+
             if(description != "" && description != null && description != undefined){
                 report.reportDescription = description;
             }
-            if(person != "" && person != null && person != person){
-                report.reportForWhom = person;
-            }
+
             report.save((err) => {
                 if(err){
                     res.send({"result": error});

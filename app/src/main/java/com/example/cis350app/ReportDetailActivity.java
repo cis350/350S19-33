@@ -25,7 +25,8 @@ import android.view.View.OnClickListener;
 
 
 public class ReportDetailActivity extends AppCompatActivity {
-    Report rep = null;
+    public Report rep = null;
+    String id;
     private static DeleteReportTask deleteTask = null;
     private static AddCommentTask addCommentTask = null;
     private static String commentString = null;
@@ -69,7 +70,9 @@ public class ReportDetailActivity extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ReportDetailActivity.this, EditReportActivity.class));
+                Intent intent = new Intent(ReportDetailActivity.this, EditReportActivity.class);
+                intent.putExtra("reportID", rep.id);
+                startActivity(intent);
             }
         });
 
@@ -104,7 +107,7 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     public void delete_report (View v) {
         try {
-            String id = rep.id;
+            id = rep.id;
             deleteTask = new ReportDetailActivity.DeleteReportTask(id);
             deleteTask.execute((Void) null);
             deleteTask = null;
@@ -113,6 +116,8 @@ public class ReportDetailActivity extends AppCompatActivity {
             deleteTask = null;
         }
     }
+
+
 
     public static class DeleteReportTask extends AsyncTask<Void, Void, String> {
 
