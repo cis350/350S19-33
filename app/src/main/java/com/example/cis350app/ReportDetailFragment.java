@@ -12,6 +12,13 @@ import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
+import android.os.AsyncTask;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.example.cis350app.data.ReportContent.Report;
 
@@ -23,7 +30,7 @@ public class ReportDetailFragment extends Fragment {
     public static ArrayList<String> ITEMS = new ArrayList<>();
     public static Map<String, Report> ITEM_MAP = new HashMap<>();
     private static String commentString = null;
-    //private static DeleteReportTask deleteTask = null;
+    private static DeleteReportTask deleteTask = null;
 
     private Report mItem;
 
@@ -97,31 +104,57 @@ public class ReportDetailFragment extends Fragment {
         */
 
         //edit button
-        /*
-        Button btnEdit = (Button) findViewById(R.id.edit_submit_button);
-        final EditText mEdit = (EditText) findViewById(R.id.report_detail);
-         */
+        Button btnEdit = (Button) rootView.findViewById(R.id.edit_submit_button);
+        final EditText mEdit = (EditText) rootView.findViewById(R.id.report_detail);
+
 
         //delete button
-        /*
-        Button btnDelete = (Button) findViewById(R.id.delete_submit_button);
+        Button btnDelete = (Button) rootView.findViewById(R.id.delete_button);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-
-                    deleteTask = new ReportDetailActivity.DeleteReportTask(id);
+                    String id = mItem.id;
+                    deleteTask = new ReportDetailFragment.DeleteReportTask(id);
                     deleteTask.execute((Void) null);
                     deleteTask = null;
-                    startActivity(new Intent(ReportDetailActivity.this, ReportListActivity.class));
+                    startActivity(new Intent(getContext(), ReportListActivity.class));
                 } catch (Exception e) {
                     deleteTask = null;
                 }
             }
         });
-         */
 
         return rootView;
+    }
+
+    public static class DeleteReportTask extends AsyncTask<Void, Void, String> {
+
+        private final String mId;
+
+        DeleteReportTask(String id) {
+            mId = id;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                URL url = new URL("http://10.0.2.2:3000/deleteReport?id=" + mId);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+                String result = jo.getString("result");
+                return result;
+            } catch (Exception e) {
+
+                return e.getMessage();
+            }
+        }
+
     }
 
 }

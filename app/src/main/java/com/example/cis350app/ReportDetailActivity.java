@@ -10,6 +10,7 @@ import com.example.cis350app.data.ReportContent.Report;
 
 public class ReportDetailActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
