@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,118 +21,162 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/report_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/username_report_form"
-            android:layout_width="match_parent"
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout7"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout8"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout8"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout8" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                    android:id="@+id/report_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_report_name"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/report_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_report_date"
-                    android:imeActionId="6"
-                    android:imeActionLabel="Submit Report"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/report_subject"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_report_subject"
-                    android:imeActionId="6"
-                    android:imeActionLabel="Submit Report"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:autofillHints="" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/report_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_report_description"
-                    android:imeActionId="6"
-                    android:imeActionLabel="Submit Report"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/report_person"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_report_person"
-                    android:imeActionId="6"
-                    android:imeActionLabel="Submit Report"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/report_submit_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+            <AutoCompleteTextView
+                android:id="@+id/report_name"
+                android:layout_width="356dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Submit Report"
-                android:textStyle="bold" />
+                android:hint="@string/prompt_report_name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-        </LinearLayout>
-    </ScrollView>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout10"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout10"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
+
+            <EditText
+                android:id="@+id/report_date"
+                android:layout_width="355dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_report_date"
+                android:imeActionId="6"
+                android:imeActionLabel="Submit Report"
+                android:imeOptions="actionUnspecified"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout11"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout11"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
+
+            <EditText
+                android:id="@+id/report_subject"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/prompt_report_subject"
+                android:imeActionId="6"
+                android:imeActionLabel="Submit Report"
+                android:imeOptions="actionUnspecified"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout12"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
+
+            <EditText
+                android:id="@+id/report_description"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_report_description"
+                android:imeActionId="6"
+                android:imeActionLabel="Submit Report"
+                android:imeOptions="actionUnspecified"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="@+id/report_submit_button"
+            app:layout_constraintStart_toStartOf="@+id/report_submit_button"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout11">
+
+            <EditText
+                android:id="@+id/report_person"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_report_person"
+                android:imeActionId="6"
+                android:imeActionLabel="Submit Report"
+                android:imeOptions="actionUnspecified"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/report_submit_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="379dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Submit Report"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+
+        <ImageButton
+            android:id="@+id/home_button"
+            android:layout_width="45dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="183dp"
+            android:layout_marginLeft="183dp"
+            android:layout_marginTop="569dp"
+            android:layout_marginEnd="183dp"
+            android:layout_marginRight="183dp"
+            android:layout_marginBottom="119dp"
+            android:background="#008577"
+            android:onClick="home_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_home_black_24dp" />
+
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

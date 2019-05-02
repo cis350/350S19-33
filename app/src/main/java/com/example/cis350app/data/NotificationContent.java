@@ -43,7 +43,7 @@ public class NotificationContent {
 
         @Override
         public String toString() {
-            String s = content + "\n" + "Sent on: " + timestamp;
+            String s = "Report ID: " + id + "\n" + "Content: " + content + "\n" + "Sent on: " + timestamp;
             return s;
         }
     }

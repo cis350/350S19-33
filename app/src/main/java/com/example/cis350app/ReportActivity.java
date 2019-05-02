@@ -196,4 +196,8 @@ public class ReportActivity extends AppCompatActivity {
 
     }
 
+    public void home_button(View view) {
+        startActivity(new Intent(ReportActivity.this, HomeActivity.class));
+    }
+
 }
