@@ -23,7 +23,7 @@ public class ReportDetailActivity extends AppCompatActivity {
 
             Report reportInfo = (Report)
                     getIntent().getSerializableExtra("report");
-            System.out.println("reportinto: " + reportInfo.toString());
+            System.out.println("report into: " + reportInfo.toString());
             arguments.putSerializable("report", reportInfo);
             ReportDetailFragment fragment = new ReportDetailFragment();
             fragment.setArguments(arguments);

@@ -633,7 +633,8 @@ const saveStudentReport = function(req, res){
                 adminCommented: false,
                 adminEmail: adminEmail,
                 closed: false,
-                read: false
+                read: false,
+                closedDate: date
             });
             
             newReport.save( (err) => {

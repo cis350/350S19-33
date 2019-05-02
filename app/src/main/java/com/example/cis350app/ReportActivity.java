@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import com.example.cis350app.data.ReportContent;
-
+import java.util.Date;
 
 
 public class ReportActivity extends AppCompatActivity {
@@ -51,7 +51,6 @@ public class ReportActivity extends AppCompatActivity {
         Button btnSubmit = (Button) findViewById(R.id.report_submit_button);
         //Button btnSrc = (Button) findViewById(R.id.buttonSrc);
         name = (EditText) findViewById(R.id.report_name);
-        date = (EditText) findViewById(R.id.report_date);
         subject = (EditText) findViewById(R.id.report_subject);
         description = (EditText) findViewById(R.id.report_description);
         person = (EditText) findViewById(R.id.report_person);
@@ -72,14 +71,14 @@ public class ReportActivity extends AppCompatActivity {
         // Reset errors.
         //name.setError(null);
         name.setError(null);
-        date.setError(null);
         subject.setError(null);
         description.setError(null);
         person.setError(null);
 
         // Store values at the time of the register attempt.
         String rep_name = name.getText().toString();
-        String rep_date = date.getText().toString();
+        Date daDate = new Date();
+        Date rep_date = daDate;
         String rep_subject = subject.getText().toString();
         String rep_description = description.getText().toString();
         String rep_person = person.getText().toString();
@@ -94,12 +93,6 @@ public class ReportActivity extends AppCompatActivity {
 
         }
 
-        // Check for a date
-        if (TextUtils.isEmpty(rep_date)) {
-            date.setError(getString(R.string.error_field_required));
-            focusView = date;
-            cancel = true;
-        }
 
         // Check for a subject
         if (TextUtils.isEmpty(rep_subject)) {
@@ -118,7 +111,7 @@ public class ReportActivity extends AppCompatActivity {
             focusView = person;
             cancel = true;
         } else {
-            CreateReportTask task = new CreateReportTask(rep_name, rep_date, rep_subject, rep_description, rep_person);
+            CreateReportTask task = new CreateReportTask(rep_name, daDate, rep_subject, rep_description, rep_person);
             task.execute((Void) null);
             task = null;
             // Show a progress spinner, and kick off a background task to
@@ -142,12 +135,12 @@ public class ReportActivity extends AppCompatActivity {
     //create report
     public class CreateReportTask extends AsyncTask<Void, Void, String> {
         private final String mName;
-        private final String mDate;
+        private final Date mDate;
         private final String mSubject;
         private final String mDescription;
         private final String mPerson;
 
-        CreateReportTask(String name, String date, String subject, String description, String person) {
+        CreateReportTask(String name, Date date, String subject, String description, String person) {
             mName = name;
             mDate = date;
             mSubject = subject;
