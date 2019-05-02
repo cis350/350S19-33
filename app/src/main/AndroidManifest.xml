@@ -98,6 +98,10 @@ package="com.example.cis350app">
         android:name=".ResourceDetailActivity"
         android:label="Resource Detail">
     </activity>
+    <activity
+        android:name=".EditReportActivity"
+        android:label="Edit Report">
+    </activity>
 </application>
 
 

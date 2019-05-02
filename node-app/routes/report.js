@@ -682,6 +682,7 @@ const editReport = function(req, res) {
     const description = req.query.age;
     const person = req.query.gender;
     const id = req.query.id;
+    console.log(id);
     
     Report.findOne({ id: id}, (err, report) => {
         if (err) {
