@@ -1,5 +1,8 @@
 package com.example.cis350app.data;
 
+import org.w3c.dom.ls.LSSerializer;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +25,7 @@ public class NotificationContent {
     /**
      * A notification item
      */
-    public static class Notification {
+    public static class Notification implements Serializable {
         public final String id; // unique ID of the notif
         public final String content; // content of the notif
         public final String timestamp; // when the notif was sent

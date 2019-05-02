@@ -2,19 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notification_singleton_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/notification_list"
-        android:layout_width="323dp"
-        android:layout_height="419dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="220dp"
+    <TextView
+        android:id="@+id/notif_text"
+        android:layout_width="257dp"
+        android:layout_height="301dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="77dp"
+        android:layout_marginRight="77dp"
+        android:layout_marginBottom="302dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,14 +27,15 @@
         android:layout_height="43dp"
         android:layout_marginStart="183dp"
         android:layout_marginLeft="183dp"
-        android:layout_marginTop="599dp"
+        android:layout_marginTop="569dp"
         android:layout_marginEnd="183dp"
         android:layout_marginRight="183dp"
-        android:layout_marginBottom="89dp"
+        android:layout_marginBottom="119dp"
         android:background="#008577"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_home_black_24dp" />
+
 </android.support.constraint.ConstraintLayout>

@@ -11,10 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.cis350app.data.NotificationContent;
 import com.example.cis350app.data.NotificationContent.Notification;
+import com.example.cis350app.data.ResourceContent;
+import com.example.cis350app.data.SearchContent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,24 +42,18 @@ import java.util.Scanner;
  * item details side-by-side using two vertical panes.
  */
 public class NotificationListActivity extends AppCompatActivity {
-
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
     private static NotificationsTask notifTask = null;
-    public static List<Notification> ITEMS = new ArrayList<>();
+    public static List<String> ITEMS = new ArrayList<>();
     public static Map<String, Notification> ITEM_MAP = new HashMap<String, Notification>();
+    ListView notification_list;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        notification_list = (ListView) findViewById(R.id.notification_list);
 
         try {
             String username = LoginActivity.getsessionUserName();
@@ -64,98 +64,53 @@ public class NotificationListActivity extends AppCompatActivity {
             List<Notification> notifs = notifTask.get();
             for (Notification n : notifs) {
                 System.out.println(n);
-                ITEMS.add(n);
-                ITEM_MAP.put(n.id, n);
+                ITEMS.add(n.content);
+                ITEM_MAP.put(n.content, n);
             }
             notifTask = null;
         } catch (Exception e) {
             notifTask = null;
         }
 
+        adapter = new ArrayAdapter<String>(
+                NotificationListActivity.this,
+                android.R.layout.simple_list_item_1, //fix this
+                ITEMS
+        );
 
-        if (findViewById(R.id.notification_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
-
-        View recyclerView = findViewById(R.id.notification_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
-    }
-
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ITEMS, mTwoPane));
-    }
-
-    public static class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final NotificationListActivity mParentActivity;
-        private final List<Notification> mValues;
-        private final boolean mTwoPane;
-        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        //put listeners on the admin items in the listviews
+        /*
+        notification_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Notification item = (Notification) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(NotificationDetailFragment.ARG_ITEM_ID, item.id);
-                    NotificationDetailFragment fragment = new NotificationDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.notification_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, NotificationDetailActivity.class);
-                    intent.putExtra(NotificationDetailFragment.ARG_ITEM_ID, item.id);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(NotificationListActivity.this, NotificationDetailActivity.class);
+                String resourceSelected = notification_list.getItemAtPosition(position).toString();
+                System.out.println("Resource selected : " + resourceSelected);
+                NotificationContent.Notification n = getNotification(resourceSelected);
+                System.out.println("IN NOTIFICATION LIST ACTIVITY, LISTENING ON ITEMS");
 
-                    context.startActivity(intent);
-                }
+                System.out.println("n id: " + n.id);
+                System.out.println("n notification: " + n.toString());
+                intent.putExtra("item_id", n.id);
+                intent.putExtra("item_map", n);
+                startActivity(intent);
             }
-        };
-
-        SimpleItemRecyclerViewAdapter(NotificationListActivity parent,
-                                      List<Notification> items,
-                                      boolean twoPane) {
-            mValues = items;
-            mParentActivity = parent;
-            mTwoPane = twoPane;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.notification_list_content, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mContentView.setText(mValues.get(position).content);
-
-            holder.itemView.setTag(mValues.get(position));
-            holder.itemView.setOnClickListener(mOnClickListener);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-            final TextView mIdView;
-            final TextView mContentView;
-
-            ViewHolder(View view) {
-                super(view);
-                mIdView = (TextView) view.findViewById(R.id.id_text);
-                mContentView = (TextView) view.findViewById(R.id.content);
+        });
+*/
+        //put listeners on the admin items in the listviews
+        notification_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(NotificationListActivity.this, NotificationDetailActivity.class);
+                String resourceSelected = notification_list.getItemAtPosition(position).toString();
+                NotificationContent.Notification n = getNotification(resourceSelected);
+                intent.putExtra("notification", n);
+                startActivity(intent);
             }
-        }
+        });
+
+        notification_list.setAdapter(adapter);
+
     }
 
     /**
@@ -188,7 +143,6 @@ public class NotificationListActivity extends AppCompatActivity {
                     String reportId = obj.getString("reportId");
                     String date = obj.getString("date");
                     Notification n = new Notification(content, date, reportId);
-                    System.out.println(n);
                     notifs.add(n);
                 }
                 return notifs;
@@ -196,5 +150,13 @@ public class NotificationListActivity extends AppCompatActivity {
                 return null;
             }
         }
+    }
+
+    public static NotificationContent.Notification getNotification(String name){
+        return ITEM_MAP.get(name);
+    }
+
+    public void home_button(View view) {
+        startActivity(new Intent(NotificationListActivity.this, HomeActivity.class));
     }
 }
