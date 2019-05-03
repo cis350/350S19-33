@@ -195,7 +195,6 @@ const addComment = function(req, res){
         }
         else {
             report.adminCommented = true;
-            report.read = false;
             report.save((err) => { //save the commented field as true
                 if(err){
                     res.type('html').status(500);
@@ -267,50 +266,58 @@ const addCommentAndroid = function(req, res){
             res.send('No report with the id ' + id);
         }
         else {
-            var newComment = new Comment({
+          report.read = false;
+          report.save((err) => {
+            if (err) {
+              res.type('html').status(500);
+              res.send('Error: ' + err);
+            } else {
+               var newComment = new Comment({
                 reportId: id,
                 content: comment,
                 user: report.studentUsername,
                 role: "student",
                 date: Date.now()
-            });
-            newComment.save((err) => {
-                if(err) {
-                    res.type('html').status(500);
-                    res.send('Error: ' + err);
-                } else {
-                    Comment.find((err, comments) => {
-                        if (err) {
-                            res.send('Error' + err);
-                        } 
-                        else {
-                            // generate notification for student
-                            const newNotif = new Notification({
-                                username: report.studentUsername,
-                                reportId: report.id,
-                                content: "Report " + report.subject + " was commented on",
-                                date: Date.now(),
-                            });
-                            
-                            newNotif.save((err) => { 
-                                if (err) {
-                                    res.type('html').status(500);
-                                    res.send('Error: ' + err);
-                                }
-                                else {
-                                    AdminUser.find((err, admins) => {
-                                        if(err){
-                                            res.send("Error" + err);
-                                        } else {
-                                            res.render('report.ejs', { admins : admins, comments: comments, report: report });
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            });
+              });
+              newComment.save((err) => {
+                  if(err) {
+                      res.type('html').status(500);
+                      res.send('Error: ' + err);
+                  } else {
+                      Comment.find((err, comments) => {
+                          if (err) {
+                              res.send('Error' + err);
+                          } 
+                          else {
+                              // generate notification for student
+                              const newNotif = new Notification({
+                                  username: report.studentUsername,
+                                  reportId: report.id,
+                                  content: "Report " + report.subject + " was commented on",
+                                  date: Date.now(),
+                              });
+                              
+                              newNotif.save((err) => { 
+                                  if (err) {
+                                      res.type('html').status(500);
+                                      res.send('Error: ' + err);
+                                  }
+                                  else {
+                                      AdminUser.find((err, admins) => {
+                                          if(err){
+                                              res.send("Error" + err);
+                                          } else {
+                                              res.render('report.ejs', { admins : admins, comments: comments, report: report });
+                                          }
+                                      });
+                                  }
+                              });
+                          }
+                      });
+                  }
+              });
+            }
+          })
         }
     });
 }
