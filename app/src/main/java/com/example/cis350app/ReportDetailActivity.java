@@ -131,7 +131,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (CommentContent.Comment c : comments) {
             sb.append(c.role);
-            sb.append(":");
+            sb.append(" : ");
             sb.append(c.content);
             sb.append("\n");
         }
