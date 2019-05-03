@@ -195,6 +195,7 @@ const addComment = function(req, res){
         }
         else {
             report.adminCommented = true;
+            report.read = false;
             report.save((err) => { //save the commented field as true
                 if(err){
                     res.type('html').status(500);
