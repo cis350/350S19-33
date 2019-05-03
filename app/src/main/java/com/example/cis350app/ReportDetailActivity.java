@@ -39,7 +39,9 @@ public class ReportDetailActivity extends AppCompatActivity {
     private EditText newComment;
     private static CommentTask commentTask = null;
     public static List<CommentContent.Comment> ITEMS = new ArrayList<>();
-    public static Map<String, CommentContent.Comment> ITEM_MAP = new HashMap<String, CommentContent.Comment>();
+    public static Map<String, CommentContent.Comment> ITEM_MAP = new HashMap<>();
+    public static List<String> commentContent = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,12 +110,23 @@ public class ReportDetailActivity extends AppCompatActivity {
             ITEM_MAP = new HashMap<>();
             commentTask.execute((Void) null);;
             List<CommentContent.Comment> comments = commentTask.get();
-            ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.report_singleton, comments);
-            comment_box.setAdapter(contentAdapter);
+            for (CommentContent.Comment c : comments) {
+                ITEMS.add(c);
+                ITEM_MAP.put(c.id, c);
+                commentContent.add(c.content);
+            }
+            //ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.report_singleton, comments);
+            //comment_box.setAdapter(contentAdapter);
             commentTask = null;
         } catch (Exception e) {
             commentTask = null;
         }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                ReportDetailActivity.this,
+                android.R.layout.simple_list_item_1, //fix this
+                commentContent
+        );
     }
 
     public void home_button(View view) {
@@ -210,6 +223,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                     comments.add(c);
                 }
 
+                System.out.println("adap comments" + comments);
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
                 //create array adapter
                 //ListView
