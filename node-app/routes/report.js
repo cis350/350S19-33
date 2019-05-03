@@ -556,6 +556,7 @@ const saveMemos = function(req, res) {
                 }
                 if(description != "" && description != null && description != undefined){
                                 memo.description = description;
+                                console.log(description);
                 }
 
                 if(solution != "" && solution != null && solution != undefined){
