@@ -130,6 +130,24 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             cancel = true;
         }
 
+        if (TextUtils.isEmpty(school)) {
+            mSchoolView.setError(getString(R.string.error_field_required));
+            focusView = mSchoolView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(username)) {
+            mAgeView.setError(getString(R.string.error_field_required));
+            focusView = mAgeView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(username)) {
+            mGenderView.setError(getString(R.string.error_field_required));
+            focusView = mGenderView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt register and focus the first
             // form field with an error.
