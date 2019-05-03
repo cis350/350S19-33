@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.util.Log;
+import android.widget.ListView;
 
 import com.example.cis350app.data.CommentContent;
 import com.example.cis350app.data.ReportContent.Report;
@@ -110,23 +112,21 @@ public class ReportDetailActivity extends AppCompatActivity {
             ITEM_MAP = new HashMap<>();
             commentTask.execute((Void) null);;
             List<CommentContent.Comment> comments = commentTask.get();
-            for (CommentContent.Comment c : comments) {
-                ITEMS.add(c);
-                ITEM_MAP.put(c.id, c);
-                commentContent.add(c.content);
-            }
-            //ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.report_singleton, comments);
-            //comment_box.setAdapter(contentAdapter);
-            commentTask = null;
+            //String comm = addCommentTas.get();
+            Log.v("32", "com" + comments);
+            ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail_comment, comments);
+            Log.v("35", "" + contentAdapter);
+            ListView listview = (ListView) findViewById(R.id.comment_list);
+            Log.v("74", "whoop");
+            listview.setAdapter(contentAdapter);
+            Log.v("68", "asdfsd");
         } catch (Exception e) {
             commentTask = null;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                ReportDetailActivity.this,
-                android.R.layout.simple_list_item_1, //fix this
-                commentContent
-        );
+
+
+
     }
 
     public void home_button(View view) {
