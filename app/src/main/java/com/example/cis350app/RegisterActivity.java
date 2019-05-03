@@ -136,13 +136,13 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(username)) {
+        if (TextUtils.isEmpty(age)) {
             mAgeView.setError(getString(R.string.error_field_required));
             focusView = mAgeView;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(username)) {
+        if (TextUtils.isEmpty(gender)) {
             mGenderView.setError(getString(R.string.error_field_required));
             focusView = mGenderView;
             cancel = true;
