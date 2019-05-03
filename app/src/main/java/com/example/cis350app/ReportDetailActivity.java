@@ -272,13 +272,13 @@ public class ReportDetailActivity extends AppCompatActivity {
                     CommentContent.Comment c = new CommentContent.Comment(id, reportId, content, user, role, date);
                     comments.add(c);
                 }
+
+                System.out.println("comments: " + arr);
                 ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail, comments);
 
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.getActivity(), R.id.comment_list, comments);
                 //create array adapter
                 //ListView
-                System.out.println("BEFORE RETURNING COMMENTS");
-                System.out.println("comments size: " + comments.size());
                 return comments;
             } catch (Exception e) {
                 return null;

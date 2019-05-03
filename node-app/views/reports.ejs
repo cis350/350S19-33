@@ -153,9 +153,9 @@ window.onclick = function(event) {
                                   <% if (!report.read && !report.closed) { %>
                                   <span class="label label-danger pull-right">unread</span><br>
                                   <span class="label label-danger pull-right">no comment</span></td></td>
-                                  <% } else if (report.read && !report.closed && report.adminComment) { %>
+                                  <% } else if (report.read && !report.closed && report.adminCommented) { %>
                                   <span class="label label-success pull-right">read</span></td></td>
-                                  <% } else if (report.read && !report.closed && !report.adminComment) { %>
+                                  <% } else if (report.read && !report.closed && !report.adminCommented) { %>
                                   <span class="label label-success pull-right">read</span><br>
                                   <span class="label label-danger pull-right">no comment</span></td></td>
                                   <% } else if (report.read && report.closed) { %>
