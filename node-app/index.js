@@ -78,7 +78,7 @@ app.use('/showMForms', report.show_memos, (req, res) => {
     res.send("memo form handled");
 })
 
-app.use('/editMForm', report.save_memo, (req, res) => {
+app.use('/editMForm', report.save_memos, (req, res) => {
 	res.send("memo form handled");
 });
 

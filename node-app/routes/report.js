@@ -564,15 +564,15 @@ const saveMemos = function(req, res) {
 
 
 
-    newMemo.save( (err) => {
+    memo.save( (err) => {
         if (err) {
             res.send('Error: ' + err);
         } else {
-            newMemo.save((err) => {
+            memo.save((err) => {
                 if(err){
                     res.redirect('dashboard/');
                 } else{
-                    req.session.memo = newMemo;
+                    req.session.memo = memo;
                     res.redirect('dashboard/');
                  }
                             });
@@ -817,7 +817,6 @@ const routes = {
     save_student_report: saveStudentReport,
     edit_report: editReport,
     save_memos: saveMemos,
-
     delete_report: deleteReport,
     add_comment_android: addCommentAndroid,
     forward_report: forwardReport,
