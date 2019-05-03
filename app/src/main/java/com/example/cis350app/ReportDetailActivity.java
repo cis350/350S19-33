@@ -130,6 +130,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         //replace with method call because no roles currently, eg. student: and admin:
         StringBuilder sb = new StringBuilder();
         for (CommentContent.Comment c : comments) {
+            sb.append(c.role);
+            sb.append(":");
             sb.append(c.content);
             sb.append("\n");
         }
