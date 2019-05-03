@@ -150,18 +150,18 @@ window.onclick = function(event) {
                             <% reports.forEach((report) => { %>
                               <tr class="unread">
                                   <td class="view-message dont-show"><%= report.studentName%> 
-                                  <% if (!report.read && !report.closed) { %>
-                                  <span class="label label-danger pull-right">unread</span><br>
-                                  <span class="label label-danger pull-right">no comment</span></td></td>
-                                  <% } else if (report.read && !report.closed && report.adminCommented) { %>
-                                  <span class="label label-success pull-right">read</span></td></td>
-                                  <% } else if (report.read && !report.closed && !report.adminCommented) { %>
-                                  <span class="label label-success pull-right">read</span><br>
-                                  <span class="label label-danger pull-right">no comment</span></td></td>
-                                  <% } else if (report.read && report.closed) { %>
-                                  <span class="label label-success pull-right">read</span><br>
-                                  <span class="label label-info pull-right">closed</span></td></td>
+                                  <% if (!report.read) { %>
+                                  <span class="label label-danger pull-right">unread</span>
+                                  <% } else { %>
+                                  <span class="label label-success pull-right">read</span>
                                   <% } %>
+                                  <% if (report.closed) { %>
+                                  <span class="label label-info pull-right">closed</span><br>
+                                  <% } %>
+                                  <% if (!report.adminCommented) { %>
+                                  <span class="label label-danger pull-right">no comment</span>
+                                  <% } %>
+                                  </td>
                                   <td class="view-message"><a href='/report?id=<%=report.id%>'+report.id><%= report.subject %> </a> </td>
                                   <td class="view-message inbox-small-cells"></td>
                                   <td class="view-message text-right"><%= report.date %></td>
