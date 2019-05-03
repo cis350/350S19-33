@@ -229,7 +229,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/comment_box"
+        android:id="@+id/comment_list"
         android:layout_width="297dp"
         android:layout_height="130dp"
         android:layout_marginStart="57dp"
