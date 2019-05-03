@@ -105,7 +105,6 @@ public class ReportDetailActivity extends AppCompatActivity {
             }
         });
 
-        comment_box = (ListView) findViewById(R.id.comment_box);
         try {
             commentTask = new CommentTask(rep.id);
             ITEMS = new ArrayList<>();
