@@ -56,9 +56,10 @@
                         android:imeActionId="6"
                         android:imeActionLabel="@string/action_sign_in_short"
                         android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
+                        android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:hint= "@string/prompt_report_name"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -75,7 +76,9 @@
                         android:imeOptions="actionUnspecified"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:hint= "@string/prompt_report_subject"/>
+
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +95,8 @@
                         android:imeOptions="actionUnspecified"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:hint= "@string/prompt_report_description"/>
 
                 </android.support.design.widget.TextInputLayout>
 

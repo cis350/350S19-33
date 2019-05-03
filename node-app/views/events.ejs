@@ -77,6 +77,8 @@ tr:hover {
       <th scope="col">Location</th>
       <th scope="col">Time</th>
       <th scope="col">Date</th>
+            <th scope="col"># Registered</th>
+                        <th scope="col">Who Registered</th>
     </tr>
   </thead>
   <tbody>
@@ -86,6 +88,8 @@ tr:hover {
         <td> <%= event.location %> </td>
         <td> <%= event.time %> </td>
         <td> <%= event.date %> </td>
+        <td> <%= event.students.length %> </td>
+                <td> <%= event.students %> </td>
       </tr>
     <% }); %>
   </tbody>
