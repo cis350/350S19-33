@@ -787,10 +787,6 @@ const forwardReport = function(req,res){
         } else {
             //the moment you clicked into the report, you read it
             report.adminEmail = adminEmail;
-            report.read = false;
-            report.closed = false;
-            //if it is forwarded, technicaly the new admin hasnt commented yet
-            report.adminCommented = false;
             report.save((err) => {
                 if(err){
                     res.type('html').status(500);
