@@ -58,9 +58,10 @@ public class ReportContent {
         public final String person; //TODO make boolean
         public final boolean closed;
        public List<String> comments = new ArrayList<String>(); //comments on
+        public final String admin;
 
         public Report(String id, String username, String name, String date, String subject, String description,
-                      String person, boolean closed ) {
+                      String person, boolean closed, String admin) {
             this.id = id;
             this.username = username;
             this.name = name;
@@ -69,6 +70,7 @@ public class ReportContent {
             this.description = description;
             this.person = person;
             this.closed = closed;
+            this.admin = admin;
             //this.comments = comments;
         }
 

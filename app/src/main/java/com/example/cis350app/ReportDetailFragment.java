@@ -74,6 +74,7 @@ public class ReportDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.subject)).setText("Subject: " + mItem.subject);
             ((TextView) rootView.findViewById(R.id.closed)).setText("Closed: " + Boolean.toString(mItem.closed));
             ((TextView) rootView.findViewById(R.id.student)).setText("Student Name: " + mItem.name);
+            ((TextView) rootView.findViewById(R.id.admin)).setText("Admin Email: " + mItem.admin);
 
             Date mydate = new Date(mItem.date);
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

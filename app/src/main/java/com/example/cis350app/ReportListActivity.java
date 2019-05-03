@@ -127,13 +127,14 @@ public class ReportListActivity extends AppCompatActivity {
                     System.out.println("description" + description);
                     String person = obj.getString("reportForWhom");
                     Boolean closed = obj.getBoolean("closed");
+                    String admin = obj.getString("adminEmail");
                    // JSONArray commentsJSON = obj.getJSONArray("comments");
                     /*System.out.println("comm JSON" + commentsJSON);
                     List<String> comments = new ArrayList<String>(){};
                     for (int j = 0; j < commentsJSON.length(); j++) {
                         comments.add(commentsJSON.optString(j));
                     }*/
-                    Report r = new Report(id, username, name, date, subject, description, person, closed);
+                    Report r = new Report(id, username, name, date, subject, description, person, closed, admin);
                     System.out.println(r.username);
                     System.out.println(r.description);
                     reports.add(r);
