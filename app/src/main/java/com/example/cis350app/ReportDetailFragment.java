@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.example.cis350app.data.ReportContent.Report;
 import com.example.cis350app.data.CommentContent;
@@ -53,7 +56,6 @@ public class ReportDetailFragment extends Fragment {
         // to load content from a content provider.
         mItem = (Report) getArguments().getSerializable("report");
         Activity activity = this.getActivity();
-
     }
 
     @Override
@@ -72,7 +74,16 @@ public class ReportDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.subject)).setText("Subject: " + mItem.subject);
             ((TextView) rootView.findViewById(R.id.closed)).setText("Closed: " + Boolean.toString(mItem.closed));
             ((TextView) rootView.findViewById(R.id.student)).setText("Student Username: " + mItem.username);
-            ((TextView) rootView.findViewById(R.id.date)).setText("Date: " + mItem.date);
+
+            Date mydate = new Date(mItem.date);
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                mydate = format.parse(mItem.date);
+            } catch (Exception e){
+
+            }
+
+            ((TextView) rootView.findViewById(R.id.date)).setText("Date: " + mydate.toString());
             ((TextView) rootView.findViewById(R.id.desc)).setText("Description: " + mItem.description);
             ((ImageButton) rootView.findViewById(R.id.home_button)).
                     setOnClickListener(new View.OnClickListener() {
