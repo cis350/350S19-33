@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.content.Intent;
-
+import android.content.Context;
 import com.example.cis350app.data.EventContent;
 import org.json.JSONArray;
 import org.json.JSONObject;
