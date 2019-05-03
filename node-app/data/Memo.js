@@ -11,7 +11,7 @@ var memoSchema = new Schema({
 	school: {type: String, required: false},
 	date: {type: Date, required: true},
 	description: {type:String, required: false},
-	solution: {type: String, required: true}
+	solution: {type: String, required: false}
 });
 
 module.exports = mongoose.model('Memo', memoSchema);

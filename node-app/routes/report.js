@@ -497,6 +497,92 @@ const saveMemo = function(req, res) {
     });
 };
 
+const editReport = function(req, res) {
+    const name = req.query.name;
+    const subject = req.query.subject;
+    const description = req.query.description;
+
+    const id = req.query.id;
+    console.log(id);
+
+    Report.findOne({ id: id}, (err, report) => {
+        if (err) {
+            res.send({"result": "error in find: " + err});
+        }
+        else if (!report) {
+            res.send({"result": "no such user"});
+        }
+        else {
+            if(name != "" && name != null && name != undefined){
+                report.studentName = name;
+            }
+            if(subject != "" && subject != null && subject != undefined){
+                            report.subject = subject;
+            }
+
+            if(description != "" && description != null && description != undefined){
+                report.reportDescription = description;
+            }
+
+            report.save((err) => {
+                if(err){
+                    res.send({"result": error});
+                } else {
+                    res.send({"result": 'edited'});
+                }
+            });
+        }
+    });
+};
+
+
+const saveMemos = function(req, res) {
+    const date = req.body.date;
+    const description = req.body.description;
+    const solution = req.body.solution;
+    const id = ObjectId();
+    console.log(id);
+
+    Memo.findOne({ id: id}, (err, memo) => {
+            if (err) {
+                res.send({"result": "error in find: " + err});
+            }
+            else if (!memo) {
+                res.send({"result": "no such user"});
+            }
+            else {
+                if(date != "" && date != null && date != undefined){
+                    memo.date = date;
+                }
+                if(description != "" && description != null && description != undefined){
+                                memo.description = description;
+                }
+
+                if(solution != "" && solution != null && solution != undefined){
+                    memo.solution = solution;
+                }
+
+
+
+    newMemo.save( (err) => {
+        if (err) {
+            res.send('Error: ' + err);
+        } else {
+            newMemo.save((err) => {
+                if(err){
+                    res.redirect('dashboard/');
+                } else{
+                    req.session.memo = newMemo;
+                    res.redirect('dashboard/');
+                 }
+                            });
+                        }
+                    });
+                };
+                });
+                };
+
+
 const deleteMemo = function(req,res){
     const id = req.query.id;
     
@@ -522,6 +608,7 @@ const deleteMemo = function(req,res){
 };
 
 const editMemo = function(req, res) {
+
     const id = req.query.id;
     
     Memo.findOne({ "id" : id }, (err, memo) => {
@@ -683,43 +770,6 @@ const deleteReport = function(req,res){
 };
 
 
-const editReport = function(req, res) {
-    const name = req.query.name;
-    const subject = req.query.subject;
-    const description = req.query.description;
-
-    const id = req.query.id;
-    console.log(id);
-    
-    Report.findOne({ id: id}, (err, report) => {
-        if (err) {
-            res.send({"result": "error in find: " + err});
-        }
-        else if (!report) {
-            res.send({"result": "no such user"});
-        }
-        else {
-            if(name != "" && name != null && name != undefined){
-                report.studentName = name;
-            }
-            if(subject != "" && subject != null && subject != undefined){
-                            report.subject = subject;
-            }
-
-            if(description != "" && description != null && description != undefined){
-                report.reportDescription = description;
-            }
-
-            report.save((err) => {
-                if(err){
-                    res.send({"result": error});
-                } else {
-                    res.send({"result": 'edited'});
-                }
-            });
-        }
-    });
-};
 
 const forwardReport = function(req,res){
     const adminEmail = req.query.admin;
@@ -766,6 +816,8 @@ const routes = {
     get_student_report: getStudentReport,
     save_student_report: saveStudentReport,
     edit_report: editReport,
+    save_memos: saveMemos,
+
     delete_report: deleteReport,
     add_comment_android: addCommentAndroid,
     forward_report: forwardReport,
