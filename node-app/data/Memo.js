@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var memoSchema = new Schema({
     id: {type: String, required: true},
     reportId: {type: String, required:false},
-	name: {type: String, required: true},
+	name: {type: String, required: false},
 	school: {type: String, required: false},
 	date: {type: Date, required: true},
 	description: {type:String, required: false},
