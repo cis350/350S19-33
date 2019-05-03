@@ -98,42 +98,57 @@ public void editReport(){
         }
         }
 
-public static class EditReportTask extends AsyncTask<Void, Void, String>{
-    private final String mId;
-    private final String mName;
-    //private final Date mDate;
-    private final String mSubject;
-    private final String mDescription;
+    public class EditReportTask extends AsyncTask<Void, Void, String>{
+        private final String mId;
+        private final String mName;
+        //private final Date mDate;
+        private final String mSubject;
+        private final String mDescription;
 
-    EditReportTask(String id, String name, String subject, String description)
-    {
-        mId = id;
-        mName = name;
-        mSubject = subject;
-        mDescription = description;
-    }
-
-    @Override
-    protected String doInBackground(Void...params){
-        try{
-            URL url = new URL("http://10.0.2.2:3000/editReport?id=" + mId + "&name=" + mName
-                    + "&subject=" + mSubject + "&description=" + mDescription);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-
-            Scanner in = new Scanner(url.openStream());
-            String msg = in.nextLine();
-            JSONObject jo = new JSONObject(msg);
-
-            String result = jo.getString("result");
-            return result;
-        } catch(Exception e){
-            return e.getMessage();
+        EditReportTask(String id, String name, String subject, String description)
+        {
+            mId = id;
+            mName = name;
+            mSubject = subject;
+            mDescription = description;
         }
-    }
 
-}
+        @Override
+        protected String doInBackground(Void...params){
+            try{
+                URL url = new URL("http://10.0.2.2:3000/editReport?id=" + mId + "&name=" + mName
+                        + "&subject=" + mSubject + "&description=" + mDescription);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                Scanner in = new Scanner(url.openStream());
+                String msg = in.nextLine();
+                JSONObject jo = new JSONObject(msg);
+
+                String result = jo.getString("result");
+                return result;
+            } catch(Exception e){
+                return e.getMessage();
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(final String result) {
+            if (result.contains("edited")) {
+                Toast myToast =Toast.makeText(getApplicationContext(), "Edited successfully!", Toast.LENGTH_LONG);
+                myToast.setMargin(50,50);
+                myToast.show();
+            } else if (result.contains("error")) {
+                Toast myToast =Toast.makeText(getApplicationContext(), "There was an error in editing. Try again.",
+                        Toast.LENGTH_LONG);
+                myToast.setMargin(50,50);
+                myToast.show();
+            }
+        }
+
+    }
     public void home_button(View view) {
         startActivity(new Intent(EditReportActivity.this, HomeActivity.class));
     }
