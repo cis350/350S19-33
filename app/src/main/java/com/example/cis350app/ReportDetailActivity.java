@@ -28,6 +28,8 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.content.Context;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 
 public class ReportDetailActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     public static List<CommentContent.Comment> ITEMS = new ArrayList<>();
     public static Map<String, CommentContent.Comment> ITEM_MAP = new HashMap<>();
     public static List<String> commentContent = new ArrayList<>();
+    public static List<CommentContent.Comment> comments;
 
 
     @Override
@@ -110,7 +113,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             ITEMS = new ArrayList<>();
             ITEM_MAP = new HashMap<>();
             commentTask.execute((Void) null);;
-            List<CommentContent.Comment> comments = commentTask.get();
+            comments = commentTask.get();
             //String comm = addCommentTas.get();
             Log.v("32", "com" + comments);
             ArrayAdapter contentAdapter = new ArrayAdapter(context, R.layout.activity_report_detail_comment, comments);
@@ -123,8 +126,21 @@ public class ReportDetailActivity extends AppCompatActivity {
             commentTask = null;
         }
 
+        //mItem comment string method was returning null, so manually creating the comment string here
+        //replace with method call because no roles currently, eg. student: and admin:
+        StringBuilder sb = new StringBuilder();
+        for (CommentContent.Comment c : comments) {
+            sb.append(c.content);
+            sb.append("\n");
+        }
+        String com = sb.toString();
+        System.out.println("com: " + com);
 
-
+        //adding the comments to the scrollview
+        TextView tv = new TextView(getBaseContext());
+        tv.setText(com);
+        ScrollView sc = (ScrollView) findViewById(R.id.comment_list);
+        sc.addView(tv);
 
     }
 
